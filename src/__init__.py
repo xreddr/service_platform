@@ -18,4 +18,9 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    with app.app_context():
+
+        from . import web
+        app.register_blueprint(web.bp)
+
     return app
