@@ -1,0 +1,14 @@
+body {
+    background-color: powderblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    max-width: 70vh;
+    margin: auto;
+}
