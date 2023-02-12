@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Service Platform</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <section class="content">
+            <header>
+                {% block header %}{% endblock %}
+            </header>
+            <main>
+                {% block content %}{% endblock %}
+            </main>
+        </section>
+    </body>
+</html>
