@@ -12,3 +12,10 @@ img {
     max-width: 70vh;
     margin: auto;
 }
+
+#login_form {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    margin: auto;
+}
