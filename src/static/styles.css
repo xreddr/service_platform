@@ -19,3 +19,10 @@ img {
     width: 200px;
     margin: auto;
 }
+
+#about {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: auto;
+}
