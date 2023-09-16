@@ -9,7 +9,7 @@
         </style>
     </head>
     <body>
-        <nav><button type="button" onclick="window.location.href='{{ url_for('.index') }}'">Home</button></nav>
+        <nav><button type="button" onclick="window.location.href='{{ url_for('web.index') }}'">Home</button></nav>
         <section class="content">
             <header>
                 {% block header %}{% endblock %}
