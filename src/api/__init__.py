@@ -6,9 +6,12 @@ bp = Blueprint('api', __name__, url_prefix='/api')
 
 '''
 USER CRUD
+Only existing users can create new users
+Users can only delete themselves
 '''
+
 # CREATE
-#
+# Register new user on stated service
 
 @bp.route('/register', methods=['POST'])
 @auth.login_required
@@ -20,7 +23,7 @@ def register_user():
     return res
 
 # READ
-#
+# Read all users on current session service
 
 @bp.route('/list_users', methods=['GET'])
 @auth.login_required
@@ -29,7 +32,7 @@ def list_users():
     return user_list
 
 # UPDATE
-#
+# Update logged in user information only
 
 @bp.route('/update/username', methods=['POST'])
 @auth.login_required
@@ -56,6 +59,23 @@ def update_password():
         error = "Not logged into requested user's profile"
         return jsonify(error)
     return jsonify(updated_password)
+
+# DELETE
+# Delete logged in users auth info
+
+@bp.route('/delete', methods=['POST'])
+@auth.login_required
+def delete_user():
+    req = request.get_json()
+    error = None
+
+    if not session['username'] == req['username']:
+        error = "Cannot delete other users"
+        return jsonify(error)
+    if error is None:
+        raw_res = auth.delete_user(req['username'], req['password'])
+    return jsonify(raw_res)
+
 
 '''
 LOGIN ROUTES

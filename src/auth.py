@@ -183,6 +183,38 @@ def update_password(username, password, new_password):
 # DELETE
 #
 
+def delete_user(username, password):
+    error = None
+    conn = pg_conn(service=session['service'])
+    cur = conn.cursor()
+
+    # User validation query
+    cur.execute(
+        "SELECT * FROM user_auth WHERE user_name = %s;",
+        (username,)
+    )
+    auth_info = cur.fetchone()
+    user_id = auth_info[0]
+    pass_check = auth_info[2]
+    if not check_password_hash(pass_check, password):
+        error = "Incorrect credentials."
+
+    if error is None:
+        # Delete query
+        cur.execute(
+            "DELETE FROM user_auth WHERE id = %s;",
+            (user_id,)
+        )
+        conn.commit()
+        msg = "User deleted"
+        res.update({"code": code['pass'], "body": msg})
+    else:
+        res.update({"code": code['fail'], "body": error})
+
+    cur.close()
+    conn.close()
+    return res
+
 '''
 LOGIN FUNCTIONS
 <CLEARED>
@@ -193,35 +225,28 @@ def login_user(service, username, password):
     error = None
 
     # Service validation
+    # Returns 
     ping = ping_conn(service)
     if ping == -1:
         error = "Service could not be reached. Check credentials."
-        res.update({ "code" : -1, "body" : error})
+        res.update({ "code" : code['fail'], "body" : error})
         return res
     
     # Query user creds
     conn = pg_conn(service)
     cur = conn.cursor()
     cur.execute(
-        "SELECT id, user_name FROM user_auth WHERE user_name = %s",
+        "SELECT id, user_name, password FROM user_auth WHERE user_name = %s",
         (username,)
     )
     user = cur.fetchone()
     cur.close()
     cur = conn.cursor()
-    cur.execute(
-        "SELECT password FROM user_auth WHERE id = %s;",
-        (user[0],)
-    )
-    pass_tmp = cur.fetchone()
-    pass_check = pass_tmp[0]
-    conn.close()
-
-    # Creds verification
     if user is None:
         error = "Incorrect credentials"
-    elif not check_password_hash(pass_check, password):
+    elif not check_password_hash(user[2], password):
         error = "Credentials incorrect"
+    conn.close()
 
     # Session building
     if error is None:
