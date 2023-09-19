@@ -10,7 +10,7 @@ POSTGRES DB CONNECTIONS
 '''
 
 def pg_conn(service=current_app.config['PG_DB']):
-    '''No args. Returns connection object'''
+    '''Optional string arg. Returns connection object'''
     conn = psycopg2.connect(
         host=current_app.config['PG_HOST'],
         port=current_app.config['PG_PORT'],
@@ -21,17 +21,18 @@ def pg_conn(service=current_app.config['PG_DB']):
     return conn
 
 def ping_conn(service):
-    '''No args. No returns'''
+    '''Takes string arg. Returns int'''
     res = -1
-    try:
-        conn = pg_conn(service)
-        print("CONNECTED")
-        conn.close()
-        res = 0
-    except Exception as er:
-        print(f"ERROR:{er}")
-        print("NOT CONNECTED TO DB")
-        res = -1
+    if service != "":
+        try:
+            conn = pg_conn(service)
+            print("CONNECTED")
+            conn.close()
+            res = 0
+        except Exception as er:
+            print(f"ERROR:{er}")
+            print("NOT CONNECTED TO DB")
+            res = -1
 
     return res
 

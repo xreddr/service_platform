@@ -1,58 +1,108 @@
-import os
 import psycopg2
-import json
 import functools
 from flask import Blueprint, current_app, g, session
 from werkzeug.security import check_password_hash, generate_password_hash
-from .db import pg_conn, rollback_db, ping_conn
+from .db import pg_conn, ping_conn
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 '''
+RESPONCE FORMAT
+All returns from this module use the res dict.
+'''
+
+res = {
+    "code" : None,
+    "body" : None
+}
+code = {
+    "pass" : 0,
+    "fail" : -1
+}
+
+'''
 USER AUTH FUNCTIONS
 User CRUD functions requiring password authorizing
+Session handling
+<CLEARED>
 '''
-# Create
-def register_user(username, password):
-    '''Takes string arguements. Returns string number.'''
-    conn = pg_conn(service=session['service'])
-    cur = conn.cursor()
 
+# CREATE
+# <CLEARED>
+
+def register_user(service, username, password):
+    '''Takes strings. Returns res dict.'''
+    error = None
+
+    # Service validation
+    ping = ping_conn(service)
+    if ping == -1:
+        error = "Service could not be reached. Check credentials."
+        res.update({ "code" : code['fail'], "body" : error})
+        return res
+    
+    # Insert Query
+    conn = pg_conn(service)
+    cur = conn.cursor()
     try:
         cur.execute(
             "INSERT INTO user_auth (user_name, password) VALUES (%s,%s);",
             (username, generate_password_hash(password))
         )
     except (psycopg2.errors.UniqueViolation):
-        print("User already exists")
-
+        error = "User already exists"
     conn.commit()
-    cur.execute(
-        "SELECT id FROM user_auth WHERE user_name = %s;",
-        (username,)
-    )
-    user_id = cur.fetchone()
-    user_id = str(user_id[0])
 
-    cur.close()
-    conn.close()
+    # Validation query
+    if error is None:
+        cur.execute(
+            "SELECT id, user_name FROM user_auth WHERE user_name = %s;",
+            (username,)
+        )
+        user_info = cur.fetchone()
+        cur.close()
+        conn.close()
 
-    return user_id
+        res.update({
+            "code": code['pass'], 
+            "body" : {
+                "user_id":user_info[0],
+                "username":user_info[1]
+            }
+        })
+    else:
+        res.update({"code": code['fail'], "body": error})
 
-# Read
+    return res
+
+# READ
+# <CLEARED>
+
 def list_users():
+    '''Takes none. Returns res dict.'''
     conn = pg_conn(service=session['service'])
     cur = conn.cursor()
 
     cur.execute(
         "SELECT id, user_name FROM user_auth"
     )
-    user_list = json.dumps(cur.fetchall())
+    user_list = cur.fetchall()
+    res.update({
+        "code": code['pass'],
+        "body": user_list
+    })
 
-    return user_list
+    return res
 
-# Update
+# UPDATE
+# Functions can be combined
+# <CLEARED>
+
 def update_username(username, password, new_username):
+    '''Takes string args. Returns res dict'''
+    error = None
+
+    # User creds query
     conn = pg_conn(service=session['service'])
     cur = conn.cursor()
     cur.execute(
@@ -61,11 +111,14 @@ def update_username(username, password, new_username):
     )
     user_info = cur.fetchone()
     user_id = user_info[0]
-    old_name = user_info[1]
-    old_password = user_info[2]
-    print(user_id)
-    print(type(user_id))
-    if check_password_hash(old_password, password):
+    pass_check = user_info[2]
+
+    # Password validation
+    if not check_password_hash(pass_check, password):
+        error = "Incorrect credentials"
+
+    if error is None:
+        # Update and validation queries
         cur.execute(
             "UPDATE user_auth SET user_name = %s WHERE id = %s;",
             (new_username, user_id)
@@ -78,57 +131,129 @@ def update_username(username, password, new_username):
         user_name = cur.fetchone()
         user_name = user_name[0]
         session['username'] = user_name
-        return user_name
+        res.update({"code": code['pass'], "body": user_name})
     else:
-        return -1
+        res.update({"code": code['fail'], "body": error})
+    
+    return res
 
-def login_user(service, username, password):
-    '''Takes strings. Returns touple.'''
+def update_password(username, password, new_password):
+    '''Takes string args. Returns res dict.'''
     error = None
 
-    ping = ping_conn(service)
-    if ping == 0:
-        session['service'] = service
-    elif ping == -1:
-        error = "Service could not be reached. Check credentials."
-        
+    # User creds query
     conn = pg_conn(service=session['service'])
     cur = conn.cursor()
-
-    if g.user:
-        error = "Logout to login to different account"
-
     cur.execute(
-        "SELECT * FROM user_auth WHERE user_name = %s",
+        "SELECT * FROM user_auth WHERE user_name = %s;",
+        (username,)
+    )
+    user_info = cur.fetchone()
+    user_id = user_info[0]
+    pass_check = user_info[2]
+
+    # Password validation
+    if not check_password_hash(pass_check, password):
+        error = "Incorrect credentials"
+
+    if error is None:
+        # Update and validation queries
+        cur.execute(
+            "UPDATE user_auth SET password = %s WHERE id = %s;",
+            (generate_password_hash(new_password), user_id)
+        )
+        conn.commit()
+        cur.execute(
+            "SELECT password FROM user_auth WHERE id = %s;",
+            (user_id,)
+        )
+        pass_tmp = cur.fetchone()
+        pass_check = pass_tmp[0]
+        if not check_password_hash(pass_check, new_password):
+            error = "New password could not be validated"
+            res.update({"code": code['fail'], "body": error})
+        else:
+            msg = "Password updated"
+            res.update({"code": code['pass'], "body": msg})
+    else:
+        res.update({"code": code['fail'], "body": error})
+    
+    return res
+
+# DELETE
+#
+
+'''
+LOGIN FUNCTIONS
+<CLEARED>
+'''
+
+def login_user(service, username, password):
+    '''Takes strings. Returns res dict.'''
+    error = None
+
+    # Service validation
+    ping = ping_conn(service)
+    if ping == -1:
+        error = "Service could not be reached. Check credentials."
+        res.update({ "code" : -1, "body" : error})
+        return res
+    
+    # Query user creds
+    conn = pg_conn(service)
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT id, user_name FROM user_auth WHERE user_name = %s",
         (username,)
     )
     user = cur.fetchone()
     cur.close()
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT password FROM user_auth WHERE id = %s;",
+        (user[0],)
+    )
+    pass_tmp = cur.fetchone()
+    pass_check = pass_tmp[0]
+    conn.close()
 
+    # Creds verification
     if user is None:
         error = "Incorrect credentials"
-    elif not check_password_hash(user[2], password):
+    elif not check_password_hash(pass_check, password):
         error = "Credentials incorrect"
 
+    # Session building
     if error is None:
         session.clear()
         session['service'] = service
+        session['user_id'] = user[0]
         session['username'] = user[1]
+        res.update({ 
+            "code" : code['pass'], 
+            "body" : {
+                "user_id" : user[0],
+                "username" : user[1]
+                }
+        })
     else:
-        print(error)
-    conn.close()
-    return user
+        res.update({ "code" : code['fail'], "body" : error})
+    
+    return res
 
 def logout():
+    '''Takes none. Gives none.'''
     session.clear()
 
 '''
 API WRAPPERS
 Set auth levels for routes
+<CLEARED>
 '''
 
 @bp.before_app_request
 def load_logged_in_user():
+    '''Takes none. Gives none.'''
     username = session.get('username')
     service = session.get('service')
     if service is None:
@@ -144,9 +269,14 @@ def load_logged_in_user():
 def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
+        '''Takes view. Returns view or res dict.'''
         if g.user is None:
-            msg = "Login required"
-            return msg
+            error = "Login is required"
+            res.update({
+                "code": code['fail'],
+                "body" : error
+            })
+            return res
         
         return view(**kwargs)
     

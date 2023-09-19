@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session
+from flask import Blueprint, render_template, session, request, jsonify
 import json
 from src import auth, db
 
@@ -7,27 +7,36 @@ bp = Blueprint('api', __name__, url_prefix='/api')
 '''
 USER CRUD
 '''
-# Create
-@bp.route('/register/<username>/<password>')
-@auth.login_required
-def register_user(username, password):
-    new_user_id = auth.register_user(username, password)
-    print(type(new_user_id))
-    return new_user_id
+# CREATE
+#
 
-# Read
-@bp.route('/list_users')
+@bp.route('/register', methods=['POST'])
+@auth.login_required
+def register_user():
+    '''Takes json object; string values. Returns json object.'''
+    req = request.get_json()
+    user_info = auth.register_user(req['service'], req['username'], req['password'])
+    res = json.dumps(user_info)
+    return res
+
+# READ
+#
+
+@bp.route('/list_users', methods=['GET'])
 @auth.login_required
 def list_users():
     user_list = auth.list_users()
     return user_list
 
-# Update
-@bp.route('/update/<username>/<password>/<new_username>')
+# UPDATE
+#
+
+@bp.route('/update/username', methods=['POST'])
 @auth.login_required
-def update_username(username, password, new_username):
-    if session['username'] == username:
-        updated_name = auth.update_username(username, password, new_username)
+def update_username():
+    req = request.get_json()
+    if session['username'] == req['username']:
+        updated_name = auth.update_username(req['username'], req['password'], req['new_username'])
     else:
         msg = "Can only change your own username"
         return msg
@@ -37,23 +46,38 @@ def update_username(username, password, new_username):
         msg = f"Your new username is: {updated_name}"
     return msg
 
-@bp.route('/service_login/<service>')
-def service_login(service):
-    session['service'] = service
-    msg = f"Now using {session['service']}"
-    return msg
+@bp.route('/update/password')
+@auth.login_required
+def update_password():
+    req = request.get_json()
+    if session['username'] == req['username']:
+        updated_password = auth.update_password(req['username'], req['password'], req['new_password'])
+    else:
+        error = "Not logged into requested user's profile"
+        return jsonify(error)
+    return jsonify(updated_password)
 
-@bp.route('/login/<service>/<username>/<password>')
-def login(service, username, password):
-    user_info = auth.login_user(service, username, password)
-    msg = f"Welcome {session['username']}"
-    return msg
+'''
+LOGIN ROUTES
+'''
+
+@bp.route('/login', methods=['POST'])
+def login():
+    req = request.get_json()
+    user_info = auth.login_user(req['service'], req['username'], req['password'])
+    res = json.dumps(user_info)
+    return res
 
 @bp.route('/logout')
 def logout():
     auth.logout()
     msg = "Session cleared"
     return msg
+
+'''
+TESTING
+Module off anything useful
+'''
 
 @bp.route('/test')
 @auth.login_required
