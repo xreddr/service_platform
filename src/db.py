@@ -1,9 +1,12 @@
 import os
 import psycopg2
 import click
-from flask import Blueprint, current_app, session
+from flask import Blueprint, current_app, g
 
 bp = Blueprint('db', __name__, url_prefix='/db')
+
+def init_app(app):
+    app.teardown_appcontext(close_db)
 
 '''
 POSTGRES DB CONNECTIONS
@@ -11,14 +14,15 @@ POSTGRES DB CONNECTIONS
 
 def pg_conn(service=current_app.config['PG_DB']):
     '''Optional string arg. Returns connection object'''
-    conn = psycopg2.connect(
-        host=current_app.config['PG_HOST'],
-        port=current_app.config['PG_PORT'],
-        database=service,
-        user=current_app.config['PG_USER'],
-        password=current_app.config['PG_PASSWORD']
-    )
-    return conn
+    if "db" not in g:        
+        g.db = psycopg2.connect(
+            host=current_app.config['PG_HOST'],
+            port=current_app.config['PG_PORT'],
+            database=service,
+            user=current_app.config['PG_USER'],
+            password=current_app.config['PG_PASSWORD']
+        )
+    return g.db
 
 def ping_conn(service):
     '''Takes string arg. Returns int'''
@@ -36,6 +40,11 @@ def ping_conn(service):
 
     return res
 
+def close_db(e=None):
+    # If this request connected to the database, close the connection
+    db = g.pop("db", None)
+    if db is not None:
+        db.close()
 
 '''
 CLI COMMANDS
@@ -54,18 +63,3 @@ def init_db():
     conn.commit()
     cur.close()
     conn.close()
-
-
-# @bp.cli.command('close_db')
-def close_db():
-    conn = pg_conn()
-    cur = conn.cursor()
-    cur.close()
-    conn.close()
-    print('DB CLOSED')
-
-def rollback_db():
-    conn = pg_conn()
-    conn.rollback()
-    conn.close()
-    print('Rollback performed')

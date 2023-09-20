@@ -1,4 +1,4 @@
-from flask import Flask, session
+from flask import Flask
 import os
 
 def create_app(test_config=None):
@@ -25,11 +25,12 @@ def create_app(test_config=None):
 
     with app.app_context():
 
-        from . import web
-        app.register_blueprint(web.bp)
+        
         from . import db
         app.register_blueprint(db.bp)
-        # db.ping_conn()
+        db.init_app(app)
+        from . import web
+        app.register_blueprint(web.bp)
         from . import auth
         app.register_blueprint(auth.bp)
         from . import api

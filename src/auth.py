@@ -181,9 +181,10 @@ def update_password(username, password, new_password):
     return res
 
 # DELETE
-#
+# <CLEARED>
 
 def delete_user(username, password):
+    '''Takes string args. Returns res dict.'''
     error = None
     conn = pg_conn(service=session['service'])
     cur = conn.cursor()
