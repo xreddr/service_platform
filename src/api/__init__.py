@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, request, jsonify
+from flask import Blueprint, render_template, session, request, jsonify, g
 import json
 from src import auth, db
 
@@ -6,7 +6,7 @@ bp = Blueprint('api', __name__, url_prefix='/api')
 
 '''
 USER CRUD
-Only existing users can create new users
+Self registration
 Users can only delete themselves
 '''
 
@@ -14,7 +14,6 @@ Users can only delete themselves
 # Register new user on stated service
 
 @bp.route('/register', methods=['POST'])
-@auth.login_required
 def register_user():
     '''Takes json object; string values. Returns json object.'''
     req = request.get_json()
@@ -85,14 +84,14 @@ LOGIN ROUTES
 def login():
     req = request.get_json()
     user_info = auth.login_user(req['service'], req['username'], req['password'])
-    res = json.dumps(user_info)
-    return res
+    res = user_info
+    return jsonify(res)
 
 @bp.route('/logout')
 def logout():
     auth.logout()
     msg = "Session cleared"
-    return msg
+    return jsonify(msg)
 
 '''
 TESTING
@@ -106,20 +105,18 @@ def test_page():
 
 @bp.route('/home')
 def home():
-    username = 'None'
-    service = 'None'
-    if session:
-        try:
-            if session['username']:
-                username = session['username']
-        except KeyError:
-            pass
-        try:
-            if session['service']:
-                service = session['service']
-        except KeyError:
-            pass
-
-    msg = f"Session User: {username}, Session Service: {service}"
-
-    return msg
+    res = {}
+    if session.get('service'):
+        for i in session:
+            res.update({i: session[i]})
+    res.update({
+        "endpoints" : {
+            "register" : "Make an account with json values 'service', 'username', 'password'",
+            "login" : "Login with json values 'service', 'username', 'password'",
+            "logout" : "Deletes session cookie",
+            "update/username" : "Takes json values for 'username', 'password', 'new_username'",
+            "update/password" : "Takes json values for 'username', 'password', 'new_password'",
+            "delete" : "Deletes user with json values 'username', 'password'"
+        }
+    })
+    return jsonify(res)

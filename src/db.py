@@ -26,18 +26,19 @@ def pg_conn(service=current_app.config['PG_DB']):
 
 def ping_conn(service):
     '''Takes string arg. Returns int'''
+    close_db()
     res = -1
     if service != "":
         try:
             conn = pg_conn(service)
             print("CONNECTED")
-            conn.close()
-            res = 0
+            if conn == g.db:
+                res = 0
         except Exception as er:
             print(f"ERROR:{er}")
             print("NOT CONNECTED TO DB")
             res = -1
-
+    close_db()
     return res
 
 def close_db(e=None):
