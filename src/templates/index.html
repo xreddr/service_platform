@@ -2,11 +2,55 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<img src="{{ url_for('static', filename='title_image.png') }}">
-<h1>Whale Shark Capital</h1>
+<p>Tailored solution software for small businessess.</p>
+<section id="contact">
+    <a href="https://xreddr.github.io" class="glass">Contanct</a>
+</section>
+<h3>Explore Apps</h3>
+<section id="app_list">
+    <a href="#ad1" class="glass">TechDay</a>
+    <a href="#ad2" class="glass">PopStudio</a>
+    <a href="#ad3" class="glass">WSC API</a>
+</section>
 {% endblock %}
 
 {% block content %}
-<button type="button" onclick="window.location.href='{{ url_for('.login') }}'">Log In</button>
-<button type="button" onclick="window.location.href='{{ url_for('.about_page') }}'">About</button>
+<!-- <button type="button" onclick="window.location.href='{{ url_for('.login') }}'">Log In</button>
+<button type="button" onclick="window.location.href='{{ url_for('.about_page') }}'">About</button> -->
+
+<section class="ad" id="ad1">
+    <h1>Tech Day</h1>
+    <section class="block1">
+        <p>Blah Blah Blah</p>
+        <img src="{{ url_for('static', filename='tech_day_dial.png') }}">
+    </section>
+    <section class="block2">
+        <img src="{{ url_for('static', filename='tech_day_listShort.png') }}">
+        <p>Blah blah blah.</p>
+    </section>
+    <section class="block1">
+        <img src="{{ url_for('static', filename='GCP_logo.png') }}">
+    </section>
+</section>
+
+<section class="ad" id="ad2">
+    <h1>POP Studio</h1>
+    <section class="block1">
+        <p>Blah Blah Blah</p>
+        <img src="{{ url_for('static', filename='pop_studio_lesson.png') }}">
+    </section>
+    <section class="block2">
+        <img src="{{ url_for('static', filename='pop_studio_report.png') }}">
+        <p>Blah blah blah.</p>
+    </section>
+    <section class="block3">
+        <img src="{{ url_for('static', filename='gcloud_logo.png') }}">
+        <img src="{{ url_for('static', filename='squareup_logo.png') }}">
+    </section>
+</section>
+
+<section class="ad" id="ad3">
+    <h1>Ad 3 Self Ad?</h1>
+</section>
+
 {% endblock %}

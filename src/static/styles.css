@@ -1,12 +1,22 @@
 body {
     background-color: powderblue;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     text-align: center;
+    margin: 0;
 }
 
-img {
+header {
+    height: 100vh;
+    max-height: 100vh;
+}
+
+#menu div {
+    height: 20px;
+    width: 32px;
+    position: fixed;
+    background-color: white;
+}
+
+#title_img {
     width: 100%;
     height: auto;
     max-width: 70vh;
@@ -25,4 +35,110 @@ img {
     flex-direction: column;
     width: 60%;
     margin: auto;
+}
+
+.ad {
+    min-height: 102vh;
+    border: 3px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+#app_list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#app_list a {
+    margin: .45rem;
+    width: 25%;
+    height: 12vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: rgb(230,120,120, .6); */
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    
+}
+
+#contact {
+    display: flex;
+    justify-content: center;
+}
+
+#contact a {
+    margin: .45rem;
+    width: 65%;
+    height: 12vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: rgb(230,120,120, .6); */
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.glass {
+	background-color: orange;
+	background-image: linear-gradient(orange,darkorange, .95);
+}
+
+.glass:hover {
+    background-image: linear-gradient(orange, darkorange)
+}
+
+#ad1 {
+    display: flex;
+}
+
+.block1 {
+    display: flex;
+    margin: auto; 
+    width: 75%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.block1 img {
+    width: 50vw;
+    max-width: 375px;
+}
+
+.block2 {
+    display: flex;
+    margin: auto; 
+    width: 75%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.block2 img {
+    width: 50vw;
+    max-width: 375px;
+}
+
+.block3 img {
+    width: 25vw;
+    max-width: 200px;
+}
+
+@media only screen and (min-width:1000px) {
+    body {
+        width: 1000px;
+        margin: auto;
+        background-image: url('background_img.jpg');
+        background-color: powderblue;
+        background-attachment: fixed;
+    }
+}
+
+#sleeve {
+    width: 100%;
+    background-color: powderblue;
 }

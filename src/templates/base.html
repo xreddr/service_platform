@@ -9,14 +9,21 @@
         </style>
     </head>
     <body>
-        <nav><button type="button" onclick="window.location.href='{{ url_for('web.index') }}'">Home</button></nav>
-        <section class="content">
-            <header>
-                {% block header %}{% endblock %}
-            </header>
-            <main>
-                {% block content %}{% endblock %}
-            </main>
+        <section id="sleeve">
+            <!-- <nav><button type="button" onclick="window.location.href='{{ url_for('web.index') }}'">Home</button></nav> -->
+            <section class="content">
+                <header id="header">
+                    <section id="menu">
+                        <a href=#header><div>Top</div></a>
+                    </section>
+                    <img id="title_img" src="{{ url_for('static', filename='title_image.png') }}">
+                    <h1>Whale Shark Capital</h1>
+                    {% block header %}{% endblock %}
+                </header>
+                <main>
+                    {% block content %}{% endblock %}
+                </main>
+            </section>
         </section>
     </body>
 </html>

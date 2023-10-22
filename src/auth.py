@@ -34,14 +34,14 @@ def register_user(service, username, password):
     '''Takes strings. Returns res dict.'''
     error = None
 
-    # Service validation
+    # Service validation : db
     ping = ping_conn(service)
     if ping == -1:
         error = "Service could not be reached. Check credentials."
         res.update({ "code" : code['fail'], "body" : error})
         return res
     
-    # Insert Query
+    # Insert Query: db, auth
     conn = pg_conn(service)
     cur = conn.cursor()
     try:
@@ -53,7 +53,7 @@ def register_user(service, username, password):
         error = "User already exists"
     conn.commit()
 
-    # Validation query
+    # User info query: db, code
     if error is None:
         cur.execute(
             "SELECT id, user_name FROM user_auth WHERE user_name = %s;",
@@ -189,7 +189,7 @@ def delete_user(username, password):
     conn = pg_conn(service=session['service'])
     cur = conn.cursor()
 
-    # User validation query
+    # User info validation query
     cur.execute(
         "SELECT * FROM user_auth WHERE user_name = %s;",
         (username,)
@@ -233,7 +233,7 @@ def login_user(service, username, password):
         res.update({ "code" : code['fail'], "body" : error})
         return res
     
-    # Query user creds
+    # Query user creds: used twice services.start_service
     conn = pg_conn(service)
     cur = conn.cursor()
     cur.execute(

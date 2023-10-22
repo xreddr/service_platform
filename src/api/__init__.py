@@ -5,6 +5,12 @@ from src import auth, db
 bp = Blueprint('api', __name__, url_prefix='/api')
 
 '''
+RESPONSE FORMAT
+'''
+
+from src.auth import res
+
+'''
 USER CRUD
 Self registration
 Users can only delete themselves
@@ -120,3 +126,31 @@ def home():
         }
     })
     return jsonify(res)
+
+'''
+SERVICES
+'''
+
+@bp.route('/start_service', methods=['POST'])
+@auth.login_required
+def service_start():
+    error = None
+    req = request.get_json()
+    if not req['owner'] == session.get('username'):
+        error = "You can only create a service for yourself"
+    else:
+        service_res = services.start_service(req['svc_name'], session.get('user_id'), req['password'])
+    
+    if error is None:
+        res.update({
+            "code": service_res['code'],
+            "body": service_res
+        })
+    else:
+        res.update({
+            "code": auth.code['fail'],
+            "body": error
+        })
+
+    return jsonify(res)
+    
