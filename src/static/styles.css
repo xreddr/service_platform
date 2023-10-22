@@ -103,6 +103,9 @@ header {
     width: 75%;
     justify-content: space-evenly;
     align-items: center;
+    flex-wrap: wrap;
+    margin-top: .45rem;
+    margin-bottom: .45rem;
 }
 
 .block1 img {
@@ -141,4 +144,22 @@ header {
 #sleeve {
     width: 100%;
     background-color: powderblue;
+}
+
+code {
+    padding: 0;
+    display: flex;
+    flex-direction: flex-start;
+    text-align: left;
+    align-content: left;
+    background-color: bisque;
+    margin: 0;
+    justify-content: center;
+}
+
+pre {
+    display: flex;
+    margin: 0;
+    text-align: right;
+    align-content: left;
 }

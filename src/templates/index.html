@@ -50,7 +50,102 @@
 </section>
 
 <section class="ad" id="ad3">
-    <h1>Ad 3 Self Ad?</h1>
+    <h1>WSC API</h1>
+    <section class="block1">
+        <p>API URL. A response code of 0 indicates a succesful connection. A response code of -1 indicates an error. Both are delivered through the response body.</p>
+        <pre>
+            <code>
+                GET
+                34.42.125.145:8080/api/home
+                responce = {
+                    "code" : 0,
+                    "body" : jsonObject
+                }
+            </code>
+        </pre>
+    </section>
+    <section class="block1">
+        <p>Register new user.</p>
+        <pre>
+            <code>
+                POST
+                34.42.125.145:8080/api/register
+                json = {
+                    "service" : "service1",
+                    "username" : "yourchoice",
+                    "password" : "yourchoice"
+                }
+            </code>
+        </pre>
+    </section>
+    <section class="block1">
+        <p>Login as a registered user.</p>
+        <pre>
+            <code>
+                POST
+                34.42.125.145:8080/api/login
+                json = {
+                    "service" : "service1",
+                    "username" : "yourchoice",
+                    "password" : "yourchoice"
+                }
+            </code>
+        </pre>
+    </section>
+    <section class="block1">
+        <p>Change username.</p>
+        <pre>
+            <code>
+                POST
+                34.42.125.145:8080/api/update/username
+                json = {
+                    "username" : "existingusername",
+                    "password" : "yourpassword",
+                    "new_username" : "yourchoice"
+                }
+            </code>
+        </pre>
+    </section>
+    <section class="block1">
+        <p>Change password.</p>
+        <pre>
+            <code>
+                POST
+                34.42.125.145:8080/api/update/password
+                json = {
+                    "username" : "existingusername",
+                    "password" : "yourpassword",
+                    "new_password" : "yourchoice"
+                }
+            </code>
+        </pre>
+    </section>
+    <section class="block1">
+        <p>Delete account.</p>
+        <pre>
+            <code>
+                POST
+                34.42.125.145:8080/api/delete
+                json = {
+                    "username" : "existingusername",
+                    "password" : "yourpassword",
+                }
+            </code>
+        </pre>
+    </section>
+    <section class="block1">
+        <p>Logout.</p>
+        <pre>
+            <code>
+                GET
+                34.42.125.145:8080/api/logout
+            </code>
+        </pre>
+    </section>
+    <section class="block3">
+        <img src="{{ url_for('static', filename='GCP_logo.png') }}">
+        <img src="{{ url_for('static', filename='postgres_logo.png') }}">
+    </section>
 </section>
 
 {% endblock %}
