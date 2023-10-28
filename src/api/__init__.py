@@ -1,20 +1,29 @@
-from flask import Blueprint, render_template, session, request, jsonify, g
+from flask import Blueprint, render_template, session, request, jsonify, g, current_app
+from flask_cors import CORS
 import json
 from src import auth, db
 
 bp = Blueprint('api', __name__, url_prefix='/api')
+cors = CORS(current_app)
+
 
 '''
 RESPONSE FORMAT
 '''
 
-from src.auth import res
+
+def res(body):
+    response = jsonify(body)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
 
 '''
 USER CRUD
 Self registration
 Users can only delete themselves
 '''
+
 
 # CREATE
 # Register new user on stated service
@@ -24,8 +33,8 @@ def register_user():
     '''Takes json object; string values. Returns json object.'''
     req = request.get_json()
     user_info = auth.register_user(req['service'], req['username'], req['password'])
-    res = json.dumps(user_info)
-    return res
+    response = res(user_info)
+    return response
 
 # READ
 # Read all users on current session service
@@ -52,7 +61,8 @@ def update_username():
         msg = "Error updating username: Check credentials."
     else:
         msg = f"Your new username is: {updated_name}"
-    return msg
+    response = res(msg)
+    return response
 
 @bp.route('/update/password')
 @auth.login_required
@@ -63,7 +73,8 @@ def update_password():
     else:
         error = "Not logged into requested user's profile"
         return jsonify(error)
-    return jsonify(updated_password)
+    response = res(updated_password)
+    return response
 
 # DELETE
 # Delete logged in users auth info
@@ -79,30 +90,34 @@ def delete_user():
         return jsonify(error)
     if error is None:
         raw_res = auth.delete_user(req['username'], req['password'])
-    return jsonify(raw_res)
+    response = res(raw_res)
+    return response
 
 
 '''
 LOGIN ROUTES
 '''
 
+
 @bp.route('/login', methods=['POST'])
 def login():
-    req = request.get_json()
-    user_info = auth.login_user(req['service'], req['username'], req['password'])
-    res = user_info
-    return jsonify(res)
+    body = request.get_json()
+    user_info = auth.login_user(body['service'], body['username'], body['password'])
+    response = res(user_info)
+    return response
 
 @bp.route('/logout')
 def logout():
     auth.logout()
-    msg = "Session cleared"
-    return jsonify(msg)
+    response = res("Session Cleared")
+    return response
+
 
 '''
 TESTING
 Module off anything useful
 '''
+
 
 @bp.route('/test')
 @auth.login_required
@@ -111,11 +126,11 @@ def test_page():
 
 @bp.route('/home')
 def home():
-    res = {}
+    body = {}
     if session.get('service'):
         for i in session:
-            res.update({i: session[i]})
-    res.update({
+            body.update({i: session[i]})
+    body.update({
         "endpoints" : {
             "register" : "Make an account with json values 'service', 'username', 'password'",
             "login" : "Login with json values 'service', 'username', 'password'",
@@ -125,32 +140,33 @@ def home():
             "delete" : "Deletes user with json values 'username', 'password'"
         }
     })
-    return jsonify(res)
+    response = res(body)
+    return response
 
 '''
 SERVICES
 '''
 
-@bp.route('/start_service', methods=['POST'])
-@auth.login_required
-def service_start():
-    error = None
-    req = request.get_json()
-    if not req['owner'] == session.get('username'):
-        error = "You can only create a service for yourself"
-    else:
-        service_res = services.start_service(req['svc_name'], session.get('user_id'), req['password'])
+# @bp.route('/start_service', methods=['POST'])
+# @auth.login_required
+# def service_start():
+#     error = None
+#     req = request.get_json()
+#     if not req['owner'] == session.get('username'):
+#         error = "You can only create a service for yourself"
+#     else:
+#         service_res = services.start_service(req['svc_name'], session.get('user_id'), req['password'])
     
-    if error is None:
-        res.update({
-            "code": service_res['code'],
-            "body": service_res
-        })
-    else:
-        res.update({
-            "code": auth.code['fail'],
-            "body": error
-        })
+#     if error is None:
+#         res.update({
+#             "code": service_res['code'],
+#             "body": service_res
+#         })
+#     else:
+#         res.update({
+#             "code": auth.code['fail'],
+#             "body": error
+#         })
 
-    return jsonify(res)
+#     return jsonify(res)
     
