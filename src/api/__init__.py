@@ -103,7 +103,7 @@ LOGIN ROUTES
 
 
 @bp.route('/login', methods=['POST'])
-@cross_origin(origin='*', headers=['Content-Type','Authorization'])
+# @cross_origin(origin='*', headers=['Content-Type','Authorization'])
 def login():
     body = request.get_json()
     user_info = auth.login_user(body['service'], body['username'], body['password'])
