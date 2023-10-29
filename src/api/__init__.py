@@ -130,7 +130,7 @@ def test_page():
     return render_template('about.html')
 
 @bp.route('/home')
-@cross_origin(origins='*', headers=['Content-Type','Authorization'])
+# @cross_origin(origins='*', headers=['Content-Type','Authorization'])
 def home():
     body = {}
     if session.get('service'):
