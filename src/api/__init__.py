@@ -12,7 +12,7 @@ RESPONSE FORMAT
 
 def res(body):
     response = jsonify(body)
-    response.headers.add('Access-Control-Allow-Origin', '*')
+    # response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 
@@ -130,7 +130,7 @@ def test_page():
     return render_template('about.html')
 
 @bp.route('/home')
-@cross_origin(origin='*', headers=['Content-Type','Authorization'])
+@cross_origin(origins='*', headers=['Content-Type','Authorization'])
 def home():
     body = {}
     if session.get('service'):
