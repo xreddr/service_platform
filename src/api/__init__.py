@@ -27,7 +27,7 @@ Users can only delete themselves
 # Register new user on stated service
 
 @bp.route('/register', methods=['POST'])
-@cross_origin() 
+@cross_origin(origin='*', headers=['Content-Type','Authorization'])
 def register_user():
     '''Takes json object; string values. Returns json object.'''
     req = request.get_json()
@@ -39,7 +39,7 @@ def register_user():
 # Read all users on current session service
 
 @bp.route('/list_users', methods=['GET'])
-@cross_origin()
+@cross_origin(origin='*', headers=['Content-Type','Authorization'])
 @auth.login_required
 def list_users():
     user_list = auth.list_users()
@@ -49,7 +49,7 @@ def list_users():
 # Update logged in user information only
 
 @bp.route('/update/username', methods=['POST'])
-@cross_origin()
+@cross_origin(origin='*', headers=['Content-Type','Authorization'])
 @auth.login_required
 def update_username():
     req = request.get_json()
@@ -66,7 +66,7 @@ def update_username():
     return response
 
 @bp.route('/update/password')
-@cross_origin()
+@cross_origin(origin='*', headers=['Content-Type','Authorization'])
 @auth.login_required
 def update_password():
     req = request.get_json()
@@ -82,7 +82,7 @@ def update_password():
 # Delete logged in users auth info
 
 @bp.route('/delete', methods=['POST'])
-@cross_origin()
+@cross_origin(origin='*', headers=['Content-Type','Authorization'])
 @auth.login_required
 def delete_user():
     req = request.get_json()
@@ -103,7 +103,7 @@ LOGIN ROUTES
 
 
 @bp.route('/login', methods=['POST'])
-@cross_origin()
+@cross_origin(origin='*', headers=['Content-Type','Authorization'])
 def login():
     body = request.get_json()
     user_info = auth.login_user(body['service'], body['username'], body['password'])
@@ -111,7 +111,7 @@ def login():
     return response
 
 @bp.route('/logout')
-@cross_origin()
+@cross_origin(origin='*', headers=['Content-Type','Authorization'])
 def logout():
     auth.logout()
     response = res("Session Cleared")
@@ -130,7 +130,7 @@ def test_page():
     return render_template('about.html')
 
 @bp.route('/home')
-@cross_origin()
+@cross_origin(origin='*', headers=['Content-Type','Authorization'])
 def home():
     body = {}
     if session.get('service'):
