@@ -12,7 +12,7 @@ RESPONSE FORMAT
 
 def res(body):
     response = jsonify(body)
-    # response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 
