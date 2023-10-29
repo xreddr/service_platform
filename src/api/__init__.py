@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, session, request, jsonify, g, current_app
 import json
-from flask_cors import cross_origin
+from flask_cors import cross_origin, CORS
 from src import auth, db
-
+cors = CORS(current_app, resources={r"/api/*": {"origins": "*"}})
+current_app.config['CORS_HEADERS'] = 'Content-Type'
 bp = Blueprint('api', __name__, url_prefix='/api')
 
 '''
