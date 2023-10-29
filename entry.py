@@ -3,7 +3,7 @@ import os
 from flask_cors import CORS
 
 app = create_app()
-cors = CORS(app)
+CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 if __name__ == "__main__":
