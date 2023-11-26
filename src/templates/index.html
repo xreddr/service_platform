@@ -3,14 +3,33 @@
 
 {% block header %}
 <p>Tailored solution software for small businessess.</p>
-<section id="contact">
+<!-- <section id="app_list">
     <a href="https://xreddr.github.io" class="glass">Contanct</a>
-</section>
-<h3>Explore Apps</h3>
+    <a href="https://wsc-qxy4flwsca-uc.a.run.app/" class="glass">PPAS Login</a>
+</section> -->
+<!-- <h3>Explore Apps</h3>
 <section id="app_list">
     <a href="#ad1" class="glass">TechDay</a>
     <a href="#ad2" class="glass">PopStudio</a>
     <a href="#ad3" class="glass">WSC API</a>
+</section> -->
+<section id="menu" onclick="menuClick(this)"">
+    <section class="menu_icon">
+        <section class="menu_container">
+            <div class="menu1"></div>
+            <div class="menu2"></div>
+            <div class="menu3"></div>
+        </section>
+    </section>
+    <section class="menu_bar">
+        <a href="#ad1" class="glass">TechDay</a>
+        <a href="#ad2" class="glass">PopStudio</a>
+        <a href="#ad3" class="glass">WSC API</a>
+        <a href="https://xreddr.github.io" class="glass">Contact</a>
+        <a class="menu_buff"></a>  
+    </section>
+    <a href="https://wsc-qxy4flwsca-uc.a.run.app/" class="left_icon">PPAS</a>
+    <a href="#header" class="right_icon">Home</a>    
 </section>
 {% endblock %}
 
@@ -148,4 +167,5 @@
     </section>
 </section>
 
+<script src="{{ url_for('static', filename='js/index.js')  }}"></script>
 {% endblock %}

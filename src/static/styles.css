@@ -9,12 +9,12 @@ header {
     max-height: 100vh;
 }
 
-#menu div {
+/* #menu div {
     height: 20px;
     width: 32px;
     position: fixed;
     background-color: white;
-}
+} */
 
 #title_img {
     width: 100%;
@@ -86,11 +86,11 @@ header {
 
 .glass {
 	background-color: orange;
-	background-image: linear-gradient(orange,darkorange, .95);
+	background-image: linear-gradient(orange,darkorange);
 }
 
 .glass:hover {
-    background-image: linear-gradient(orange, darkorange)
+    background-image: linear-gradient(orange, rgb(255, 210, 126))
 }
 
 #ad1 {
@@ -131,13 +131,135 @@ header {
     max-width: 200px;
 }
 
+#menu {
+    /* transition: 0.4s */
+}
+
+.menu_icon {
+    background-color: orange;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor:pointer;
+    position: fixed;
+    bottom: 5vh;
+    right: 50%;
+    margin-right: -30px;   
+    transition: 0.4s; 
+    z-index: 100;
+}
+
+#menu div {
+    width: 35px;
+    height: 5px;
+    background-color: black;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.menu_bar {
+    height: 0px;
+    margin: 0;
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+}
+
+.menu_bar a {
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.left_icon, .right_icon {
+    display: none;
+}
+
+.change .left_icon, .change .right_icon {
+    position: fixed;
+    bottom: 2vh;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: orange;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.change .left_icon {
+    /* position: fixed;
+    bottom: 2vh; */
+    left: 25%;
+    margin-left:-30px;
+    /* width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: orange;
+    display:flex;
+    justify-content: center;
+    align-items: center; */
+}
+
+.change .right_icon {
+    /* position: fixed;
+    bottom: 2vh; */
+    right: 25%;
+    margin-right:-30px;
+    /* width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: orange;
+    display:flex;
+    justify-content: center;
+    align-items: center; */
+}
+
+.menu_buff {
+    background-color: darkgrey;
+    padding-bottom: 4vh;
+}
+
+.change .menu_bar {
+    height: auto;
+}
+
+.change .menu_icon {
+    bottom: 2vh;
+}
+
+.change .menu1 {
+    transform: translate(0, 11px) rotate(-45deg);
+}
+
+.change .menu2 {
+    opacity:0;
+}
+
+.change .menu3 {
+    transform: translate(0, -11px) rotate(45deg);
+}
+
 @media only screen and (min-width:1000px) {
     body {
         width: 1000px;
+        max-width: 1000px;
         margin: auto;
         background-image: url('background_img.jpg');
         background-color: powderblue;
         background-attachment: fixed;
+    }
+
+    #menu {
+        display: none;
     }
 }
 
