@@ -10,9 +10,28 @@
     </head>
     <body>
         <section id="sleeve">
+            <nav>
+                <section class="left_nav">
+                    <section class="top_menu">
+                        <section>
+                            <div class="menu1"></div>
+                            <div class="menu2"></div>
+                            <div class="menu3"></div>
+                        </section>
+                    </section>
+                    <a href="" class="glassG">Ad1</a>
+                    <a href="" class="glassG">Ad2</a>
+                    <a href="" class="glassG">Ad3</a>
+                </section>
+                <section class="right_nav">
+                    <a href="" class="glassG">PPAS Login</a>
+                    <a href="" class="glassG">Home</a>
+                </section>
+            </nav>
             <!-- <nav><button type="button" onclick="window.location.href='{{ url_for('web.index') }}'">Home</button></nav> -->
             <section class="content">
                 <header id="header">
+                    <div class="nav_spacer"></div>
                     <img id="title_img" src="{{ url_for('static', filename='title_image.png') }}">
                     <h1>Whale Shark Capital</h1>
                     {% block header %}{% endblock %}

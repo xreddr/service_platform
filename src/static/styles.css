@@ -84,6 +84,8 @@ header {
     font-size: 1.2rem;
 }
 
+/* Button Style ******************************** */
+
 .glass {
 	background-color: orange;
 	background-image: linear-gradient(orange,darkorange);
@@ -92,6 +94,17 @@ header {
 .glass:hover {
     background-image: linear-gradient(orange, rgb(255, 210, 126))
 }
+
+.glassG {
+	background-color: grey;
+	background-image: linear-gradient(grey,darkgrey);
+}
+
+.glassG:hover {
+    background-image: linear-gradient(orange, rgb(255, 210, 126))
+}
+
+/* Content Organizers *************************** */
 
 #ad1 {
     display: flex;
@@ -130,6 +143,8 @@ header {
     width: 25vw;
     max-width: 200px;
 }
+
+/* Mobile Menu ********************************** */
 
 #menu {
     /* transition: 0.4s */
@@ -181,7 +196,7 @@ header {
 .left_icon, .right_icon {
     display: none;
 }
-
+/* Change styles ***************************** */
 .change .left_icon, .change .right_icon {
     position: fixed;
     bottom: 2vh;
@@ -196,31 +211,14 @@ header {
 }
 
 .change .left_icon {
-    /* position: fixed;
-    bottom: 2vh; */
     left: 25%;
     margin-left:-30px;
-    /* width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: orange;
-    display:flex;
-    justify-content: center;
-    align-items: center; */
 }
 
 .change .right_icon {
-    /* position: fixed;
-    bottom: 2vh; */
+    bottom: 2vh;
     right: 25%;
     margin-right:-30px;
-    /* width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: orange;
-    display:flex;
-    justify-content: center;
-    align-items: center; */
 }
 
 .menu_buff {
@@ -248,11 +246,48 @@ header {
     transform: translate(0, -11px) rotate(45deg);
 }
 
+/* Desktop Menu ******************************* */
+
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 0px;
+    background-color: darkgrey;
+    position: fixed;
+    width: 1000px;
+}
+
+.top_menu {
+    height: 0px;
+    width: 60px;
+    /* position: fixed; */
+    background-color: orange;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer
+}
+
+.left_nav, .right_nav {
+    display: flex;
+    flex-direction: row;
+}
+
+.left_nav a, .right_nav a {
+    display:none;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    padding: 0 12px;
+}
+
 @media only screen and (min-width:1000px) {
     body {
         width: 1000px;
         max-width: 1000px;
-        margin: auto;
+        margin: auto auto auto auto;
         background-image: url('background_img.jpg');
         background-color: powderblue;
         background-attachment: fixed;
@@ -261,6 +296,28 @@ header {
     #menu {
         display: none;
     }
+
+    nav, .top_menu {
+        height: 60px;
+    }
+
+    .left_nav a, .right_nav a {
+        display: flex;
+    }
+
+    .top_menu div {
+        width: 35px;
+        height: 5px;
+        background-color: black;
+        margin: 6px 0;
+        transition: 0.4s;
+    }
+
+    .nav_spacer {
+        height: 60px;
+        background-color: powderblue;
+    }
+
 }
 
 #sleeve {
