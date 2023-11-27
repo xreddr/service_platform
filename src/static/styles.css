@@ -191,10 +191,16 @@ header {
     justify-content: center;
     align-items: center;
     text-decoration: none;
+    color: black;
 }
 
 .left_icon, .right_icon {
     display: none;
+}
+
+.menu_buff {
+    background-color: rgb(107, 107, 107);
+    padding-bottom: 4vh;
 }
 /* Change styles ***************************** */
 .change .left_icon, .change .right_icon {
@@ -221,11 +227,6 @@ header {
     margin-right:-30px;
 }
 
-.menu_buff {
-    background-color: darkgrey;
-    padding-bottom: 4vh;
-}
-
 .change .menu_bar {
     height: auto;
 }
@@ -246,6 +247,15 @@ header {
     transform: translate(0, -11px) rotate(45deg);
 }
 
+.change .top_drop {
+    height: auto;
+    display:flex;
+}
+
+.change .top_drop a {
+    display: flex;
+}
+
 /* Desktop Menu ******************************* */
 
 nav {
@@ -253,9 +263,10 @@ nav {
     flex-direction: row;
     justify-content: space-between;
     height: 0px;
-    background-color: darkgrey;
+    background-color: rgb(107, 107, 107);
     position: fixed;
-    width: 1000px;
+    max-width: 100%;
+    width: 100vw;
 }
 
 .top_menu {
@@ -267,7 +278,7 @@ nav {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    cursor: pointer
+    cursor: pointer;
 }
 
 .left_nav, .right_nav {
@@ -281,16 +292,55 @@ nav {
     align-items: center;
     text-decoration: none;
     padding: 0 12px;
+    border-radius: 30% 30% 0 0;
+    color: black;
+}
+
+.top_drop {
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 500px;
+    display: none;
+    flex-direction: column;
+}
+
+.top_drop div {
+    height: 60px;
+}
+
+.top_drop a {
+    display: none;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    z-index: -1;
+    border-radius: 0 0 0 0;
+    color: black;
+}
+
+.menu_buff_top {
+    z-index: -1;
+    /* background-color: darkgrey; */
+    /* padding-bottom: 60px; */
 }
 
 @media only screen and (min-width:1000px) {
     body {
-        width: 1000px;
-        max-width: 1000px;
+        /* width: 1000px;
+        max-width: 1000px; */
         margin: auto auto auto auto;
         background-image: url('background_img.jpg');
         background-color: powderblue;
         background-attachment: fixed;
+    }
+
+    #sleeve {
+        width: 1000px;
+        max-width: 1000px;
+        margin: auto;
     }
 
     #menu {

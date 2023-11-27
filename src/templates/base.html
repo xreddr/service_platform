@@ -9,25 +9,35 @@
         </style>
     </head>
     <body>
-        <section id="sleeve">
-            <nav>
-                <section class="left_nav">
-                    <section class="top_menu">
-                        <section>
-                            <div class="menu1"></div>
-                            <div class="menu2"></div>
-                            <div class="menu3"></div>
-                        </section>
+        <nav>
+            <section class="left_nav">
+                <section class="top_menu" onclick="menuClick(this)">
+                    <section>
+                        <div class="menu1"></div>
+                        <div class="menu2"></div>
+                        <div class="menu3"></div>
                     </section>
-                    <a href="" class="glassG">Ad1</a>
-                    <a href="" class="glassG">Ad2</a>
-                    <a href="" class="glassG">Ad3</a>
+                    <section class="top_drop">
+                        <a class="menu_buff_top"></a>
+                        <a href="#ad1" id="show" class="glass">Cloud Apps</a>
+                        <a href="#ad2" id="show" class="glass">Database Solutions</a>
+                        <a href="#ad3" id="show" class="glass">WSC API</a>
+                        <a href="https://xreddr.github.io" id="show" class="glass">Contact</a>
+                    </section>
                 </section>
-                <section class="right_nav">
-                    <a href="" class="glassG">PPAS Login</a>
-                    <a href="" class="glassG">Home</a>
-                </section>
-            </nav>
+                <a href="#ad1" class="glassG">Coud Apps</a>
+                <a href="#ad2" class="glassG">Database Solutions</a>
+                <a href="#ad3" class="glassG">WSC API</a>
+                <a href="https://wsc-qxy4flwsca-uc.a.run.app/" class="glassG">PPAS Login</a>
+                <a href="https://xreddr.github.io" class="glassG">Contact</a>
+                <a href="" class="glassG">Home</a>
+            </section>
+            <!-- <section class="right_nav">
+                <a href="" class="glassG">PPAS Login</a>
+                <a href="" class="glassG">Home</a>
+            </section> -->
+        </nav>
+        <section id="sleeve">
             <!-- <nav><button type="button" onclick="window.location.href='{{ url_for('web.index') }}'">Home</button></nav> -->
             <section class="content">
                 <header id="header">
