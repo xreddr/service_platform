@@ -2,17 +2,24 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<p>Tailored solution software for small businessess.</p>
-<!-- <section id="app_list">
-    <a href="https://xreddr.github.io" class="glass">Contanct</a>
-    <a href="https://wsc-qxy4flwsca-uc.a.run.app/" class="glass">PPAS Login</a>
-</section> -->
-<!-- <h3>Explore Apps</h3>
-<section id="app_list">
-    <a href="#ad1" class="glass">TechDay</a>
-    <a href="#ad2" class="glass">PopStudio</a>
-    <a href="#ad3" class="glass">WSC API</a>
-</section> -->
+<section class="title">
+    <h1>Welcome to Whale Shark Capital</h1>
+    <p>Tailored solution software for small businessess.</p>    
+</section>
+<section class="logo_container">
+    <section class="img_text">
+        <img src="{{ url_for('static', filename='cloud.png') }}">
+        <p>Cloud Apps.</p>
+    </section>
+    <section class="img_text">
+        <img src="{{ url_for('static', filename='datastack.png') }}">
+        <p>Database Solutions</p>
+    </section>
+    <section class="img_text">
+        <img src="{{ url_for('static', filename='api_gears.png') }}">
+        <p>API Connections</p>
+    </section>
+</section>
 <section id="menu" onclick="menuClick(this)"">
     <section class="menu_icon">
         <section class="menu_container">
