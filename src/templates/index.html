@@ -66,15 +66,18 @@
     <section class="block1">
     <pre>
     <code>
+    URL 
+    https://serviceplatform-qxy4flwsca-uc.a.run.app
+    
     GET - Endpoints
-    34.42.125.145:8080/api/home
+    /api/home
     responce = {
         "code" : 0,
         "body" : jsonObject
     }
 
     POST - Register new user
-    34.42.125.145:8080/api/register
+    /api/register
     json = {
         "service" : "service1",
         "username" : "yourchoice",
@@ -82,7 +85,7 @@
     }
 
     POST - Login
-    34.42.125.145:8080/api/login
+    /api/login
     json = {
         "service" : "service1",
         "username" : "yourchoice",
@@ -90,7 +93,7 @@
     }
 
     POST - Update username
-    34.42.125.145:8080/api/update/username
+    /api/update/username
     json = {
         "username" : "existingusername",
         "password" : "yourpassword",
@@ -98,7 +101,7 @@
     }
 
     POST - Update password
-    34.42.125.145:8080/api/update/password
+    /api/update/password
     json = {
         "username" : "existingusername",
         "password" : "yourpassword",
@@ -106,14 +109,14 @@
     }
 
     POST - Delete user
-    34.42.125.145:8080/api/delete
+    /api/delete
     json = {
         "username" : "existingusername",
         "password" : "yourpassword",
     }
 
     GET - Logout
-    34.42.125.145:8080/api/logout
+    /api/logout
     </code>
     </pre>
     </section>

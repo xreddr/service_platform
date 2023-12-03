@@ -40,7 +40,8 @@ header {
     font-size: 2rem;
 }
 
-#ad1, #ad2, #ad3 {
+#ad3 {
+    justify-content: space-evenly;
 }
 
 .ad p {
@@ -126,19 +127,11 @@ header {
 
 /* Content Organizers *************************** */
 
-#ad1 {
-    display: flex;
-}
-
 .block1 {
-    display: flex;
-    margin: auto; 
-    width: 75%;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-top: .45rem;
-    margin-bottom: .45rem;
+    margin: .45rem auto .45rem auto; 
+    width: 85%;
+    overflow: scroll;
+    max-width: 400px;
 }
 
 .block1 img {
@@ -446,6 +439,7 @@ pre {
     margin: 0;
     text-align: right;
     align-content: left;
+    max-width: 400px
 }
 
 /* Header icons */
