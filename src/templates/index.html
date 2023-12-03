@@ -30,7 +30,7 @@
     </section>
     <section class="menu_bar">
         <a href="#ad1" class="glass">Cloud Apps</a>
-        <a href="#ad2" class="glass">Database Solutions</a>
+        <!-- <a href="#ad2" class="glass">Database Solutions</a> -->
         <a href="#ad3" class="glass">WSC API</a>
         <a href="https://xreddr.github.io" class="glass">Contact</a>
         <a class="menu_buff"></a>  
@@ -41,136 +41,81 @@
 {% endblock %}
 
 {% block content %}
-<!-- <button type="button" onclick="window.location.href='{{ url_for('.login') }}'">Log In</button>
-<button type="button" onclick="window.location.href='{{ url_for('.about_page') }}'">About</button> -->
 
 <section class="ad" id="ad1">
-    <h1>Tech Day</h1>
-    <section class="block1">
-        <p>Blah Blah Blah</p>
-        <img src="{{ url_for('static', filename='tech_day_dial.png') }}">
-    </section>
-    <section class="block2">
-        <img src="{{ url_for('static', filename='tech_day_listShort.png') }}">
-        <p>Blah blah blah.</p>
-    </section>
-    <section class="block1">
+    <h1>Software Solutions for Your Needs</h1>
+    <p>Your business has specific needs and pipelines. Why find an enterprise solution that requires adjustment, risking expense on un-utilized features.
+        Using containerized api applications and cloud computing; tailored solutions for your business can be created with your existing tools and services, and made
+        accissible on the web or local office networks.
+    </p>
+    <section class="logo_flex">
         <img src="{{ url_for('static', filename='GCP_logo.png') }}">
-    </section>
-</section>
-
-<section class="ad" id="ad2">
-    <h1>POP Studio</h1>
-    <section class="block1">
-        <p>Blah Blah Blah</p>
-        <img src="{{ url_for('static', filename='pop_studio_lesson.png') }}">
-    </section>
-    <section class="block2">
-        <img src="{{ url_for('static', filename='pop_studio_report.png') }}">
-        <p>Blah blah blah.</p>
-    </section>
-    <section class="block3">
-        <img src="{{ url_for('static', filename='gcloud_logo.png') }}">
+        <img src="{{ url_for('static', filename='postgres_logo.png') }}">
         <img src="{{ url_for('static', filename='squareup_logo.png') }}">
+        <img src="{{ url_for('static', filename='azure_logo.png') }}">
+        <img src="{{ url_for('static', filename='aws_logo.png') }}">
     </section>
 </section>
 
 <section class="ad" id="ad3">
     <h1>WSC API</h1>
+    <p>The WSC API exists for users to create their own clients to services. Registering and loging
+        in to a new account will create a token you can use to verify login to your own application.
+        A responce code of 0 will return a json object and a cookie with the token. A responce of -1
+        indicates a failed attempt.</p>
     <section class="block1">
-        <p>API URL. A response code of 0 indicates a succesful connection. A response code of -1 indicates an error. Both are delivered through the response body.</p>
-        <pre>
-            <code>
-                GET
-                34.42.125.145:8080/api/home
-                responce = {
-                    "code" : 0,
-                    "body" : jsonObject
-                }
-            </code>
-        </pre>
-    </section>
-    <section class="block1">
-        <p>Register new user.</p>
-        <pre>
-            <code>
-                POST
-                34.42.125.145:8080/api/register
-                json = {
-                    "service" : "service1",
-                    "username" : "yourchoice",
-                    "password" : "yourchoice"
-                }
-            </code>
-        </pre>
-    </section>
-    <section class="block1">
-        <p>Login as a registered user.</p>
-        <pre>
-            <code>
-                POST
-                34.42.125.145:8080/api/login
-                json = {
-                    "service" : "service1",
-                    "username" : "yourchoice",
-                    "password" : "yourchoice"
-                }
-            </code>
-        </pre>
-    </section>
-    <section class="block1">
-        <p>Change username.</p>
-        <pre>
-            <code>
-                POST
-                34.42.125.145:8080/api/update/username
-                json = {
-                    "username" : "existingusername",
-                    "password" : "yourpassword",
-                    "new_username" : "yourchoice"
-                }
-            </code>
-        </pre>
-    </section>
-    <section class="block1">
-        <p>Change password.</p>
-        <pre>
-            <code>
-                POST
-                34.42.125.145:8080/api/update/password
-                json = {
-                    "username" : "existingusername",
-                    "password" : "yourpassword",
-                    "new_password" : "yourchoice"
-                }
-            </code>
-        </pre>
-    </section>
-    <section class="block1">
-        <p>Delete account.</p>
-        <pre>
-            <code>
-                POST
-                34.42.125.145:8080/api/delete
-                json = {
-                    "username" : "existingusername",
-                    "password" : "yourpassword",
-                }
-            </code>
-        </pre>
-    </section>
-    <section class="block1">
-        <p>Logout.</p>
-        <pre>
-            <code>
-                GET
-                34.42.125.145:8080/api/logout
-            </code>
-        </pre>
-    </section>
-    <section class="block3">
-        <img src="{{ url_for('static', filename='GCP_logo.png') }}">
-        <img src="{{ url_for('static', filename='postgres_logo.png') }}">
+    <pre>
+    <code>
+    GET - Endpoints
+    34.42.125.145:8080/api/home
+    responce = {
+        "code" : 0,
+        "body" : jsonObject
+    }
+
+    POST - Register new user
+    34.42.125.145:8080/api/register
+    json = {
+        "service" : "service1",
+        "username" : "yourchoice",
+        "password" : "yourchoice"
+    }
+
+    POST - Login
+    34.42.125.145:8080/api/login
+    json = {
+        "service" : "service1",
+        "username" : "yourchoice",
+        "password" : "yourchoice"
+    }
+
+    POST - Update username
+    34.42.125.145:8080/api/update/username
+    json = {
+        "username" : "existingusername",
+        "password" : "yourpassword",
+        "new_username" : "yourchoice"
+    }
+
+    POST - Update password
+    34.42.125.145:8080/api/update/password
+    json = {
+        "username" : "existingusername",
+        "password" : "yourpassword",
+        "new_password" : "yourchoice"
+    }
+
+    POST - Delete user
+    34.42.125.145:8080/api/delete
+    json = {
+        "username" : "existingusername",
+        "password" : "yourpassword",
+    }
+
+    GET - Logout
+    34.42.125.145:8080/api/logout
+    </code>
+    </pre>
     </section>
 </section>
 

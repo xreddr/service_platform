@@ -21,17 +21,16 @@
                         <section class="top_drop">
                             <a class="menu_buff_top"></a>
                             <a href="#ad1" id="show" class="glass">Cloud Apps</a>
-                            <a href="#ad2" id="show" class="glass">Database Solutions</a>
+                            <!-- <a href="#ad2" id="show" class="glass">Database Solutions</a> -->
                             <a href="#ad3" id="show" class="glass">WSC API</a>
                             <a href="https://xreddr.github.io" id="show" class="glass">Contact</a>
                         </section>
                     </section>
                     <a href="#ad1" class="glassG">Coud Apps</a>
-                    <a href="#ad2" class="glassG">Database Solutions</a>
+                    <!-- <a href="#ad2" class="glassG">Database Solutions</a> -->
                     <a href="#ad3" class="glassG">WSC API</a>
-                    <!-- <a href="" class="glassG">PPAS Login</a> -->
                     <a href="https://xreddr.github.io" class="glassG">Contact</a>
-                    <a href="" class="glassG">Home</a>
+                    <a href="#header" class="glassG">Home</a>
                 </section>
                 <section class="right_nav">
                     <a href="https://wsc-qxy4flwsca-uc.a.run.app/" class="glass">PPAS Login</a>
@@ -39,7 +38,6 @@
             </section>
         </nav>
         <section id="sleeve">
-            <!-- <nav><button type="button" onclick="window.location.href='{{ url_for('web.index') }}'">Home</button></nav> -->
             <section class="content">
                 <header id="header">
                     <div class="nav_spacer"></div>
@@ -49,6 +47,10 @@
                 <main>
                     {% block content %}{% endblock %}
                 </main>
+                <footer>
+                    <h3 class="left_foot">Whale Shark Capital(c)</h3>
+                    <h3 class="right_foot">2019 - 2023</h3>
+                </footer>
             </section>
         </section>
     </body>

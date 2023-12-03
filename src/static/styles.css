@@ -1,5 +1,5 @@
 body {
-    background-color: powderblue;
+    background-image: url('background_img.jpg');
     text-align: center;
     margin: 0;
 }
@@ -8,13 +8,6 @@ header {
     height: 100vh;
     max-height: 100vh;
 }
-
-/* #menu div {
-    height: 20px;
-    width: 32px;
-    position: fixed;
-    background-color: white;
-} */
 
 #title_img {
     width: 100%;
@@ -39,9 +32,38 @@ header {
 
 .ad {
     min-height: 102vh;
-    border: 3px solid black;
     display: flex;
     flex-direction: column;
+}
+
+.ad h1 {
+    font-size: 2rem;
+}
+
+#ad1, #ad2, #ad3 {
+}
+
+.ad p {
+    margin: .3rem 1rem .3rem 1rem; 
+    background-color: white;
+    border-radius: 20px;
+    padding: 1rem;
+    box-shadow: 10px 10px 10px rgb(177, 177, 177, .8);
+    line-height: 2;
+}
+
+.logo_flex {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.logo_flex img {
+    width: 85vw;
+    max-width: 300px;
+    height: auto;
+    max-height: 28vh;
 }
 
 #app_list {
@@ -59,7 +81,6 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: rgb(230,120,120, .6); */
     text-decoration: none;
     color: white;
     font-size: 1.2rem;
@@ -78,7 +99,6 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: rgb(230,120,120, .6); */
     text-decoration: none;
     color: white;
     font-size: 1.2rem;
@@ -96,8 +116,7 @@ header {
 }
 
 .glassG {
-	/* background-color: grey;
-	background-image: linear-gradient(grey,darkgrey); */
+
 }
 
 .glassG:hover {
@@ -148,7 +167,6 @@ header {
 /* Mobile Menu ********************************** */
 
 #menu {
-    /* transition: 0.4s */
 }
 
 .menu_icon {
@@ -215,6 +233,7 @@ header {
     justify-content: center;
     align-items: center;
     text-decoration: none;
+    color: black;
 }
 
 .change .left_icon {
@@ -266,9 +285,7 @@ nav {
     justify-content: space-between;
     height: 0px;
     position: fixed;
-    /* max-width: 99%; */
     width: 100vw;
-    /* overflow: hidden; */
 }
 
 .nav_wrapper {
@@ -279,14 +296,12 @@ nav {
     flex-direction: row;
     justify-content: space-between;
     background-color: rgb(107, 107, 107, .85);
-    /* background-image: linear-gradient(to left, rgb(107, 107, 107, .85), rgb(107, 107, 107, .1), rgb(107, 107, 107, .85)); */
     border-radius: 10%;
 }
 
 .top_menu {
     height: 0px;
     width: 60px;
-    /* position: fixed; */
     background-color: orange;
     display: flex;
     flex-direction: column;
@@ -327,7 +342,6 @@ nav {
     cursor: pointer;
     border-radius: 10%;
     font-weight: bold;
-    /* position: fixed; */
 }
 
 .top_drop {
@@ -362,17 +376,12 @@ nav {
 
 .menu_buff_top {
     z-index: -1;
-    /* background-color: darkgrey; */
-    /* padding-bottom: 60px; */
 }
 
 @media only screen and (min-width:1000px) {
     body {
-        /* width: 1000px;
-        max-width: 1000px; */
         margin: auto auto auto auto;
         background-image: url('background_img.jpg');
-        background-color: powderblue;
         background-attachment: fixed;
     }
 
@@ -380,6 +389,9 @@ nav {
         width: 1000px;
         max-width: 1000px;
         margin: auto;
+        background-color: powderblue;
+        /* background-image: linear-gradient(rgb(177, 224, 231, 0), powderblue, powderblue, powderblue); */
+        background-attachment: fixed;
     }
 
     #menu {
@@ -403,19 +415,23 @@ nav {
     }
 
     .nav_spacer {
-        height: 60px;
-        background-color: powderblue;
+        height: 30px;
     }
 
+    #ad1, #ad2, #ad3 {
+        padding-top: 60px;
+        padding-bottom: 0;
+    }
 }
 
 #sleeve {
     width: 100%;
-    background-color: powderblue;
+    background-image: linear-gradient(rgb(177, 224, 231, 0), powderblue, powderblue, powderblue);
+    background-attachment: fixed;
 }
 
 code {
-    padding: 0;
+    padding: 0 1rem 0 0;
     display: flex;
     flex-direction: flex-start;
     text-align: left;
@@ -438,6 +454,13 @@ pre {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    background-color: white;
+    border-radius: 20px;
+    width: 90%;
+    margin: auto;
+    padding-top: 1rem;
+    box-shadow: 10px 10px 10px rgb(177, 177, 177, .8);
+    /* box-shadow: 3px 3px 3px orange inset; */
     /* flex-wrap: wrap; */
 }
 
@@ -463,5 +486,18 @@ pre {
 }
 
 .title p {
-    font-size: 1.8rem;
+    font-size: 1.2rem;
+}
+
+footer {
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: darkgrey;
+}
+
+.left_foot, .right_foot {
+    width: 30vw;
+    margin: .24rem;
 }
