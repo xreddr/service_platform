@@ -1,12 +1,34 @@
 import os
 import psycopg2
 import click
+import sqlite3
 from flask import Blueprint, current_app, g
 
 bp = Blueprint('db', __name__, url_prefix='/db')
 
 def init_app(app):
     app.teardown_appcontext(close_db)
+
+'''
+SQLITE DB CONNECTION
+'''
+
+def lite_conn(query='row'):
+    if 'db' not in g:
+        g.db = sqlite3.connect(os.path.join(current_app.instance_path, current_app.config['LITE_DB']),
+                               detect_types=sqlite3.PARSE_DECLTYPES)
+        
+        if query == 'dict':
+            g.db.row_factory = make_dicts
+        elif query == 'row':
+            g.db.row_factory = sqlite3.Row
+
+    return g.db
+
+def make_dicts(cursor, row):
+    '''Takes row object. Returns python dict'''
+    return dict((cursor.description[idx][0], value) for idx, value in enumerate(row))
+
 
 '''
 POSTGRES DB CONNECTIONS
@@ -40,6 +62,10 @@ def ping_conn(service):
             res = -1
     close_db()
     return res
+
+'''
+CLOSE CURRENT DB
+'''
 
 def close_db(e=None):
     # If this request connected to the database, close the connection

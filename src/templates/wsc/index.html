@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% extends 'base.html' %}
+{% extends 'wsc/base.html' %}
 
 {% block header %}
 <section class="title">
@@ -8,15 +8,15 @@
 </section>
 <section class="logo_container">
     <section class="img_text">
-        <img src="{{ url_for('static', filename='cloud.png') }}">
+        <img src="{{ url_for('static', filename='wsc/images/cloud.png') }}">
         <p>Cloud Apps.</p>
     </section>
     <section class="img_text">
-        <img src="{{ url_for('static', filename='datastack.png') }}">
+        <img src="{{ url_for('static', filename='wsc/images/datastack.png') }}">
         <p>Database Solutions</p>
     </section>
     <section class="img_text">
-        <img src="{{ url_for('static', filename='api_gears.png') }}">
+        <img src="{{ url_for('static', filename='wsc/images/api_gears.png') }}">
         <p>API Connections</p>
     </section>
 </section>
@@ -30,8 +30,6 @@
     </section>
     <section class="menu_bar">
         <a href="#ad1" class="glass">Cloud Apps</a>
-        <!-- <a href="#ad2" class="glass">Database Solutions</a> -->
-        <a href="#ad3" class="glass">WSC API</a>
         <a href="https://xreddr.github.io" class="glass">Contact</a>
         <a class="menu_buff"></a>  
     </section>
@@ -49,15 +47,15 @@
         accissible on the web or local office networks.
     </p>
     <section class="logo_flex">
-        <img src="{{ url_for('static', filename='GCP_logo.png') }}">
-        <img src="{{ url_for('static', filename='postgres_logo.png') }}">
-        <img src="{{ url_for('static', filename='squareup_logo.png') }}">
-        <img src="{{ url_for('static', filename='azure_logo.png') }}">
-        <img src="{{ url_for('static', filename='aws_logo.png') }}">
+        <img src="{{ url_for('static', filename='wsc/images/GCP_logo.png') }}">
+        <img src="{{ url_for('static', filename='wsc/images/postgres_logo.png') }}">
+        <img src="{{ url_for('static', filename='wsc/images/squareup_logo.png') }}">
+        <img src="{{ url_for('static', filename='wsc/images/azure_logo.png') }}">
+        <img src="{{ url_for('static', filename='wsc/images/aws_logo.png') }}">
     </section>
 </section>
 
-<section class="ad" id="ad3">
+<!-- <section class="ad" id="ad3">
     <h1>WSC API</h1>
     <p>The WSC API exists for users to create their own clients to services. Registering and loging
         in to a new account will create a token you can use to verify login to your own application.
@@ -120,7 +118,7 @@
     </code>
     </pre>
     </section>
-</section>
+</section> -->
 
-<script src="{{ url_for('static', filename='js/index.js')  }}"></script>
+<script src="{{ url_for('static', filename='wsc/js/index.js')  }}"></script>
 {% endblock %}
