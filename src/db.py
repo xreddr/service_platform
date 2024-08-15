@@ -8,6 +8,7 @@ bp = Blueprint('db', __name__, url_prefix='/db')
 
 def init_app(app):
     app.teardown_appcontext(close_db)
+    app.cli.add_command(init_db)
 
 '''
 SQLITE DB CONNECTION
@@ -28,6 +29,12 @@ def lite_conn(query='row'):
 def make_dicts(cursor, row):
     '''Takes row object. Returns python dict'''
     return dict((cursor.description[idx][0], value) for idx, value in enumerate(row))
+
+def init_lite(file):
+    db = lite_conn()
+
+    with current_app.open_resource(file) as f:
+        db.executescript(f.read().decode('utf8'))
 
 
 '''
@@ -78,15 +85,18 @@ CLI COMMANDS
 Pre-runtime set up commands
 '''
 
-@bp.cli.command('init_db')
+@bp.cli.command('init-db')
 def init_db():
     '''No args. No returns'''
-    conn = pg_conn()
-    cur = conn.cursor()
+    db = lite_conn()
+    with current_app.open_resource('schema.sql') as f:
+        db.executescript(f.read().decode('utf8'))
+    cur = db.cursor()
 
     # Execute a command: this creates a new table
-    cur.execute('DROP TABLE IF EXISTS books;')
-    cur.execute('CREATE TABLE books (title TEXT);')
-    conn.commit()
+    cur.execute("INSERT INTO user (username, password) VALUES (xreddr,password);",
+                (current_app.config['DEFAULT_USER'], current_app.config['DEFAULT_PASSWORD']))
+
+    db.commit()
     cur.close()
-    conn.close()
+    db.close()

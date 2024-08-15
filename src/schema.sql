@@ -1,0 +1,7 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "user" (
+    "id" INTEGER,
+    "username" TEXT NOT NULL UNIQUE,
+    "password" TEXT NOT NULL,
+     PRIMARY KEY("id" AUTOINCREMENT)
+);
