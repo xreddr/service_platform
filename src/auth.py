@@ -2,7 +2,7 @@ import psycopg2
 import functools
 from flask import Blueprint, current_app, g, session
 from werkzeug.security import check_password_hash, generate_password_hash
-from .db import pg_conn, ping_conn
+from .db import pg_conn, ping_conn, lite_conn
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -20,48 +20,67 @@ code = {
     "fail" : -1
 }
 
+
 '''
 USER AUTH FUNCTIONS
 User CRUD functions requiring password authorizing
 Session handling
-<CLEARED>
+SQLITE CONVERSION
 '''
 
 # CREATE
-# <CLEARED>
 
-def register_user(service, username, password):
+def register_user(username, password):
     '''Takes strings. Returns res dict.'''
     error = None
 
     # Service validation : db
-    ping = ping_conn(service)
-    if ping == -1:
-        error = "Service could not be reached. Check credentials."
-        res.update({ "code" : code['fail'], "body" : error})
-        return res
-    
-    # Insert Query: db, auth
-    conn = pg_conn(service)
-    cur = conn.cursor()
-    try:
-        cur.execute(
-            "INSERT INTO user_auth (user_name, password) VALUES (%s,%s);",
-            (username, generate_password_hash(password))
-        )
-    except (psycopg2.errors.UniqueViolation):
-        error = "User already exists"
-    conn.commit()
+    ping = ping_conn()
+    if ping == 0:
+        # INSERT
+        conn = pg_conn()
+        cur = conn.cursor()
+        try:
+            cur.execute(
+                "INSERT INTO user_auth (user_name, password) VALUES (%s,%s);",
+                (username, generate_password_hash(password))
+            )
+        except (psycopg2.errors.UniqueViolation):
+            error = "User already exists"
+        conn.commit()
 
-    # User info query: db, code
-    if error is None:
-        cur.execute(
-            "SELECT id, user_name FROM user_auth WHERE user_name = %s;",
-            (username,)
-        )
-        user_info = cur.fetchone()
-        cur.close()
-        conn.close()
+        # SELECT
+        if error is None:
+            cur.execute(
+                "SELECT id, user_name FROM user_auth WHERE user_name = %s;",
+                (username,)
+            )
+            user_info = cur.fetchone()
+
+    else:
+
+        conn = lite_conn()
+        cur = conn.cursor()
+        try:
+            cur.exectue(
+                "INSERT INTO user (username, password) VALUES (?,?)",
+                (username, generate_password_hash(password))
+            )
+        except (psycopg2.errors.UniqueViolation):
+            error = "User already exists"
+        conn.commit()
+
+        if error is None:
+            cur.execute(
+                "SELECT id, username FROM user WHERE username = ?",
+                (username,)
+            )
+            user_info = cur.fetchone()
+
+    cur.close()
+    conn.close()
+
+    if user_info:
 
         res.update({
             "code": code['pass'], 
@@ -70,13 +89,13 @@ def register_user(service, username, password):
                 "username":user_info[1]
             }
         })
+        
     else:
         res.update({"code": code['fail'], "body": error})
 
     return res
 
 # READ
-# <CLEARED>
 
 def list_users():
     '''Takes none. Returns res dict.'''
@@ -96,7 +115,6 @@ def list_users():
 
 # UPDATE
 # Functions can be combined
-# <CLEARED>
 
 def update_username(username, password, new_username):
     '''Takes string args. Returns res dict'''
@@ -181,7 +199,6 @@ def update_password(username, password, new_password):
     return res
 
 # DELETE
-# <CLEARED>
 
 def delete_user(username, password):
     '''Takes string args. Returns res dict.'''
@@ -218,7 +235,6 @@ def delete_user(username, password):
 
 '''
 LOGIN FUNCTIONS
-<CLEARED>
 '''
 
 def login_user(service, username, password):
@@ -274,7 +290,6 @@ def logout():
 '''
 API WRAPPERS
 Set auth levels for routes
-<CLEARED>
 '''
 
 @bp.before_app_request
