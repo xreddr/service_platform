@@ -35,6 +35,8 @@ def make_dicts(cursor, row):
 
 '''
 POSTGRES DB CONNECTIONS
+!!! CURRENTLY UNUSED
+!!! NEEDS ADAPTATION AND TESTING
 '''
 
 def pg_conn():

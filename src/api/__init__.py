@@ -31,7 +31,7 @@ Users can only delete themselves
 def register_user():
     '''Takes json object; string values. Returns json object.'''
     req = request.get_json()
-    user_info = auth.register_user(req['service'], req['username'], req['password'])
+    user_info = auth.register_user(req['username'], req['password'])
     response = res(user_info)
     return response
 

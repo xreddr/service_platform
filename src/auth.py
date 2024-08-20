@@ -33,49 +33,25 @@ SQLITE CONVERSION
 def register_user(username, password):
     '''Takes strings. Returns res dict.'''
     error = None
+    query_var = '?'
+    conn = lite_conn()
+    # if ping_conn() == 0:
+    #     query_var = '%s'
+    #     conn = pg_conn()
 
-    # Service validation : db
-    ping = ping_conn()
-    if ping == 0:
-        # INSERT
-        conn = pg_conn()
-        cur = conn.cursor()
-        try:
-            cur.execute(
-                "INSERT INTO user_auth (user_name, password) VALUES (%s,%s);",
-                (username, generate_password_hash(password))
-            )
-        except (psycopg2.errors.UniqueViolation):
-            error = "User already exists"
-        conn.commit()
+    insert_user = f"INSERT INTO user (username, password) VALUES ({query_var}, {query_var})"
+    select_user = f"SELECT id, username FROM user WHERE username = {query_var}"
 
-        # SELECT
-        if error is None:
-            cur.execute(
-                "SELECT id, user_name FROM user_auth WHERE user_name = %s;",
-                (username,)
-            )
-            user_info = cur.fetchone()
+    cur = conn.cursor()
+    try:
+        cur.execute(insert_user, (username, generate_password_hash(password)))
+    except (psycopg2.errors.UniqueViolation):
+        error = "User already exists"
+    conn.commit()
 
-    else:
-
-        conn = lite_conn()
-        cur = conn.cursor()
-        try:
-            cur.exectue(
-                "INSERT INTO user (username, password) VALUES (?,?)",
-                (username, generate_password_hash(password))
-            )
-        except (psycopg2.errors.UniqueViolation):
-            error = "User already exists"
-        conn.commit()
-
-        if error is None:
-            cur.execute(
-                "SELECT id, username FROM user WHERE username = ?",
-                (username,)
-            )
-            user_info = cur.fetchone()
+    if error is None:
+        cur.execute(select_user, (username,))
+        user_info = cur.fetchone()
 
     cur.close()
     conn.close()

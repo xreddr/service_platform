@@ -2,14 +2,11 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<img src="{{ url_for('static', filename='title_image.png') }}">
 <h1>Whale Shark Capital</h1>
 {% endblock %}
 
 {% block content %}
 <form method="POST" id="login_form">
-    <label for="service">Service</label>
-    <input name="service_name" id="service_name" required>
     <label for="username">Username</label>
     <input name="username" id="username" required>
     <label for="password">Password</label>
