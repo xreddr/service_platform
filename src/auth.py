@@ -20,6 +20,7 @@ code = {
     "fail" : -1
 }
 
+query_var = '?'
 
 '''
 USER AUTH FUNCTIONS
@@ -271,15 +272,12 @@ Set auth levels for routes
 @bp.before_app_request
 def load_logged_in_user():
     '''Takes none. Gives none.'''
-    username = session.get('username')
-    service = session.get('service')
-    if service is None:
-        service = current_app.config['PG_DB']
-    if username is None:
+    user_id = session.get('user_id')
+    if user_id is None:
         g.user = None
     else:
-        cur = pg_conn(service).cursor()
-        cur.execute("SELECT * FROM user_auth WHERE user_name = %s;", (username,))
+        cur = lite_conn().cursor()
+        cur.execute(f"SELECT * FROM user WHERE id = {query_var};", (user_id,))
         g.user = cur.fetchone()
     
 

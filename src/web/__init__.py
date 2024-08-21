@@ -1,7 +1,7 @@
 import functools
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import Blueprint, render_template, request, session, url_for, current_app, g, redirect
-from db import lite_conn
+from src import db
 bp = Blueprint('web', __name__, url_prefix='/')
 
 query_var = '?'
@@ -16,8 +16,8 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        db = lite_conn()
-        cur = db.cursor()
+        conn = db.lite_conn()
+        cur = conn.cursor()
         error = None
         select_user = f"SELECT * FROM user WHERE username = {query_var}"
         user = cur.execute(select_user, (username,)).fetchone()
@@ -31,7 +31,7 @@ def login():
             session.clear()
             session['user_id'] = user['id']
             session['username'] = user['username']
-            return redirect(url_for('home_page'))
+            return redirect(url_for('web.home_page'))
 
         print(error)
 
