@@ -1,7 +1,7 @@
 import functools
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import Blueprint, render_template, request, session, url_for, current_app, g, redirect
-from src import db
+from src import db, auth
 bp = Blueprint('web', __name__, url_prefix='/')
 
 query_var = '?'
@@ -37,6 +37,10 @@ def login():
 
     return render_template('wsc/login.html')
 
+@bp.route('/logout', methods=('GET',))
+def logout():
+    auth.logout()
+    return redirect(url_for('web.index'))
 
 
 @bp.route('/home')

@@ -36,6 +36,27 @@
         <section id="sleeve">
             <section class="content">
                 <header id="header">
+                    <!-- Move to nav_wrapper -->
+                    <section id="menu" onclick="menuClick(this)"">
+                        <section class="menu_icon">
+                            <section class="menu_container">
+                                <div class="menu1"></div>
+                                <div class="menu2"></div>
+                                <div class="menu3"></div>
+                            </section>
+                        </section>
+                        <section class="menu_bar">
+                            <a href="/#ad1" class="glass">Cloud Apps</a>
+                            <a href="https://xreddr.github.io" class="glass">Contact</a>
+                            <a class="menu_buff"></a>  
+                        </section>
+                        {% if g.user %}
+                        <a href="{{ url_for('web.logout') }}" class="left_icon">Logout</a>
+                        {% else %}
+                        <a href="{{ url_for('web.login') }}" class="left_icon">Login</a>
+                        {% endif %}
+                        <a href="{{ url_for('web.index') }}" class="right_icon">Home</a>    
+                    </section>
                     <div class="nav_spacer"></div>
                     <img id="title_img" src="{{ url_for('static', filename='wsc/images/title_image.png') }}">
                     {% block header %}{% endblock %}
@@ -49,6 +70,7 @@
                 </footer>
             </section>
         </section>
+        <script src="{{ url_for('static', filename='wsc/js/index.js')  }}"></script>
         <script>
             function LoadScroll() {
                 window.scroll(0,1);

@@ -20,22 +20,7 @@
         <p>API Connections</p>
     </section>
 </section>
-<section id="menu" onclick="menuClick(this)"">
-    <section class="menu_icon">
-        <section class="menu_container">
-            <div class="menu1"></div>
-            <div class="menu2"></div>
-            <div class="menu3"></div>
-        </section>
-    </section>
-    <section class="menu_bar">
-        <a href="#ad1" class="glass">Cloud Apps</a>
-        <a href="https://xreddr.github.io" class="glass">Contact</a>
-        <a class="menu_buff"></a>  
-    </section>
-    <a href="https://wsc-qxy4flwsca-uc.a.run.app/" class="left_icon">PPAS</a>
-    <a href="#header" class="right_icon">Home</a>    
-</section>
+
 {% endblock %}
 
 {% block content %}
@@ -55,70 +40,4 @@
     </section>
 </section>
 
-<!-- <section class="ad" id="ad3">
-    <h1>WSC API</h1>
-    <p>The WSC API exists for users to create their own clients to services. Registering and loging
-        in to a new account will create a token you can use to verify login to your own application.
-        A responce code of 0 will return a json object and a cookie with the token. A responce of -1
-        indicates a failed attempt.</p>
-    <section class="block1">
-    <pre>
-    <code>
-    URL 
-    https://serviceplatform-qxy4flwsca-uc.a.run.app
-    
-    GET - Endpoints
-    /api/home
-    responce = {
-        "code" : 0,
-        "body" : jsonObject
-    }
-
-    POST - Register new user
-    /api/register
-    json = {
-        "service" : "service1",
-        "username" : "yourchoice",
-        "password" : "yourchoice"
-    }
-
-    POST - Login
-    /api/login
-    json = {
-        "service" : "service1",
-        "username" : "yourchoice",
-        "password" : "yourchoice"
-    }
-
-    POST - Update username
-    /api/update/username
-    json = {
-        "username" : "existingusername",
-        "password" : "yourpassword",
-        "new_username" : "yourchoice"
-    }
-
-    POST - Update password
-    /api/update/password
-    json = {
-        "username" : "existingusername",
-        "password" : "yourpassword",
-        "new_password" : "yourchoice"
-    }
-
-    POST - Delete user
-    /api/delete
-    json = {
-        "username" : "existingusername",
-        "password" : "yourpassword",
-    }
-
-    GET - Logout
-    /api/logout
-    </code>
-    </pre>
-    </section>
-</section> -->
-
-<script src="{{ url_for('static', filename='wsc/js/index.js')  }}"></script>
 {% endblock %}

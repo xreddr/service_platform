@@ -15,10 +15,10 @@ def init_app(app):
 SQLITE DB CONNECTION
 '''
 
-def lite_conn(query='row'):
+def lite_conn(query='row', source=current_app.config['LITE_DB']):
     '''Takes string. Returns session.connection object'''
     if 'db' not in g:
-        g.db = sqlite3.connect(os.path.join(current_app.instance_path, current_app.config['LITE_DB']),
+        g.db = sqlite3.connect(os.path.join(current_app.instance_path, source),
                                detect_types=sqlite3.PARSE_DECLTYPES)
         
         if query == 'dict':
