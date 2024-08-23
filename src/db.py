@@ -2,6 +2,8 @@ import os
 import psycopg2
 import click
 import sqlite3
+from werkzeug.security import check_password_hash, generate_password_hash
+
 from flask import Blueprint, current_app, g
 
 bp = Blueprint('db', __name__, url_prefix='/db')
@@ -96,7 +98,7 @@ def init_db():
     cur = db.cursor()
 
     cur.execute("INSERT INTO user (username, password) VALUES (?,?);",
-                (current_app.config['DEFAULT_USER'], current_app.config['DEFAULT_PASSWORD'])
+                (current_app.config['DEFAULT_USER'], generate_password_hash(current_app.config['DEFAULT_PASSWORD']))
                 )
 
     db.commit()
