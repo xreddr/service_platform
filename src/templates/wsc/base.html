@@ -24,12 +24,12 @@
                             <a href="https://xreddr.github.io" id="show" class="glass">Contact</a>
                         </section>
                     </section>
-                    <a href="#ad1" class="glassG">Coud Apps</a>
+                    <a href="/#ad1" class="glassG">Coud Apps</a>
                     <a href="https://xreddr.github.io" class="glassG">Contact</a>
-                    <a href="#header" class="glassG">Home</a>
+                    <a href="/#header" class="glassG">Home</a>
                 </section>
                 <section class="right_nav">
-                    <a href="https://wsc-qxy4flwsca-uc.a.run.app/" class="glass">PPAS Login</a>
+                    <a href="/#login" class="glass">PPAS Login</a>
                 </section>
             </section>
         </nav>
@@ -53,7 +53,7 @@
                         {% if g.user %}
                         <a href="{{ url_for('web.logout') }}" class="left_icon">Logout</a>
                         {% else %}
-                        <a href="{{ url_for('web.login') }}" class="left_icon">Login</a>
+                        <a href="/#login" class="left_icon">Login</a>
                         {% endif %}
                         <a href="{{ url_for('web.index') }}" class="right_icon">Home</a>    
                     </section>
