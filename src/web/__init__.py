@@ -8,7 +8,7 @@ query_var = '?'
 
 @bp.route('/')
 def index():
-    return render_template('wsc/index.html')
+    return render_template('wsc/index.html', OPEN_REG=current_app.config['OPEN_REG'])
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
@@ -16,31 +16,35 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        conn = db.lite_conn()
-        cur = conn.cursor()
-        error = None
-        select_user = f"SELECT * FROM user WHERE username = {query_var}"
-        user = cur.execute(select_user, (username,)).fetchone()
-
-        if user is None:
-            error = "Incorrect username."
-        elif not check_password_hash(user['password'], password):
-            error = "Could not validate credentials."
-
-        if error is None:
-            session.clear()
-            session['user_id'] = user['id']
-            session['username'] = user['username']
+        if request.form['login'] == 'reg':
+            return render_template('wsc/reg.html', username=username, password=password)
+        
+        response = auth.login_user(username, password)
+        if response['code'] == 0:
             return redirect(url_for('web.home_page'))
 
-        print(error)
 
-    return render_template('wsc/login.html')
+    return render_template('wsc/login.html', OPEN_REG=current_app.config['OPEN_REG'])
 
 @bp.route('/logout', methods=('GET',))
 def logout():
     auth.logout()
     return redirect(url_for('web.index'))
+
+# CREATE
+
+@bp.route('/register', methods=('POST', 'GET'))
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        confirm_pass = request.form['confirm_pass']
+
+        if password == confirm_pass:
+
+            return render_template('wsc/about.html')
+        
+    return render_template('wsc/reg.html')
 
 
 @bp.route('/home')

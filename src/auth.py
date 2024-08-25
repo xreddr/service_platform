@@ -34,11 +34,7 @@ SQLITE CONVERSION
 def register_user(username, password):
     '''Takes strings. Returns res dict.'''
     error = None
-    query_var = '?'
     conn = lite_conn()
-    # if ping_conn() == 0:
-    #     query_var = '%s'
-    #     conn = pg_conn()
 
     insert_user = f"INSERT INTO user (username, password) VALUES ({query_var}, {query_var})"
     select_user = f"SELECT id, username FROM user WHERE username = {query_var}"
@@ -214,45 +210,28 @@ def delete_user(username, password):
 LOGIN FUNCTIONS
 '''
 
-def login_user(service, username, password):
+def login_user(username, password):
     '''Takes strings. Returns res dict.'''
+    conn = lite_conn()
+    cur = conn.cursor()
     error = None
+    select_user = f"SELECT * FROM user WHERE username = {query_var}"
+    user = cur.execute(select_user, (username,)).fetchone()
 
-    # Service validation
-    # Returns 
-    ping = ping_conn(service)
-    if ping == -1:
-        error = "Service could not be reached. Check credentials."
-        res.update({ "code" : code['fail'], "body" : error})
-        return res
-    
-    # Query user creds: used twice services.start_service
-    conn = pg_conn(service)
-    cur = conn.cursor()
-    cur.execute(
-        "SELECT id, user_name, password FROM user_auth WHERE user_name = %s",
-        (username,)
-    )
-    user = cur.fetchone()
-    cur.close()
-    cur = conn.cursor()
     if user is None:
-        error = "Incorrect credentials"
-    elif not check_password_hash(user[2], password):
-        error = "Credentials incorrect"
-    conn.close()
+        error = "Incorrect username."
+    elif not check_password_hash(user['password'], password):
+        error = "Could not validate credentials."
 
-    # Session building
     if error is None:
         session.clear()
-        session['service'] = service
-        session['user_id'] = user[0]
-        session['username'] = user[1]
+        session['user_id'] = user['id']
+        session['username'] = user['username']
         res.update({ 
             "code" : code['pass'], 
             "body" : {
-                "user_id" : user[0],
-                "username" : user[1]
+                "user_id" : user['id'],
+                "username" : user['username']
                 }
         })
     else:

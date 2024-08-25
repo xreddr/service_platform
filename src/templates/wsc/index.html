@@ -41,11 +41,17 @@
 </section>
 
 <section class="ad" id="login">
-    <form method="POST" id="login_form">
+    <form method="POST" id="login_form" action="/login">
         <label for="username">Username</label>
         <input name="username" id="username" required>
         <label for="password">Password</label>
         <input name="password" type="password" id="password" required>
+        {% if OPEN_REG %}
+        <label for="reg">register</label>
+        <input type="radio" id="reg" name="login" value="reg">
+        <label for="login">login</label>
+        <input type="radio" id="login" name="login" value="login" checked>
+        {% endif %}
         <input type="submit" value="Log In">
     </form>
 </section>

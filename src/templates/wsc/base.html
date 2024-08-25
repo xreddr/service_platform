@@ -48,6 +48,9 @@
                         <section class="menu_bar">
                             <a href="/#ad1" class="glass">Cloud Apps</a>
                             <a href="https://xreddr.github.io" class="glass">Contact</a>
+                            {% if g.user %}
+                            <a href="{{ url_for('web.register') }}" class="glass">{{ g.user['id'] }}</a>
+                            {% endif %}
                             <a class="menu_buff"></a>  
                         </section>
                         {% if g.user %}
