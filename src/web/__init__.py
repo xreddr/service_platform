@@ -6,25 +6,22 @@ bp = Blueprint('web', __name__, url_prefix='/')
 
 query_var = '?'
 
-@bp.route('/')
+@bp.route('/', methods=('GET', 'POST'))
 def index():
-    return render_template('wsc/index.html', OPEN_REG=current_app.config['OPEN_REG'])
-
-@bp.route('/login', methods=('GET', 'POST'))
-def login():
 
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         if request.form['login'] == 'reg':
-            return render_template('wsc/reg.html', username=username, password=password)
+            return redirect(url_for('web.register', username=username, password=password))
         
         response = auth.login_user(username, password)
+        print(response['code'])
         if response['code'] == 0:
             return redirect(url_for('web.home_page'))
+        
+    return render_template('wsc/index.html', OPEN_REG=current_app.config['OPEN_REG'], ADMIN_CODE=current_app.config['ADMIN_CODE'])
 
-
-    return render_template('wsc/login.html', OPEN_REG=current_app.config['OPEN_REG'])
 
 @bp.route('/logout', methods=('GET',))
 def logout():
@@ -35,14 +32,22 @@ def logout():
 
 @bp.route('/register', methods=('POST', 'GET'))
 def register():
+    # if not current_app.config['OPEN_REG'] and g.user['role'] != current_app.config['ADMIN_CODE']:
+    #     return redirect(url_for('web.index'))
+        
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         confirm_pass = request.form['confirm_pass']
 
         if password == confirm_pass:
-
-            return render_template('wsc/about.html')
+            reg = auth.register_user(username, password)
+            print(reg['code'])
+            if reg['code'] == 0:
+                logged = auth.login_user(username, password)
+                print(logged['code'])
+                if logged['code'] == 0:
+                    return render_template('wsc/about.html')
         
     return render_template('wsc/reg.html')
 

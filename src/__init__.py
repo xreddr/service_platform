@@ -9,7 +9,8 @@ def create_app(test_config=None):
         LITE_DB='default.sqlite',
         DEFAULT_USER='admin',
         DEFAULT_PASSWORD='password',
-        OPEN_REG=True
+        OPEN_REG=True,
+        ADMIN_CODE='A'
     )
     if test_config is None:
         app.config.from_pyfile('config.py', silent=True)
