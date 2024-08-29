@@ -1,10 +1,10 @@
 import functools
+import werkzeug.exceptions
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import Blueprint, render_template, request, session, url_for, current_app, g, redirect
 from src import db, auth
 bp = Blueprint('web', __name__, url_prefix='/')
 
-query_var = '?'
 
 @bp.route('/', methods=('GET', 'POST'))
 def index():
@@ -12,9 +12,11 @@ def index():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        if request.form['login'] == 'reg':
-            return redirect(url_for('web.register', username=username, password=password))
-        
+        try:
+            if request.form['login'] == 'reg':
+                return render_template('wsc/reg.html', username=username, password=password)
+        except werkzeug.exceptions.BadRequestKeyError:
+            pass
         response = auth.login_user(username, password)
         print(response['code'])
         if response['code'] == 0:
@@ -31,6 +33,7 @@ def logout():
 # CREATE
 
 @bp.route('/register', methods=('POST', 'GET'))
+@auth.open_reg_required
 def register():
     # if not current_app.config['OPEN_REG'] and g.user['role'] != current_app.config['ADMIN_CODE']:
     #     return redirect(url_for('web.index'))

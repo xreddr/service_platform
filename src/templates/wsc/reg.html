@@ -3,7 +3,7 @@
 
 {% block header %}
 <h1>Whale Shark Capital</h1>
-<form method="POST" id="login_form">
+<form method="POST" id="login_form", action="/register">
     <label for="username">Username</label>
     {% if username and password %}
     <input name="username" id="username" required value="{{ username }}">

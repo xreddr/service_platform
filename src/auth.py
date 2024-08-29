@@ -1,6 +1,6 @@
 import psycopg2
 import functools
-from flask import Blueprint, current_app, g, session
+from flask import Blueprint, current_app, g, session, redirect, url_for, render_template
 from werkzeug.security import check_password_hash, generate_password_hash
 from .db import pg_conn, ping_conn, lite_conn
 
@@ -280,3 +280,18 @@ def login_required(view):
 '''
 WEB WRAPPERS
 '''
+
+def open_reg_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        '''Takes view. Returns view.'''
+        try:
+            if current_app.config['OPEN_REG'] != True and g.user['role'] != current_app.config['ADMIN_CODE']:
+                return redirect(url_for('web.index'))
+        except IndexError:
+            return redirect(url_for('web.index'))
+
+        return view(**kwargs)
+    
+    return wrapped_view
+        
