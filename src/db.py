@@ -97,7 +97,7 @@ def init_db():
         db.executescript(f.read().decode('utf8'))
     cur = db.cursor()
 
-    cur.execute("INSERT INTO user (username, password, roll) VALUES (?,?,?);",
+    cur.execute("INSERT INTO user (username, password, role) VALUES (?,?,?);",
                 (current_app.config['DEFAULT_USER'], generate_password_hash(current_app.config['DEFAULT_PASSWORD']), current_app.config['ADMIN_CODE'])
                 )
 

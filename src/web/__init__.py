@@ -1,4 +1,5 @@
 import functools
+import sqlite3
 import werkzeug.exceptions
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import Blueprint, render_template, request, session, url_for, current_app, g, redirect
@@ -35,8 +36,6 @@ def logout():
 @bp.route('/register', methods=('POST', 'GET'))
 @auth.open_reg_required
 def register():
-    # if not current_app.config['OPEN_REG'] and g.user['role'] != current_app.config['ADMIN_CODE']:
-    #     return redirect(url_for('web.index'))
         
     if request.method == 'POST':
         username = request.form['username']
@@ -44,17 +43,21 @@ def register():
         confirm_pass = request.form['confirm_pass']
 
         if password == confirm_pass:
-            reg = auth.register_user(username, password)
+            try:
+                reg = auth.register_user(username, password)
+            except sqlite3.IntegrityError:
+                reg = {'code': 0}
             print(reg['code'])
             if reg['code'] == 0:
                 logged = auth.login_user(username, password)
                 print(logged['code'])
                 if logged['code'] == 0:
-                    return render_template('wsc/about.html')
+                    return render_template('wsc/home.html')
         
     return render_template('wsc/reg.html')
 
 
 @bp.route('/home')
+@auth.authorize_login
 def home_page():
-    return render_template('wsc/about.html')
+    return render_template('wsc/home.html')

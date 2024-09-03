@@ -295,3 +295,10 @@ def open_reg_required(view):
     
     return wrapped_view
         
+def authorize_login(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for('web.index'))
+        return view(**kwargs)
+    return wrapped_view

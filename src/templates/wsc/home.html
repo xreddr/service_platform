@@ -2,8 +2,7 @@
 {% extends 'wsc/base.html' %}
 
 {% block header %}
-<img src="{{ url_for('static', filename='title_image.png') }}">
-<h1>About WSC</h1>
+<h1>Welcome {{ g.user['username'] }}</h1>
 {% endblock %}
 
 {% block content %}
