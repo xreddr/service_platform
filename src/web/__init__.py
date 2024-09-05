@@ -61,3 +61,8 @@ def register():
 @auth.authorize_login
 def home_page():
     return render_template('wsc/home.html')
+
+@bp.route('/cookbook')
+@auth.authorize_login
+def cookbook():
+    return render_template('wsc/cookbook.html')

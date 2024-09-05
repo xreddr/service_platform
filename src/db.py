@@ -11,6 +11,7 @@ bp = Blueprint('db', __name__, url_prefix='/db')
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db)
+    app.cli.add_command(init_cookbookdb)
 
 
 '''
@@ -101,6 +102,22 @@ def init_db():
                 (current_app.config['DEFAULT_USER'], generate_password_hash(current_app.config['DEFAULT_PASSWORD']), current_app.config['ADMIN_CODE'])
                 )
 
+    db.commit()
+    cur.close()
+    db.close()
+
+@bp.cli.command('init-cookbookdb')
+def init_cookbookdb():
+    '''No args. No returns'''
+    db = lite_conn(source='cookbook.sqlite')
+    with current_app.open_resource('cookbook.sql') as f:
+        db.executescript(f.read().decode('utf8'))
+    cur = db.cursor()
+
+    cur.execute("INSERT INTO recipe (title, recipe) VALUES (?,?);",
+                ('Sampe', 'A bit of this, a bit of that')
+                )
+    
     db.commit()
     cur.close()
     db.close()
