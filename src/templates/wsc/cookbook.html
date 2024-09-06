@@ -7,6 +7,9 @@
 
 {% block content %}
 <section id="recipe_list">
+    {% for recipe in recipes %}
+    <p>{{ recipe['title'] }}</p>
+    {% endfor %}
 
 </section>
 {% endblock %}

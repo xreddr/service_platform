@@ -84,6 +84,7 @@ def close_db(e=None):
         db.close()
 
 
+
 '''
 CLI COMMANDS
 Pre-runtime set up commands
@@ -117,7 +118,6 @@ def init_cookbookdb():
     cur.execute("INSERT INTO recipe (title, recipe) VALUES (?,?);",
                 ('Sampe', 'A bit of this, a bit of that')
                 )
-    
     db.commit()
     cur.close()
     db.close()

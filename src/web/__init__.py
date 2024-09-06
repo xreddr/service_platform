@@ -65,4 +65,11 @@ def home_page():
 @bp.route('/cookbook')
 @auth.authorize_login
 def cookbook():
-    return render_template('wsc/cookbook.html')
+    db.close_db()
+    conn = db.lite_conn(source='cookbook.sqlite')
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM recipe;")
+    recipes = cur.fetchall()
+    cur.close()
+    db.close_db()
+    return render_template('wsc/cookbook.html', recipes=recipes)
