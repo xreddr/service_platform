@@ -3,13 +3,16 @@
 
 {% block header %}
 <h1>{{ g.user['username'] }}'s Cookbook</h1>
-{% endblock %}
 
-{% block content %}
-<section id="recipe_list">
+<section id="recipe_list"></section>
     {% for recipe in recipes %}
-    <p>{{ recipe['title'] }}</p>
+    <h1>{{ recipe['title'] }}</h1>
+    <p>{{ recipe['recipe'] }}</p>
     {% endfor %}
 
 </section>
+{% endblock %}
+
+{% block content %}
+
 {% endblock %}

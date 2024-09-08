@@ -60,13 +60,22 @@ def register():
 @bp.route('/home')
 @auth.authorize_login
 def home_page():
-    return render_template('wsc/home.html')
+    db.close_db()
+    try:
+        conn = db.lite_conn()
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM service;")
+        services = cur.fetchall()
+    except all as e:
+        services = e
+
+    return render_template('wsc/home.html', services=services)
 
 @bp.route('/cookbook')
 @auth.authorize_login
 def cookbook():
     db.close_db()
-    conn = db.lite_conn(source='cookbook.sqlite')
+    conn = db.lite_conn()
     cur = conn.cursor()
     cur.execute("SELECT * FROM recipe;")
     recipes = cur.fetchall()

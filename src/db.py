@@ -110,7 +110,8 @@ def init_db():
 @bp.cli.command('init-cookbookdb')
 def init_cookbookdb():
     '''No args. No returns'''
-    db = lite_conn(source='cookbook.sqlite')
+    # Writes the cookbook database
+    db = lite_conn()
     with current_app.open_resource('cookbook.sql') as f:
         db.executescript(f.read().decode('utf8'))
     cur = db.cursor()
@@ -118,6 +119,13 @@ def init_cookbookdb():
     cur.execute("INSERT INTO recipe (title, recipe) VALUES (?,?);",
                 ('Sampe', 'A bit of this, a bit of that')
                 )
+    try:
+        cur.execute("INSERT INTO service (name, link) VALUES (?,?);",
+                    ('cookbook', 'cookbook.sqlite')
+        )
+    except sqlite3.IntegrityError:
+        pass
+        
     db.commit()
     cur.close()
-    db.close()
+    close_db()
