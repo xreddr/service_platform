@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% extends 'wsc/base.html' %}
+
+{% block header %}
+<h1>{{ g.user['username'] }}'s Latest Recipe</h1>
+{% endblock %}
+
+{% block content %}
+<section id="input_recipe"></section>
+    <form method="POST">
+        <input type="text" name="title" id="recipe_title">
+        <input type="textfield" name="recipe" id="recipe_body">
+    </form>
+</section>
+{% endblock %}

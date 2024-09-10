@@ -4,7 +4,13 @@ import werkzeug.exceptions
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import Blueprint, render_template, request, session, url_for, current_app, g, redirect
 from src import db, auth
+
+
+
+
 bp = Blueprint('web', __name__, url_prefix='/')
+from . import cookbook
+bp.register_blueprint(cookbook.bp)
 
 
 @bp.route('/', methods=('GET', 'POST'))
@@ -81,4 +87,4 @@ def cookbook():
     recipes = cur.fetchall()
     cur.close()
     db.close_db()
-    return render_template('wsc/cookbook.html', recipes=recipes)
+    return render_template('cookbook/home.html', recipes=recipes)

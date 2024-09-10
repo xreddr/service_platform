@@ -3,16 +3,18 @@
 
 {% block header %}
 <h1>{{ g.user['username'] }}'s Cookbook</h1>
+<section id="cb_home_menu" style="display:flex;flex-direction:column">
+    <a href="{{ url_for('web.cookbook.new_recipe') }}"><button>New Recipe</button></a>
+    <a><button>View</button></a>
+</section>
 
+{% endblock %}
+
+{% block content %}
 <section id="recipe_list"></section>
     {% for recipe in recipes %}
     <h1>{{ recipe['title'] }}</h1>
     <p>{{ recipe['recipe'] }}</p>
     {% endfor %}
-
 </section>
-{% endblock %}
-
-{% block content %}
-
 {% endblock %}
