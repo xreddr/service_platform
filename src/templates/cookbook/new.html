@@ -7,9 +7,15 @@
 
 {% block content %}
 <section id="input_recipe"></section>
-    <form method="POST">
+    <form method="POST" style="display:flex;flex-direction:column;width:80%;margin:auto;">
+        <label for="title">Recipe Title:</label>
         <input type="text" name="title" id="recipe_title">
-        <input type="textfield" name="recipe" id="recipe_body">
+        <label for="recipe_body">Recipe:</label>
+        <textarea name="recipe" id="recipe_body" rows="20">
+This is a bunch of text to try this out like this yeah yeah yeah oh boy
+        </textarea>
+        <label for="keywords">Recipe Keywords *Seperate by comma*</label>
+        <input type="text" name="keywords" id="recipe_keywords">
     </form>
 </section>
 {% endblock %}
