@@ -90,7 +90,7 @@ CLI COMMANDS
 Pre-runtime set up commands
 '''
 
-
+# Run First
 @bp.cli.command('init-db')
 def init_db():
     '''No args. No returns'''

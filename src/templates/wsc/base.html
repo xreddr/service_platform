@@ -70,6 +70,9 @@
                     </section>
                     <div class="nav_spacer"></div>
                     <img id="title_img" src="{{ url_for('static', filename='wsc/images/title_image.png') }}">
+                    {% for message in get_flashed_messages() %}
+                    <div class="flash">{{ message }}</div>
+                    {% endfor %}
                     {% block header %}{% endblock %}
                 </header>
                 <main>
