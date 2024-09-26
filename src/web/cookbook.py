@@ -23,8 +23,30 @@ def new_recipe():
         print(type(keywords), type(keywords_string))
         print(keywords_string)
         print(user_id)
+        error = None
+
+        conn = db.lite_conn()
+        cur = conn.cursor()
+        try:
+            cur.execute("INSERT INTO recipe (title, recipe, keywords) VALUES (?,?,?);",
+                        (title, body, keywords_string))
+        except sqlite3.IntegrityError:
+            error = "Recipe already exists!"
+        conn.commit()
+        cur.execute("SELECT id FROM recipe WHERE title=?;",
+                    (title,))
+        recipe_id = cur.fetchone()
+        print(recipe_id[0])
+        print(session['user_id'])
+        # cur.execute("INSERT INTO user_recipe (user_id, recipe_id) VALUES (?,?);",
+        #             (int(session[user_id]), int(recipe_id)))
         # conn = db.lite_conn()
         # cur = conn.cursor()
-        flash('button pressed!')
+        if error:
+            flash(error)
+        else:
+            flash("New recipe logged!")
 
+        return redirect(url_for('web.cookbook'))
+    
     return render_template('cookbook/new.html')

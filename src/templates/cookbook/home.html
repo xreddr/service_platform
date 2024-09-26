@@ -5,7 +5,7 @@
 <h1>{{ g.user['username'] }}'s Cookbook</h1>
 <section id="cb_home_menu" style="display:flex;flex-direction:column">
     <a href="{{ url_for('web.cookbook.new_recipe') }}"><button>New Recipe</button></a>
-    <a><button>View</button></a>
+    <a href="#recipe_list"><button>View</button></a>
 </section>
 
 {% endblock %}
