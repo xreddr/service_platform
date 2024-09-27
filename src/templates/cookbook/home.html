@@ -6,6 +6,14 @@
 <section id="cb_home_menu" style="display:flex;flex-direction:column">
     <a href="{{ url_for('web.cookbook.new_recipe') }}"><button>New Recipe</button></a>
     <a href="#recipe_list"><button>View</button></a>
+    <form>
+        <input type="search" list="recipes" placeholder="Recipe?">
+        <datalist id="recipes">
+            {% for recipe in recipes %}
+            <option value="{{ recipe['title'] }}" />
+            {% endfor %}
+        </datalist>
+    </form>
 </section>
 
 {% endblock %}
