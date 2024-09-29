@@ -99,7 +99,15 @@ def init_db():
         db.executescript(f.read().decode('utf8'))
     cur = db.cursor()
 
-    cur.execute("INSERT INTO user (username, password, role) VALUES (?,?,?);",
+    roles = ['owner', 'admin', 'user']
+    for role in roles:
+        cur.execute("INSERT INTO role (role) VALUES (?)",(role,))
+        db.commit()
+    role_id = cur.execute("SELECT id FROM role WHERE role=?", (roles[0],)).fetchone()
+    current_app.config.update(
+        ADMIN_CODE=int(role_id[0])
+    )
+    cur.execute("INSERT INTO user (username, password, role_id) VALUES (?,?,?);",
                 (current_app.config['DEFAULT_USER'], generate_password_hash(current_app.config['DEFAULT_PASSWORD']), current_app.config['ADMIN_CODE'])
                 )
 
@@ -116,8 +124,8 @@ def init_cookbookdb():
         db.executescript(f.read().decode('utf8'))
     cur = db.cursor()
 
-    cur.execute("INSERT INTO recipe (title, recipe) VALUES (?,?);",
-                ('Sampe', 'A bit of this, a bit of that')
+    cur.execute("INSERT INTO recipe (user_id, title, recipe) VALUES (?,?,?);",
+                (1, 'Sample', 'A bit of this, a bit of that')
                 )
     try:
         cur.execute("INSERT INTO service (name, link) VALUES (?,?);",

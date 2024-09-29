@@ -47,10 +47,15 @@ def register():
         username = request.form['username']
         password = request.form['password']
         confirm_pass = request.form['confirm_pass']
+        role_id = 3
+        admin_role = request.form.get('admin')
+        if admin_role:
+            role = auth.get_role_id('admin')
+            role_id = role['body']
 
         if password == confirm_pass:
             try:
-                reg = auth.register_user(username, password)
+                reg = auth.register_user(username, password, role_id)
             except sqlite3.IntegrityError:
                 reg = {'code': 0}
             print(reg['code'])

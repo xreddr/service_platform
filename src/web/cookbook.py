@@ -8,6 +8,12 @@ from src import db, auth
 
 bp = Blueprint('cookbook', __name__, url_prefix='cookbook')
 
+
+'''
+Create
+'''
+
+
 @bp.route('/new', methods=('GET', 'POST'))
 @auth.authorize_login
 def new_recipe():
@@ -32,6 +38,7 @@ def new_recipe():
                         (title, body, keywords_string))
         except sqlite3.IntegrityError:
             error = "Recipe already exists!"
+        print(error)
         conn.commit()
         cur.execute("SELECT id FROM recipe WHERE title=?;",
                     (title,))
@@ -50,3 +57,30 @@ def new_recipe():
         return redirect(url_for('web.cookbook'))
     
     return render_template('cookbook/new.html')
+
+'''
+Read
+'''
+
+@bp.route('/recipes', methods=('GET', 'POST'))
+@auth.authorize_login
+def recipes():
+    return redirect(url_for('web.cookbook'))
+
+'''
+Update
+'''
+
+@bp.route('/edit', methods=('GET', 'POST'))
+@auth.authorize_login
+def edit_recipe():
+    return redirect(url_for('web.cookbook'))
+
+'''
+Delete
+'''
+
+@bp.route('/delete', methods=('GET', 'POST'))
+@auth.authorize_login
+def delete_recipe():
+    return redirect(url_for('web.cookbook'))

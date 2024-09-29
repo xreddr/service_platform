@@ -7,6 +7,13 @@ CREATE TABLE IF NOT EXISTS user (
     id INTEGER NOT NULL,
     username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
+    role_id INTEGER NOT NULL,
+    PRIMARY KEY(id AUTOINCREMENT),
+    FOREIGN KEY(role_id) REFERENCES role(id) ON DELETE CASCADE
+);
+DROP TABLE IF EXISTS role;
+CREATE TABLE IF NOT EXISTS role (
+    id INTEGER NOT NULL,
     role TEXT,
     PRIMARY KEY(id AUTOINCREMENT)
 );
@@ -17,7 +24,8 @@ CREATE TABLE IF NOT EXISTS post (
     body TEXT NOT NULL,
     image TEXT,
     author TEXT NOT NULL,
-    type TEXT,
+    service_id TEXT,
+    scope TEXT DEFAULT 'global',
     PRIMARY KEY(id AUTOINCREMENT),
     FOREIGN KEY(author) REFERENCES user(id)
 );
@@ -27,9 +35,9 @@ CREATE TABLE IF NOT EXISTS comment (
     date DATE NOT NULL,
     body TEXT NOT NULL,
     author TEXT NOT NULL,
-    post INTEGER NOT NULL,
+    post_id INTEGER NOT NULL UNIQUE,
     PRIMARY KEY(id AUTOINCREMENT),
-    FOREIGN KEY(post) REFERENCES post(id)
+    FOREIGN KEY(post_id) REFERENCES post(id)
 );
 DROP TABLE IF EXISTS service;
 CREATE TABLE IF NOT EXISTS service (

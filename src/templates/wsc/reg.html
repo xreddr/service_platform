@@ -16,7 +16,11 @@
     {% endif %}
     <label for="confirm_pass">Re-type Password</label>
     <input name="confirm_pass" type="password" id="confirm_pass" required>
-    <input type="submit" value="Log In">
+    <input type="radio" id="admin" name="admin" value="admin">
+    <label for="admin">Admin</label>
+    <input type="radio" id="user" name="user" value="user" checked="checked">
+    <label for="user">User</label>
+    <input type="submit" value="Register">
 </form>
 {% endblock %}
 

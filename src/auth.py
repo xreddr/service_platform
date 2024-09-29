@@ -31,17 +31,17 @@ SQLITE CONVERSION
 
 # CREATE
 
-def register_user(username, password):
+def register_user(username, password, role_id):
     '''Takes strings. Returns res dict.'''
     error = None
     conn = lite_conn()
 
-    insert_user = f"INSERT INTO user (username, password) VALUES ({query_var}, {query_var})"
+    insert_user = f"INSERT INTO user (username, password, role_id) VALUES ({query_var}, {query_var}, {query_var})"
     select_user = f"SELECT id, username FROM user WHERE username = {query_var}"
 
     cur = conn.cursor()
     try:
-        cur.execute(insert_user, (username, generate_password_hash(password)))
+        cur.execute(insert_user, (username, generate_password_hash(password), role_id))
     except (psycopg2.errors.UniqueViolation):
         error = "User already exists"
     conn.commit()
@@ -84,6 +84,25 @@ def list_users():
         "body": user_list
     })
 
+    return res
+
+def get_role_id(role):
+    '''Takes none. Returns res dict.'''
+    conn = lite_conn()
+    cur = conn.cursor()
+    cur.execute("SELECT id FROM role WHERE id = ?;", (role,))
+    role_id = cur.fetchone()
+    if role_id[0]:
+        res.update({
+            "code": code['pass'],
+            "body": role_id[0]
+        })
+    else:
+        res.update({
+            "code": code['fail'],
+            "body": "Couldn't retrieve role id"
+        })
+    
     return res
 
 # UPDATE
@@ -286,7 +305,7 @@ def open_reg_required(view):
     def wrapped_view(**kwargs):
         '''Takes view. Returns view.'''
         try:
-            if current_app.config['OPEN_REG'] != True and g.user['role'] != current_app.config['ADMIN_CODE']:
+            if current_app.config['OPEN_REG'] != True and g.user['role_id'] != int(current_app.config['ADMIN_CODE']):
                 return redirect(url_for('web.index'))
         except IndexError:
             return redirect(url_for('web.index'))
