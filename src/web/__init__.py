@@ -47,10 +47,14 @@ def register():
         username = request.form['username']
         password = request.form['password']
         confirm_pass = request.form['confirm_pass']
-        role_id = 3
-        admin_role = request.form.get('admin')
-        if admin_role:
+        role = request.form.get('role')
+        if role == 'admin':
             role = auth.get_role_id('admin')
+            print(role['body'])
+            role_id = role['body']
+        else:
+            role = auth.get_role_id('user')
+            print(role['body'])
             role_id = role['body']
 
         if password == confirm_pass:

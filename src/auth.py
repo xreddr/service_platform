@@ -90,7 +90,7 @@ def get_role_id(role):
     '''Takes none. Returns res dict.'''
     conn = lite_conn()
     cur = conn.cursor()
-    cur.execute("SELECT id FROM role WHERE id = ?;", (role,))
+    cur.execute("SELECT id FROM role WHERE role = ?;", (role,))
     role_id = cur.fetchone()
     if role_id[0]:
         res.update({
@@ -305,7 +305,7 @@ def open_reg_required(view):
     def wrapped_view(**kwargs):
         '''Takes view. Returns view.'''
         try:
-            if current_app.config['OPEN_REG'] != True and g.user['role_id'] != int(current_app.config['ADMIN_CODE']):
+            if current_app.config['OPEN_REG'] != True and g.user['role_id'] > 2:
                 return redirect(url_for('web.index'))
         except IndexError:
             return redirect(url_for('web.index'))

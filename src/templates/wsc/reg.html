@@ -16,10 +16,12 @@
     {% endif %}
     <label for="confirm_pass">Re-type Password</label>
     <input name="confirm_pass" type="password" id="confirm_pass" required>
-    <input type="radio" id="admin" name="admin" value="admin">
+    {% if g.user['role_id'] == 1 %}
+    <input type="radio" id="admin" name="role" value="admin">
     <label for="admin">Admin</label>
-    <input type="radio" id="user" name="user" value="user" checked="checked">
+    <input type="radio" id="user" name="role" value="user" checked>
     <label for="user">User</label>
+    {% endif %}
     <input type="submit" value="Register">
 </form>
 {% endblock %}
