@@ -86,6 +86,16 @@ def home_page():
 
     return render_template('wsc/home.html', services=services)
 
+@bp.route('manage_users', methods=('GET', 'POST'))
+@auth.authorize_login
+def manage_user_page():
+    conn = db.lite_conn()
+    cur = conn.cursor()
+    user_list = cur.execute("SELECT * FROM user WHERE role_id = ?;", (3,)).fetchall()
+    admin_list = cur.execute("SELECT * FROM user WHERE role_id = ?;", (2,)).fetchall()
+
+    return render_template('wsc/manage_users.html', user_list=user_list, admin_list=admin_list)
+
 @bp.route('/cookbook')
 @auth.authorize_login
 def cookbook():

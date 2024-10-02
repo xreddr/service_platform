@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% extends 'wsc/base.html' %}
+
+{% block header %}
+<h1>Manage Users</h1>
+<a href="{{ url_for('web.register') }}" class="glass">Register New User</a>
+
+{% endblock %}  
+
+{% block content %}
+{% if g.user['role_id'] == 1 %}
+{% for admin in admin_list %}
+<p>{{ admin['username'] }},{{ admin['id'] }}, {{ admin['role_id'] }}</p>
+{% endfor %}
+{% endif %}
+{% for user in user_list %}
+<p>{{ user['username'] }},{{ user['id'] }}, {{ user['role_id'] }}</p>
+{% endfor %}
+{% endblock %}
