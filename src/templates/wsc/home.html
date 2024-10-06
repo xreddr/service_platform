@@ -4,7 +4,7 @@
 {% block header %}
 <h1>Welcome {{ g.user['username'] }}</h1>
 {% for service in services %}
-<a href="{{ url_for('web.cookbook')}}"><button>{{ service['name'] }}</button></a>
+<a href="{{ url_for(service['link'])}}"><button>{{ service['name'] }}</button></a>
 {% endfor %}
 {% endblock %}
 

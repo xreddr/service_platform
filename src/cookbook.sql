@@ -2,8 +2,6 @@ PRAGMA foreign_keys = off;
 
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS user_recipe;
-
 DROP TABLE IF EXISTS recipe;
 CREATE TABLE IF NOT EXISTS recipe (
     id INTEGER NOT NULL,
@@ -14,7 +12,7 @@ CREATE TABLE IF NOT EXISTS recipe (
     PRIMARY KEY(id AUTOINCREMENT),
     FOREIGN KEY(user_id) REFERENCES user(id)
 );
-DROP TABLE IF EXISTS cookbook_keyword;
+DROP TABLE IF EXISTS cookbook_user_keyword;
 CREATE TABLE IF NOT EXISTS keyword (
     id INTEGER NOT NULL,
     user_id INTEGER NOT NULL UNIQUE,

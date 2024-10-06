@@ -11,6 +11,8 @@ from src import db, auth
 bp = Blueprint('web', __name__, url_prefix='/')
 from . import cookbook
 bp.register_blueprint(cookbook.bp)
+from . import chatter
+bp.register_blueprint(chatter.bp)
 
 
 @bp.route('/', methods=('GET', 'POST'))
