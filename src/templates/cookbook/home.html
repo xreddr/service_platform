@@ -7,10 +7,10 @@
     <a href="{{ url_for('web.cookbook.new_recipe') }}"><button>New Recipe</button></a>
     <a href="#recipe_list"><button>View</button></a>
     <form>
-        <input type="search" list="recipes" placeholder="Recipe?">
+        <input type="search" list="recipes" placeholder="Keyword?">
         <datalist id="recipes">
-            {% for recipe in recipes %}
-            <option value="{{ recipe['title'] }}" />
+            {% for keyword in keywords %}
+            <option value="{{ keyword['keyword'] }}" />
             {% endfor %}
         </datalist>
     </form>

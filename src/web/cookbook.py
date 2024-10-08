@@ -24,11 +24,11 @@ def new_recipe():
         keywords = request.form['keywords'].split(',')
         keywords_string = json.dumps(keywords)
         user_id = session.get('user_id')
-        print(title)
-        print(body)
-        print(type(keywords), type(keywords_string))
-        print(keywords_string)
-        print(user_id)
+        # print(title)
+        # print(body)
+        # print(type(keywords), type(keywords_string))
+        # print(keywords_string)
+        # print(user_id)
         error = None
 
         conn = db.lite_conn()
@@ -40,6 +40,15 @@ def new_recipe():
             error = "Recipe already exists!"
         print(error)
         conn.commit()
+
+        recipe_id = cur.execute("SELECT id FROM recipe WHERE user_id = ? AND title = ?;",
+                    (user_id, title)).fetchone()
+        for keyword in keywords:
+            cur.execute("INSERT INTO recipe_keyword (recipe_id, user_id, keyword) VALUES (?,?,?);",
+                        (recipe_id[0], user_id, keyword)
+                        )
+            conn.commit()
+            print(keyword)
 
         if error:
             flash(error)

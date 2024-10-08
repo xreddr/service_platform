@@ -23,9 +23,10 @@ CREATE TABLE IF NOT EXISTS keyword (
 DROP TABLE IF EXISTS recipe_keyword;
 CREATE TABLE IF NOT EXISTS recipe_keyword (
     recipe_id INTEGER NOT NULL,
-    keyword_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    keyword text NOT NULL,
     FOREIGN KEY(recipe_id) REFERENCES recipe(id),
-    FOREIGN KEY(keyword_id) REFERENCES keyword(id)
+    FOREIGN KEY(user_id) REFERENCES user(id)
 );
 
 COMMIT TRANSACTION;
