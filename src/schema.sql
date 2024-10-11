@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS post (
     id INTEGER NOT NULL,
     date DATE NOT NULL,
     body TEXT NOT NULL,
-    image TEXT,
+    image TEXT DEFAULT 'none',
     author TEXT NOT NULL,
     service_id TEXT,
     scope TEXT DEFAULT 'global',

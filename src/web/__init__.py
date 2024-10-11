@@ -111,3 +111,8 @@ def cookbook():
     cur.close()
     db.close_db()
     return render_template('cookbook/home.html', recipes=recipes, keywords=keywords)
+
+@bp.route('/chatter')
+@auth.authorize_login
+def chatter_page():
+    return render_template('chatter/home.html')
