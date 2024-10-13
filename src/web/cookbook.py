@@ -24,31 +24,32 @@ def new_recipe():
         keywords = request.form['keywords'].split(',')
         keywords_string = json.dumps(keywords)
         user_id = session.get('user_id')
-        print(title)
-        print(body)
-        print(type(keywords), type(keywords_string))
-        print(keywords_string)
-        print(user_id)
+        # print(title)
+        # print(body)
+        # print(type(keywords), type(keywords_string))
+        # print(keywords_string)
+        # print(user_id)
         error = None
 
         conn = db.lite_conn()
         cur = conn.cursor()
         try:
-            cur.execute("INSERT INTO recipe (title, recipe, keywords) VALUES (?,?,?);",
-                        (title, body, keywords_string))
+            cur.execute("INSERT INTO recipe (user_id, title, recipe, keywords) VALUES (?,?,?,?);",
+                        (user_id, title, body, keywords_string))
         except sqlite3.IntegrityError:
             error = "Recipe already exists!"
         print(error)
         conn.commit()
-        cur.execute("SELECT id FROM recipe WHERE title=?;",
-                    (title,))
-        recipe_id = cur.fetchone()
-        print(recipe_id[0])
-        print(session['user_id'])
-        # cur.execute("INSERT INTO user_recipe (user_id, recipe_id) VALUES (?,?);",
-        #             (int(session[user_id]), int(recipe_id)))
-        # conn = db.lite_conn()
-        # cur = conn.cursor()
+
+        recipe_id = cur.execute("SELECT id FROM recipe WHERE user_id = ? AND title = ?;",
+                    (user_id, title)).fetchone()
+        for keyword in keywords:
+            cur.execute("INSERT INTO recipe_keyword (recipe_id, user_id, keyword) VALUES (?,?,?);",
+                        (recipe_id[0], user_id, keyword)
+                        )
+            conn.commit()
+            print(keyword)
+
         if error:
             flash(error)
         else:

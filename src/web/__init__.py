@@ -11,6 +11,8 @@ from src import db, auth
 bp = Blueprint('web', __name__, url_prefix='/')
 from . import cookbook
 bp.register_blueprint(cookbook.bp)
+from . import chatter
+bp.register_blueprint(chatter.bp)
 
 
 @bp.route('/', methods=('GET', 'POST'))
@@ -102,8 +104,15 @@ def cookbook():
     db.close_db()
     conn = db.lite_conn()
     cur = conn.cursor()
-    cur.execute("SELECT * FROM recipe;")
+    cur.execute("SELECT * FROM recipe WHERE user_id = ?;", (session['user_id'],))
     recipes = cur.fetchall()
+    cur.execute("SELECT * FROM recipe_keyword WHERE user_id = ?;", (session['user_id'],))
+    keywords = cur.fetchall()
     cur.close()
     db.close_db()
-    return render_template('cookbook/home.html', recipes=recipes)
+    return render_template('cookbook/home.html', recipes=recipes, keywords=keywords)
+
+@bp.route('/chatter')
+@auth.authorize_login
+def chatter_page():
+    return render_template('chatter/home.html')

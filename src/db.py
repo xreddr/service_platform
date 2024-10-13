@@ -129,7 +129,7 @@ def init_cookbookdb():
                 )
     try:
         cur.execute("INSERT INTO service (name, link) VALUES (?,?);",
-                    ('cookbook', 'cookbook.sqlite')
+                    ('cookbook', 'web.cookbook')
         )
     except sqlite3.IntegrityError:
         pass

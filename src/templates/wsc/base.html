@@ -56,7 +56,6 @@
                             <a href="/#ad1" class="glass">Cloud Apps</a>
                             <a href="https://xreddr.github.io" class="glass">Contact</a>
                             {% if g.user['role_id'] and g.user['role_id'] <= 2 %}
-                            <a href="{{ url_for('web.register') }}" class="glass">Register User</a>
                             <a href="{{ url_for('web.manage_user_page') }}" class="glass">Manage Users</a>
                             {% endif %}
                             <a class="menu_buff"></a>  
