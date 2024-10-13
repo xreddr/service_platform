@@ -21,20 +21,17 @@
                             <div class="menu3"></div>
                         </section>
                         <section class="top_drop">
-                            <a class="menu_buff_top"></a>
-                            <a href="#ad1" id="show" class="glass">Cloud Apps</a>
-                            <a href="https://xreddr.github.io" id="show" class="glass">Contact</a>
+                            {% include 'wsc/menu_links.html' %}
                         </section>
                     </section>
-                    <a href="/#ad1" class="glassG">Coud Apps</a>
-                    <a href="https://xreddr.github.io" class="glassG">Contact</a>
+                    {% include 'wsc/menu_links.html' %}
                 </section>
                 <section class="right_nav">
                     {% if g.user %}
-                    <a href="{{ url_for('web.home_page') }}" class="glass">Home</a>
-                    <a href="{{ url_for('web.logout') }}" class="glass">Logout</a>
+                        <a href="{{ url_for('web.home_page') }}" class="glass">Home</a>
+                        <a href="{{ url_for('web.logout') }}" class="glass">Logout</a>
                     {% else %}
-                    <a href="/#login" class="glass">Login</a>
+                        <a href="/#login" class="glass">Login</a>
                     {% endif %}
                     <!-- <a href="/#login" class="glass">PPAS Login</a> -->
                 </section>
@@ -53,25 +50,14 @@
                             </section>
                         </section>
                         <section class="menu_bar">
-                            <a href="/#ad1" class="glass">Cloud Apps</a>
-                            <a href="https://xreddr.github.io" class="glass">Contact</a>
-                            {% if g.user['role_id'] and g.user['role_id'] <= 2 %}
-                            <a href="{{ url_for('web.manage_user_page') }}" class="glass">Manage Users</a>
-                            {% endif %}
-                            <a class="menu_buff"></a>  
+                            {% include 'wsc/menu_links.html' %}
                         </section>
-                        {% if g.user %}
-                        <a href="{{ url_for('web.logout') }}" class="left_icon">Logout</a>
-                        <a href="{{ url_for('web.home_page') }}" class="right_icon">Home</a>    
-                        {% else %}
-                        <a href="/#login" class="left_icon">Login</a>
-                        <a href="{{ url_for('web.index') }}" class="right_icon">Home</a>    
-                        {% endif %}
+                            <a class="menu_buff"></a>
                     </section>
                     <div class="nav_spacer"></div>
                     <img id="title_img" src="{{ url_for('static', filename='wsc/images/title_image.png') }}">
                     {% for message in get_flashed_messages() %}
-                    <div class="flash">{{ message }}</div>
+                        <div class="flash">{{ message }}</div>
                     {% endfor %}
                     {% block header %}{% endblock %}
                 </header>
