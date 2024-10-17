@@ -5,6 +5,13 @@ import json
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import Blueprint, flash, render_template, request, session, url_for, current_app, g, redirect
 from src import db, auth
+# CKEditor
+from flask import Flask
+from flask_ckeditor import CKEditor
+
+current_app.config.update(CKEDITOR_SERVE_LOCAL='ON', CKEDITOR_HEIGHT=400)
+ckeditor = CKEditor(current_app)
+
 
 bp = Blueprint('cookbook', __name__, url_prefix='cookbook')
 
