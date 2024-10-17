@@ -9,7 +9,7 @@ from src import db, auth
 from flask import Flask
 from flask_ckeditor import CKEditor
 
-current_app.config.update(CKEDITOR_SERVE_LOCAL='ON', CKEDITOR_HEIGHT=400)
+# current_app.config.update(CKEDITOR_SERVE_LOCAL='ON', CKEDITOR_HEIGHT=400)
 ckeditor = CKEditor(current_app)
 
 
@@ -27,7 +27,7 @@ def new_recipe():
 
     if request.method == 'POST':
         title = request.form['title']
-        body = request.form['recipe']
+        body = request.form['ckeditor']
         keywords = request.form['keywords'].split(',')
         keywords_string = json.dumps(keywords)
         user_id = session.get('user_id')
