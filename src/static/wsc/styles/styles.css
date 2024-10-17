@@ -371,6 +371,18 @@ nav {
     z-index: -1;
 }
 
+pre {
+    text-align: left;
+    width: 80%;
+    margin: auto;
+    white-space: pre-line;
+    white-space: pre-wrap;
+    white-space:-moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrape;
+    word-wrap: break-word;
+}
+
 @media only screen and (min-width:1000px) {
     body {
         margin: auto auto auto auto;
@@ -434,13 +446,6 @@ code {
     justify-content: center;
 }
 
-pre {
-    display: flex;
-    margin: 0;
-    text-align: right;
-    align-content: left;
-    max-width: 400px
-}
 
 /* Header icons */
 

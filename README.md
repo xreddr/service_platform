@@ -1,8 +1,8 @@
 Service Platform
-================
+=
 
 A Whale Shark Capital Project
------------------------------
+-
 
 Feel free to explore while directions are being written.
 

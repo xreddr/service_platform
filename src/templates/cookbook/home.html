@@ -19,10 +19,10 @@
 {% endblock %}
 
 {% block content %}
-<section id="recipe_list"></section>
+<section id="recipe_list">
     {% for recipe in recipes %}
     <h1>{{ recipe['title'] }}</h1>
-    <p>{{ recipe['recipe'] }}</p>
+    <pre>{{ recipe['recipe'] }}</pre>
     {% endfor %}
 </section>
 {% endblock %}
