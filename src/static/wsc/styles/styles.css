@@ -383,6 +383,14 @@ pre {
     word-wrap: break-word;
 }
 
+.ckedit {
+    line-height: 0;
+}
+
+.ckedit ol {
+    line-height: 0.5;
+}
+
 @media only screen and (min-width:1000px) {
     body {
         margin: auto auto auto auto;

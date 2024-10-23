@@ -19,4 +19,7 @@
         <input type="submit" value="Add">
     </form>
 </section>
+{{ ckeditor.load() }}
+{{ ckeditor.config(custom_config="addCss('.cke_editable p {margin: 0 !important; }')") }}
+<script src="{{ url_for('static', filename='cookbook/js/ckeditor_config.js') }}"></script>
 {% endblock %}

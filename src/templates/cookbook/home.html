@@ -22,7 +22,9 @@
 <section id="recipe_list">
     {% for recipe in recipes %}
     <h1>{{ recipe['title'] }}</h1>
-    <pre>{{ recipe['recipe'] }}</pre>
+    <pre class="ckedit">{{ recipe['recipe']|safe }}</pre>
+    <pre>{{ recipe['recipe']|safe }}</pre>
+    {{ recipe['recipe']|safe }}
     {% endfor %}
 </section>
 {% endblock %}
