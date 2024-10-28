@@ -22,9 +22,11 @@
 <section id="recipe_list">
     {% for recipe in recipes %}
     <h1>{{ recipe['title'] }}</h1>
-    <pre class="ckedit">{{ recipe['recipe']|safe }}</pre>
-    <pre>{{ recipe['recipe']|safe }}</pre>
-    {{ recipe['recipe']|safe }}
+    {% if "<pre>" in recipe['recipe'] or recipe['recipe'][0] != "<" or "<br />" in recipe['recipe'] %}
+        <pre>{{ recipe['recipe']|safe }}</pre>
+    {% else %}
+        <pre class="ckedit">{{ recipe['recipe']|safe }}</pre>
+    {% endif %}
     {% endfor %}
 </section>
 {% endblock %}
