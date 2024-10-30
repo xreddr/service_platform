@@ -70,10 +70,16 @@ def new_recipe():
 Read
 '''
 
-@bp.route('/recipes', methods=('GET', 'POST'))
+@bp.route('/view/<recipe_id>', methods=('GET', 'POST'))
 @auth.authorize_login
-def recipes():
-    return redirect(url_for('web.cookbook'))
+def recipes(recipe_id):
+    conn = db.lite_conn()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM recipe WHERE id = ?",
+                (recipe_id,)
+                )
+    recipe = cur.fetchone()
+    return render_template('cookbook/view.html', recipe=recipe)
 
 '''
 Update
