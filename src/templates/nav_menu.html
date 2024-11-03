@@ -1,9 +1,9 @@
 <!-- To include for service in user_services logic. Can be adapted into menu_m after menu_d is eliminated. -->
 <section class="menu_bar">
-    <a href="/#ad1" class="glass">Cloud Apps</a>
+    <a href="/#ad1" class="glass">Welcome page</a>
     <a href="https://xreddr.github.io" class="glass">Contact</a>
     {% if g.user['role_id'] and g.user['role_id'] <= 2 %}
     <a href="{{ url_for('web.manage_user_page') }}" class="glass">Manage Users</a>
     {% endif %}
-    <a class="menu_buff"></a>  
+    <a class="menu_buff"></a>
 </section>

@@ -10,7 +10,8 @@ def create_app(test_config=None):
         DEFAULT_USER='admin',
         DEFAULT_PASSWORD='password',
         OPEN_REG=True,
-        ADMIN_CODE=1
+        ADMIN_CODE=1,
+        CLOUD_STORAGE=(None, None)
     )
     if test_config is None:
         app.config.from_pyfile('config.py', silent=True)

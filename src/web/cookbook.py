@@ -94,7 +94,10 @@ def edit_recipe():
 Delete
 '''
 
-@bp.route('/delete', methods=('GET', 'POST'))
+@bp.route('/delete/<recipe_id>', methods=('GET', 'POST'))
 @auth.authorize_login
-def delete_recipe():
+def delete_recipe(recipe_id):
+    conn = db.lite_conn()
+    cur = conn.cursor()
+    cur. execute("DELETE FROM recipe WHERE id = ?;", (recipe_id,))
     return redirect(url_for('web.cookbook'))

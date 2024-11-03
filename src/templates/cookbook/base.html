@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Service Platform</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='wsc/styles/styles.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='cookbook/styles/styles.css') }}">
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <nav>
+            {% include 'nav_d.html' %}
+        </nav>
+        <section id="sleeve">
+            <section class="content">
+                <header id="header">
+                    <!-- Should be in nav. Does not display properly when outside of id=sleeve, or inside id=nav_wrapper -->
+                    {% include 'nav_m.html' %}
+                    <!-- That up there ^ -->
+                    <img id="title_img" src="{{ url_for('static', filename='wsc/images/title_image.png') }}">
+                    {% for message in get_flashed_messages() %}
+                    <div class="flash">{{ message }}</div>
+                    {% endfor %}
+                    <!-- Page specific header -->
+                    {% block header %}{% endblock %}
+                </header>
+                <main>
+                    <!-- Page specific content -->
+                    {% block content %}{% endblock %}
+                </main>
+                <footer>
+                    <h3 class="left_foot">Whale Shark Capital(c)</h3>
+                    <h3 class="right_foot">2019 - 2024</h3>
+                </footer>
+            </section>
+        </section>
+        <script src="{{ url_for('static', filename='wsc/js/index.js')  }}"></script>
+        <script>
+            function LoadScroll() {
+                window.scroll(0,1);
+            }
+            window.onload = LoadScroll;
+        </script>
+    </body>
+</html>

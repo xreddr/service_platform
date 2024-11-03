@@ -4,6 +4,8 @@ import click
 import sqlite3
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from google.cloud import storage
+
 from flask import Blueprint, current_app, g
 
 bp = Blueprint('db', __name__, url_prefix='/db')
@@ -83,6 +85,20 @@ def close_db(e=None):
     if db is not None:
         db.close()
 
+
+'''
+GOOGLE CLOUD
+'''
+
+
+def upload_blob():
+    if current_app.config['CLOUD_STORAGE'][0] is not None:
+        storage_client = storage.Client()
+        bucket = storage_client.bucket(current_app.config['CLOUD_STORAGE'][0])
+        blob = bucket.blob(current_app.config['CLOUD_STORAGE'][1])
+        blob.upload_from_filename(os.path.join(current_app.instance_path, current_app.config['LITE_DB']))
+    else:
+        pass
 
 
 '''

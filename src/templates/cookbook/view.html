@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-{% extends 'wsc/base.html' %}
+{% extends 'cookbook/base.html' %}
 
 {% block header %}
 <h1>{{ recipe['title'] }}</h1>
 {% endblock %}
 
 {% block content %}
-{% if "<pre>" in recipe['recipe'] or recipe['recipe'][0] != "<" or "<br />" in recipe['recipe'] %}
-    <pre>{{ recipe['recipe']|safe }}</pre>
-{% else %}
-    <pre class="ckedit">{{ recipe['recipe']|safe }}</pre>
-{% endif %}
+<section id="view_recipe">
+    <div class="page_buff"></div>
+    {% if "<pre>" in recipe['recipe'] or recipe['recipe'][0] != "<" or "<br />" in recipe['recipe'] %}
+        <pre>{{ recipe['recipe']|safe }}</pre>
+    {% else %}
+        <pre class="ckedit">{{ recipe['recipe']|safe }}</pre>
+    {% endif %}
+    <div class="page_buff"></div>
+</section>
+<a href="{{ url_for('web.cookbook')  }}"><button>Cookbook</button></a>
+<div class="page_buff"></div>
 {% endblock %}

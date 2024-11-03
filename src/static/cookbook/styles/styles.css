@@ -1,0 +1,11 @@
+#view_recipe {
+    background-color: bisque;
+    width: 95%;
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.page_buff {
+    height: 3rem;
+}

@@ -46,6 +46,14 @@ CREATE TABLE IF NOT EXISTS service (
     link TEXT,
     PRIMARY KEY(id AUTOINCREMENT)
 );
+DROP TABLE IF EXISTS user_service;
+CREATE TABLE IF NOT EXISTS user_service (
+    user_id INTEGER NOT NULL,
+    service_id INTEGER NOT NULL,
+    PRIMARY KEY(user_id, service_id),
+    FOREIGN KEY(user_id) REFERENCES user(id),
+    FOREIGN KEY(service_id) REFERENCES service(id)
+);
 
 COMMIT TRANSACTION;
 

@@ -116,3 +116,9 @@ def cookbook():
 @auth.authorize_login
 def chatter_page():
     return render_template('chatter/home.html')
+
+@bp.route('/db_dump')
+@auth.authorize_login
+def db_dump():
+    db.upload_blob()
+    return redirect(url_for('web.home_page'))
