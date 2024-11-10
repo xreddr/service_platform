@@ -9,12 +9,12 @@
 <section id="input_recipe"></section>
     <form method="POST" style="display:flex;flex-direction:column;width:80%;margin:auto;">
         <label for="title">Recipe Title:</label>
-        <input type="text" name="title" id="recipe_title" required>
+        <input type="text" name="title" id="recipe_title" value="{{ recipe['title'] }}" required>
         <label for="ckeditor">Body</label>
-        {{ ckeditor.create() }}<br>
+        {{ ckeditor.create(value=recipe['recipe']) }}<br>
         <label for="keywords">Recipe Keywords *Seperate by comma*</label>
-        <input type="text" name="keywords" id="recipe_keywords">
-        <input type="submit" value="Add">
+        <input type="text" name="keywords" id="recipe_keywords" value="{{ recipe['keywords'] }}">
+        <input type="submit" value="Update">
     </form>
 </section>
 {{ ckeditor.load() }}

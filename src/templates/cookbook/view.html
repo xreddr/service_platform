@@ -13,8 +13,14 @@
     {% else %}
         <pre class="ckedit">{{ recipe['recipe']|safe }}</pre>
     {% endif %}
+    <p>{{ recipe['keywords']|string }}</p>
     <div class="page_buff"></div>
 </section>
+<form method="POST" action="/cookbook/delete/{{ recipe['id'] }}">
+    <input type="checkbox" required>
+    <input type="submit" value="Delete">
+</form>
+<a href="{{ url_for('web.cookbook.edit_recipe', recipe_id=recipe['id']) }}"><button>Edit</button></a>
 <a href="{{ url_for('web.cookbook')  }}"><button>Cookbook</button></a>
 <div class="page_buff"></div>
 {% endblock %}

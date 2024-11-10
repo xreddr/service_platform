@@ -11,7 +11,8 @@ def create_app(test_config=None):
         DEFAULT_PASSWORD='password',
         OPEN_REG=True,
         ADMIN_CODE=1,
-        CLOUD_STORAGE=(None, None)
+        CLOUD_STORAGE=(None, None),
+        VOLUME_DIRECTORY=None
     )
     if test_config is None:
         app.config.from_pyfile('config.py', silent=True)
@@ -30,6 +31,8 @@ def create_app(test_config=None):
         pass
 
     with app.app_context():
+        if app.config['CLOUD_STORAGE'][0] is not None and os.path.exists(os.path.join(app.instance_path, app.config['VOLUME_DIRECTORY'])):
+            app.config.update(LITE_DB=os.path.join(app.config['VOLUME_DIRECTORY'], app.config['LITE_DB']))
 
         from . import db
         app.register_blueprint(db.bp)

@@ -9,7 +9,7 @@ from src import db, auth
 from flask import Flask
 from flask_ckeditor import CKEditor
 
-# current_app.config.update(CKEDITOR_SERVE_LOCAL='ON', CKEDITOR_HEIGHT=400)
+current_app.config.update(CKEDITOR_SERVE_LOCAL='ON', CKEDITOR_HEIGHT=400)
 ckeditor = CKEditor(current_app)
 
 
@@ -29,20 +29,15 @@ def new_recipe():
         title = request.form['title']
         body = request.form['ckeditor']
         keywords = request.form['keywords'].split(',')
-        keywords_string = json.dumps(keywords)
         user_id = session.get('user_id')
-        # print(title)
-        # print(body)
-        # print(type(keywords), type(keywords_string))
-        # print(keywords_string)
-        # print(user_id)
+
         error = None
 
         conn = db.lite_conn()
         cur = conn.cursor()
         try:
             cur.execute("INSERT INTO recipe (user_id, title, recipe, keywords) VALUES (?,?,?,?);",
-                        (user_id, title, body, keywords_string))
+                        (user_id, title, body, request.form['keywords']))
         except sqlite3.IntegrityError:
             error = "Recipe already exists!"
         print(error)
@@ -85,10 +80,60 @@ def recipes(recipe_id):
 Update
 '''
 
-@bp.route('/edit', methods=('GET', 'POST'))
+@bp.route('/edit/<recipe_id>', methods=('GET', 'POST'))
 @auth.authorize_login
-def edit_recipe():
-    return redirect(url_for('web.cookbook'))
+def edit_recipe(recipe_id):
+    conn = db.lite_conn()
+    cur = conn.cursor()
+
+    if request.method == 'POST':
+        title = request.form['title']
+        body = request.form['ckeditor']
+        new_keywords = request.form['keywords'].split(',')
+        user_id = session.get('user_id')
+
+        error = None
+
+        cur.execute("SELECT keyword FROM recipe_keyword WHERE user_id = ? AND recipe_id = ?;",
+                    (user_id, recipe_id)
+                    )
+        keywords = cur.fetchall()
+        old_keywords = []
+        for keyword in keywords:
+            old_keywords.append(keyword[0])
+        del_keywords = [item for item in old_keywords if item not in new_keywords]
+        add_keywords = [item for item in new_keywords if item not in old_keywords]
+        for keyword in del_keywords:
+            cur = conn.cursor()
+            cur.execute("DELETE FROM recipe_keyword WHERE user_id = ? AND recipe_id = ? AND keyword = ?;",
+                        (user_id, recipe_id, keyword)
+                        )
+            conn.commit()
+            cur.close()
+        for keyword in add_keywords:
+            cur = conn.cursor()
+            cur.execute("INSERT INTO recipe_keyword (user_id, recipe_id, keyword) VALUES (?,?,?);",
+                        (user_id, recipe_id, keyword)
+                        )
+            conn.commit()
+            cur.close()
+        
+        cur = conn.cursor()
+        cur.execute("UPDATE recipe SET title = ?, recipe = ?, keywords = ? WHERE user_id = ? AND id = ?;",
+                    (title, body, request.form['keywords'], user_id, recipe_id)
+                    )
+        conn.commit()
+        cur.close()
+        conn.close()
+
+        return redirect(url_for('web.cookbook.recipes', recipe_id=recipe_id))
+
+    cur.execute('SELECT * FROM recipe WHERE id = ?', (recipe_id,))
+    recipe = cur.fetchone()
+    cur.close()
+    conn.close()
+
+    return render_template('cookbook/edit.html', recipe=recipe)
 
 '''
 Delete
@@ -97,7 +142,11 @@ Delete
 @bp.route('/delete/<recipe_id>', methods=('GET', 'POST'))
 @auth.authorize_login
 def delete_recipe(recipe_id):
-    conn = db.lite_conn()
-    cur = conn.cursor()
-    cur. execute("DELETE FROM recipe WHERE id = ?;", (recipe_id,))
-    return redirect(url_for('web.cookbook'))
+    if request.method == 'POST':
+        conn = db.lite_conn()
+        cur = conn.cursor()
+        cur.execute("DELETE FROM recipe WHERE id = ?;", (recipe_id,))
+        conn.commit()
+        cur.close()
+        conn.close()
+        return redirect(url_for('web.cookbook'))
