@@ -6,7 +6,10 @@
             <div class="menu3"></div>
         </section>
     </section>
-    {% include 'nav_menu.html' %}
+    <section class="menu_bar">
+        {% include 'nav_menu.html' %}
+        <a class="menu_buff"></a>
+    </section>
     {% if g.user %}
     <a href="{{ url_for('web.logout') }}" class="left_icon">Logout</a>
     <a href="{{ url_for('web.home_page') }}" class="right_icon">Home</a>    

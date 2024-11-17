@@ -435,6 +435,21 @@ pre {
         padding-top: 60px;
         padding-bottom: 0;
     }
+
+    .menu_bar {
+        height: auto;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 500px;
+        /* display: none; */
+        flex-direction: column;
+        /* margin-left: 445px; */
+        margin-top: .5rem;
+        left: inherit;
+        border-radius: 5%;
+        overflow: hidden;
+    }
 }
 
 #sleeve {
