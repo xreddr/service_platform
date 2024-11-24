@@ -9,3 +9,15 @@
 .page_buff {
     height: 3rem;
 }
+
+.ckedit p {
+    line-height: 2.0;
+}
+
+.ckedit ol {
+    line-height: 2.0;
+}
+
+.ckedit ul {
+    line-height: 1.0;
+}
