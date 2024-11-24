@@ -1,3 +1,11 @@
+body {
+    background-color: rgb(62, 95, 204);
+}
+
+.nav_spacer {
+    height: 100px;
+}
+
 #view_recipe {
     background-color: bisque;
     width: 95%;
@@ -20,4 +28,34 @@
 
 .ckedit ul {
     line-height: 1.0;
+}
+
+pre {
+    text-align: left;
+    width: 80%;
+    margin: auto;
+    white-space: pre-line;
+    white-space: pre-wrap;
+    white-space:-moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrape;
+    word-wrap: break-word;
+}
+
+.ckedit {
+    line-height: 0;
+}
+
+.ckedit ol {
+    line-height: 0.5;
+}
+
+@media only screen and (min-width:1000px) {
+    #sleeve {
+        background-color: bisque;
+    }
+}
+
+#sleeve {
+    background-color: bisque;
 }

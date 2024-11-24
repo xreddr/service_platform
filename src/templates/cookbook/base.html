@@ -3,7 +3,8 @@
     <head>
         <title>Service Platform</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='wsc/styles/styles.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+        <!-- <link rel="stylesheet" href="{{ url_for('static', filename='wsc/styles/styles.css') }}"> -->
         <link rel="stylesheet" href="{{ url_for('static', filename='cookbook/styles/styles.css') }}">
         <style>
 
@@ -19,7 +20,6 @@
                     <!-- Should be in nav. Does not display properly when outside of id=sleeve, or inside id=nav_wrapper -->
                     {% include 'nav_m.html' %}
                     <!-- That up there ^ -->
-                    <img id="title_img" src="{{ url_for('static', filename='wsc/images/title_image.png') }}">
                     {% for message in get_flashed_messages() %}
                     <div class="flash">{{ message }}</div>
                     {% endfor %}
