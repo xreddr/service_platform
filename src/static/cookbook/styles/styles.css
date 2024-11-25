@@ -7,7 +7,7 @@ body {
 }
 
 #view_recipe {
-    background-color: bisque;
+    background-color: black;
     width: 95%;
     margin: auto;
     margin-top: 1rem;
@@ -32,7 +32,7 @@ body {
 
 pre {
     text-align: left;
-    width: 80%;
+    width: 86%;
     margin: auto;
     white-space: pre-line;
     white-space: pre-wrap;
@@ -40,22 +40,35 @@ pre {
     white-space: -pre-wrap;
     white-space: -o-pre-wrape;
     word-wrap: break-word;
+    font-family:Arial;
 }
 
 .ckedit {
-    line-height: 0;
+    line-height: 0vh;
+}
+
+.ckedit p {
+    margin: 0;
 }
 
 .ckedit ol {
-    line-height: 0.5;
+    line-height: 1.5;
 }
 
 @media only screen and (min-width:1000px) {
     #sleeve {
-        background-color: bisque;
+        background-color: rgb(14, 13, 13);
+        /* color:rgb(255, 255, 255); */
     }
 }
 
 #sleeve {
-    background-color: bisque;
+    background-color: rgb(39, 23, 23);
+    color:rgb(255, 255, 255);
+}
+
+#sleeve a {
+    color: white;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
 }
