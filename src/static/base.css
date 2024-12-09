@@ -270,8 +270,6 @@ footer {
         width: 1000px;
         max-width: 1000px;
         margin: auto;
-        /* background-color: powderblue; */
-        /* background-image: linear-gradient(rgb(177, 224, 231, 0), powderblue, powderblue, powderblue); */
         background-attachment: fixed;
     }
 

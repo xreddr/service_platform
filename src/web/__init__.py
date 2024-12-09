@@ -98,7 +98,7 @@ def manage_user_page():
 
     return render_template('wsc/manage_users.html', user_list=user_list, admin_list=admin_list)
 
-@bp.route('/cookbook')
+@bp.route('/cookbook', methods=('GET', 'POST'))
 @auth.authorize_login
 def cookbook():
     db.close_db()
@@ -108,9 +108,11 @@ def cookbook():
     recipes = cur.fetchall()
     cur.execute("SELECT * FROM recipe_keyword WHERE user_id = ?;", (session['user_id'],))
     keywords = cur.fetchall()
+    cur.execute("SELECT * FROM cookbook_category WHERE user_id = ?;", (session['user_id'],))
+    categories = cur.fetchall()
     cur.close()
     db.close_db()
-    return render_template('cookbook/home.html', recipes=recipes, keywords=keywords)
+    return render_template('cookbook/home.html', recipes=recipes, keywords=keywords, categories=categories)
 
 @bp.route('/chatter')
 @auth.authorize_login

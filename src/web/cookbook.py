@@ -20,7 +20,7 @@ bp = Blueprint('cookbook', __name__, url_prefix='cookbook')
 Create
 '''
 
-
+# New Recipe
 @bp.route('/new', methods=('GET', 'POST'))
 @auth.authorize_login
 def new_recipe():
@@ -60,6 +60,19 @@ def new_recipe():
         return redirect(url_for('web.cookbook'))
     
     return render_template('cookbook/new.html')
+
+# New category
+@bp.route('/new_category', methods=['POST'])
+@auth.authorize_login
+def new_category():
+    category = request.form['category']
+    conn = db.lite_conn()
+    cur = conn.cursor()
+    cur.execute("INSERT INTO cookbook_category (user_id, name) VALUES (?,?);",
+                (session['user_id'], category)
+                )
+    conn.commit()
+    return redirect(url_for("web.cookbook"))
 
 '''
 Read
