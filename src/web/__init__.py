@@ -98,13 +98,19 @@ def manage_user_page():
 
     return render_template('wsc/manage_users.html', user_list=user_list, admin_list=admin_list)
 
+@bp.route('/cookbook/<category_id>', methods=('GET', 'POST'))
 @bp.route('/cookbook', methods=('GET', 'POST'))
 @auth.authorize_login
-def cookbook():
+def cookbook(category_id=None):
     db.close_db()
     conn = db.lite_conn()
     cur = conn.cursor()
-    cur.execute("SELECT * FROM recipe WHERE user_id = ?;", (session['user_id'],))
+    if category_id is None:
+        cur.execute("SELECT * FROM recipe WHERE user_id = ?;", (session['user_id'],))
+    else:
+        cur.execute("SELECT * FROM recipe rp, recipe_category rc WHERE rp.user_id = ? AND rc.category_id = ? AND rp.id = rc.recipe_id;",
+                    (session['user_id'], category_id,)
+                    )
     recipes = cur.fetchall()
     cur.execute("SELECT * FROM recipe_keyword WHERE user_id = ?;", (session['user_id'],))
     keywords = cur.fetchall()

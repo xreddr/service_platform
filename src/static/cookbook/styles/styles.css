@@ -1,5 +1,6 @@
 body {
     background-color: rgb(62, 95, 204);
+    min-height: 100vh;
 }
 
 .nav_spacer {

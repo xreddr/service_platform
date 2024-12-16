@@ -14,6 +14,17 @@
         {{ ckeditor.create(value=recipe['recipe']) }}<br>
         <label for="keywords">Recipe Keywords *Seperate by comma*</label>
         <input type="text" name="keywords" id="recipe_keywords" value="{{ recipe['keywords'] }}">
+        <label for="categories">Categories:</label>
+        {% if categories %}
+        {% for category in categories %}
+        <label for="{{ category['id'] }}">{{ category['name'] }}</label>
+        {% if category['id'] in cat_list %}
+        <input type="checkbox" name="{{ category['id'] }}" checked>
+        {% else %}
+        <input type="checkbox" name="{{ category['id'] }}">
+        {% endif %}
+        {% endfor %}
+        {% endif %}
         <input type="submit" value="Update">
     </form>
 </section>

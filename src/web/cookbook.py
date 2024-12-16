@@ -106,7 +106,7 @@ def edit_recipe(recipe_id):
         user_id = session.get('user_id')
 
         error = None
-
+        # RECIPE KEYWORDS UPDATE
         cur.execute("SELECT keyword FROM recipe_keyword WHERE user_id = ? AND recipe_id = ?;",
                     (user_id, recipe_id)
                     )
@@ -130,11 +130,47 @@ def edit_recipe(recipe_id):
                         )
             conn.commit()
             cur.close()
-        
+
+        #RECIPE CATEGORIES UPDATED
+        cur.execute("SELECT * FROM cookbook_category WHERE user_id = ?;", (user_id,))
+        categories = cur.fetchall()
+        cur.execute('SELECT * FROM recipe_category WHERE recipe_id = ?;', (recipe_id,))
+        recipe_categories = cur.fetchall()
+        recipe_cat_list = []
+        if recipe_categories is not None:
+            for recipe_category in recipe_categories:
+                recipe_cat_list.append(recipe_category['category_id'])
+        print(recipe_cat_list)
+
+        if categories is not None:
+            cat_chage = None
+            for category in categories:
+                conn = db.lite_conn()
+                cur = conn.cursor()
+                print(category['id'])
+                print(request.form)
+                if str(category['id']) in request.form:
+                    print(type(category['id']), type(recipe_id), recipe_id)
+                if str(category['id']) in request.form and category['id'] not in recipe_cat_list:
+                    cur.execute("INSERT INTO recipe_category (recipe_id, category_id) VALUES (?,?);",
+                                (int(recipe_id), int(category['id']))
+                                )
+
+                elif category['id'] in recipe_cat_list and str(category['id']) not in request.form:
+                    print('Delete?')
+                    cur.execute('DELETE FROM recipe_category WHERE recipe_id = ? AND category_id = ?;',
+                                (int(recipe_id), int(category['id']))
+                                )
+                conn.commit()
+                cur.close()
+
+
+        # RECIPE UPDATED
         cur = conn.cursor()
         cur.execute("UPDATE recipe SET title = ?, recipe = ?, keywords = ? WHERE user_id = ? AND id = ?;",
                     (title, body, request.form['keywords'], user_id, recipe_id)
                     )
+        
         conn.commit()
         cur.close()
         conn.close()
@@ -143,10 +179,18 @@ def edit_recipe(recipe_id):
 
     cur.execute('SELECT * FROM recipe WHERE id = ?', (recipe_id,))
     recipe = cur.fetchone()
+    cur.execute('SELECT * FROM cookbook_category WHERE user_id = ?;', (session['user_id'],))
+    categories = cur.fetchall()
+    cur.execute("SELECT * FROM recipe_category WHERE recipe_id = ?;",
+                (recipe_id,))
+    cat_ids = cur.fetchall()
+    cat_list = []
+    for id in cat_ids:
+        cat_list.append(id['category_id'])
     cur.close()
     conn.close()
 
-    return render_template('cookbook/edit.html', recipe=recipe)
+    return render_template('cookbook/edit.html', recipe=recipe, categories=categories, cat_list=cat_list)
 
 '''
 Delete

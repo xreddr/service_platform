@@ -19,7 +19,7 @@
     </form>
     {% if categories %}
     {% for category in categories %}
-    <button>{{category['name']}}</button>
+    <a href="{{ url_for('web.cookbook', category_id=category['id']) }}" class="glass">{{category['name']}}</a>
     {% endfor %}
     {% endif %}
 </section>
@@ -29,7 +29,7 @@
 {% block content %}
 <section id="recipe_list">
     {% for recipe in recipes %}
-    <a href="cookbook/view/{{ recipe['id'] }}"><h1>{{ recipe['title'] }}</h1></a>
+    <h1><a href="{{ url_for('web.cookbook.recipes', recipe_id=recipe['id']) }}">{{ recipe['title'] }}</a></h1>
     {% endfor %}
 </section>
 {% endblock %}
