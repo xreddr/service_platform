@@ -24,6 +24,10 @@ Create
 @bp.route('/new', methods=('GET', 'POST'))
 @auth.authorize_login
 def new_recipe():
+    conn = db.lite_conn()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM cookbook_category WHERE user_id = ?;", (session['user_id'],))
+    categories = cur.fetchall()
 
     if request.method == 'POST':
         title = request.form['title']
@@ -52,6 +56,17 @@ def new_recipe():
             conn.commit()
             print(keyword)
 
+        cur.execute("SELECT * FROM cookbook_category WHERE user_id = ?;", (user_id,))
+        categories = cur.fetchall()
+        print(request.form)
+        for category in categories:
+            print(category['id'])
+            if str(category['id']) in request.form:
+                print(category['id'])
+                cur.execute("INSERT INTO recipe_category (recipe_id, category_id) VALUES (?,?);",
+                            (recipe_id[0], category['id']))
+                conn.commit()
+
         if error:
             flash(error)
         else:
@@ -59,7 +74,7 @@ def new_recipe():
 
         return redirect(url_for('web.cookbook'))
     
-    return render_template('cookbook/new.html')
+    return render_template('cookbook/new.html', categories=categories)
 
 # New category
 @bp.route('/new_category', methods=['POST'])

@@ -32,7 +32,7 @@
 {% block content %}
 <section id="recipe_list">
     {% for recipe in recipes %}
-    <h1><a href="{{ url_for('web.cookbook.recipes', recipe_id=recipe['id']) }}">{{ recipe['title'] }}</a></h1>
+    <h1><a href="{{ url_for('web.cookbook.recipes', recipe_id=recipe['id']) }}">{{ recipe['title']|capitalize }}</a></h1>
     {% endfor %}
 </section>
 {% endblock %}
