@@ -73,3 +73,15 @@ pre {
     text-decoration: none;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+#category_buttons {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+}
+
+#category_buttons a {
+    height: 2rem;
+    align-content: center;
+}

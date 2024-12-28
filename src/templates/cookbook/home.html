@@ -17,11 +17,14 @@
             {% endfor %}
         </datalist>
     </form>
-    {% if categories %}
-    {% for category in categories %}
-    <a href="{{ url_for('web.cookbook', category_id=category['id']) }}" class="glass">{{category['name']}}</a>
-    {% endfor %}
-    {% endif %}
+    <section id="category_buttons">
+        <a href="{{ url_for('web.cookbook') }}" class="glass">All</a>
+        {% if categories %}
+        {% for category in categories %}
+        <a href="{{ url_for('web.cookbook', category_id=category['id']) }}" class="glass">{{category['name']}}</a>
+        {% endfor %}
+        {% endif %}
+    </section>
 </section>
 
 {% endblock %}

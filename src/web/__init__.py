@@ -106,9 +106,9 @@ def cookbook(category_id=None):
     conn = db.lite_conn()
     cur = conn.cursor()
     if category_id is None:
-        cur.execute("SELECT * FROM recipe WHERE user_id = ?;", (session['user_id'],))
+        cur.execute("SELECT * FROM recipe WHERE user_id = ? ORDER BY title ASC;", (session['user_id'],))
     else:
-        cur.execute("SELECT * FROM recipe rp, recipe_category rc WHERE rp.user_id = ? AND rc.category_id = ? AND rp.id = rc.recipe_id;",
+        cur.execute("SELECT * FROM recipe rp, recipe_category rc WHERE rp.user_id = ? AND rc.category_id = ? AND rp.id = rc.recipe_id ORDER BY rp.title ASC;",
                     (session['user_id'], category_id,)
                     )
     recipes = cur.fetchall()
