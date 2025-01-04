@@ -105,8 +105,12 @@ def cookbook(category_id=None):
     db.close_db()
     conn = db.lite_conn()
     cur = conn.cursor()
-    if category_id is None:
+    if category_id == '00':
         cur.execute("SELECT * FROM recipe WHERE user_id = ? ORDER BY title ASC;", (session['user_id'],))
+    elif category_id == '000':
+        cur.execute("SELECT * FROM recipe WHERE user_id = ? AND NOT EXISTS (SELECT recipe_id FROM recipe_category WHERE recipe.user_id = ? AND recipe_category.recipe_id=recipe.id) ORDER BY title ASC;",
+                    (session['user_id'], session['user_id'])
+                    )
     else:
         cur.execute("SELECT * FROM recipe rp, recipe_category rc WHERE rp.user_id = ? AND rc.category_id = ? AND rp.id = rc.recipe_id ORDER BY rp.title ASC;",
                     (session['user_id'], category_id,)

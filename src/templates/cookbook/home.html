@@ -18,11 +18,12 @@
         </datalist>
     </form>
     <section id="category_buttons">
-        <a href="{{ url_for('web.cookbook') }}" class="glass">All</a>
+        <a href="{{ url_for('web.cookbook', category_id='00') }}" class="glass">All</a>
         {% if categories %}
         {% for category in categories %}
         <a href="{{ url_for('web.cookbook', category_id=category['id']) }}" class="glass">{{category['name']}}</a>
         {% endfor %}
+        <a href="{{ url_for('web.cookbook', category_id='000') }}" class="glass">Uncategorized</a>
         {% endif %}
     </section>
 </section>
@@ -30,9 +31,12 @@
 {% endblock %}
 
 {% block content %}
+{% if recipes %}
 <section id="recipe_list">
     {% for recipe in recipes %}
-    <h1><a href="{{ url_for('web.cookbook.recipes', recipe_id=recipe['id']) }}">{{ recipe['title']|capitalize }}</a></h1>
+    <h1><a href="{{ url_for('web.cookbook.recipes', recipe_id=recipe['id']) }}">{{ recipe['title'] }}</a>
+    </h1>
     {% endfor %}
 </section>
+{% endif %}
 {% endblock %}

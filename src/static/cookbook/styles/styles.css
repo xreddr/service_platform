@@ -37,11 +37,11 @@ pre {
     margin: auto;
     white-space: pre-line;
     white-space: pre-wrap;
-    white-space:-moz-pre-wrap;
+    white-space: -moz-pre-wrap;
     white-space: -pre-wrap;
     white-space: -o-pre-wrape;
     word-wrap: break-word;
-    font-family:Arial;
+    font-family: Arial;
 }
 
 .ckedit {
@@ -65,7 +65,7 @@ pre {
 
 #sleeve {
     background-color: rgb(39, 23, 23);
-    color:rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
 }
 
 #sleeve a {
@@ -84,4 +84,26 @@ pre {
 #category_buttons a {
     height: 2rem;
     align-content: center;
+}
+
+.cat_chk {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: auto;
+}
+
+.cat_chk div {
+    flex-direction: row;
+    margin-top: .2rem;
+    margin-bottom: .2rem;
+}
+
+#input_recipe label {
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+}
+
+#input_recipe .submit {
+    margin: 1rem;
 }

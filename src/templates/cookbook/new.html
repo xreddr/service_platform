@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<section id="input_recipe"></section>
+<section id="input_recipe">
     <form method="POST" style="display:flex;flex-direction:column;width:80%;margin:auto;">
         <label for="title">Recipe Title:</label>
         <input type="text" name="title" id="recipe_title" required>
@@ -15,12 +15,16 @@
         <label for="keywords">Recipe Keywords *Seperate by comma*</label>
         <input type="text" name="keywords" id="recipe_keywords">
         {% if categories %}
-        {% for category in categories %}
-        <label for="{{ category['id'] }}">{{ category['name'] }}</label>
-        <input type="checkbox" name="{{ category['id'] }}">
-        {% endfor %}
-        {% endif %}
-        <input type="submit" value="Add">
+        <section class="cat_chk">
+            {% for category in categories %}
+            <div>
+                <label for="{{ category['id'] }}">{{ category['name'] }}</label>
+                <input type="checkbox" name="{{ category['id'] }}">
+            </div>
+            {% endfor %}
+            {% endif %}
+        </section>
+        <input class="submit" type="submit" value="Add">
     </form>
 </section>
 {{ ckeditor.load() }}
