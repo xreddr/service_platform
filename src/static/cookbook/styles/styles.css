@@ -84,6 +84,9 @@ pre {
 #category_buttons a {
     height: 2rem;
     align-content: center;
+    width: 350px;
+    margin: auto;
+    margin-top: .5rem;
 }
 
 .cat_chk {
@@ -106,4 +109,18 @@ pre {
 
 #input_recipe .submit {
     margin: 1rem;
+}
+
+#edit_category form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#edit_category form div {
+    flex-direction: column;
+}
+
+main {
+    min-height: 100vh;
 }

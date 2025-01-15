@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+{% extends 'cookbook/base.html' %}
+
+{% block header %}
+<h1>Edit Categories</h1>
+<section id="edit_category">
+    {% if categories %}
+    {% for category in categories %}
+    <form>
+        <input name="id" value="{{ category['id'] }}" style="display:none;">
+        <input name="category" value="{{ category['name'] }}">
+        <div style="display:flex;flex-direction:column;">
+            <label for="delete">Delete</label>
+            <input type="checkbox" name="delete">
+        </div>
+        <input type="Submit" value="Submit">
+    </form>
+    {% endfor %}
+    {% endif %}
+</section>
+{% endblock %}
+
+{% block content %}
+{% endblock %}

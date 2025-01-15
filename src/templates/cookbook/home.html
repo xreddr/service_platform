@@ -13,19 +13,20 @@
         <input type="search" list="recipes" placeholder="Keyword?">
         <datalist id="recipes">
             {% for keyword in keywords %}
-            <option value="{{ keyword['keyword'] }}" />
+            <option value="{{ keyword['keyword'] }}">
             {% endfor %}
         </datalist>
     </form>
+    {% if categories %}
     <section id="category_buttons">
+        <a href="{{ url_for('web.cookbook.edit_category' )}}"><button>Edit Categories</button></a>
         <a href="{{ url_for('web.cookbook', category_id='00') }}" class="glass">All</a>
-        {% if categories %}
         {% for category in categories %}
         <a href="{{ url_for('web.cookbook', category_id=category['id']) }}" class="glass">{{category['name']}}</a>
         {% endfor %}
         <a href="{{ url_for('web.cookbook', category_id='000') }}" class="glass">Uncategorized</a>
-        {% endif %}
     </section>
+    {% endif %}
 </section>
 
 {% endblock %}
