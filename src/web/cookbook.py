@@ -208,7 +208,7 @@ def edit_recipe(recipe_id):
     return render_template('cookbook/edit.html', recipe=recipe, categories=categories, cat_list=cat_list)
 
 # Edit Recipe Category
-@bp.route('/edit_category', methods=('Get', 'Post'))
+@bp.route('/edit_category', methods=('GET', 'POST'))
 @auth.authorize_login
 def edit_category():
     conn = db.lite_conn()
@@ -219,7 +219,21 @@ def edit_category():
                               ).fetchall()
     
     if request.method == 'POST':
-         return redirect(url_for('cookbook.edit_category'))
+        print(request.form)
+        if request.form.get('delete') == 'on':
+             print('DELETE')
+             cur.execute("DELETE FROM cookbook_category WHERE id=?",
+                         (request.form['id'],))
+             cur.execute("DELETE FROM recipe_category WHERE category_id=?",
+                         (request.form['id']))
+             conn.commit()
+             cur.close()
+        else:
+            cur.execute("UPDATE cookbook_category SET name=? WHERE id=?",
+                        (request.form['category'], request.form['id']))
+            conn.commit()
+            cur.close()
+        return redirect(url_for('web.cookbook.edit_category'))
     
     return render_template('cookbook/edit_category.html', categories=categorires)
 

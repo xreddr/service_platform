@@ -6,7 +6,7 @@
 <section id="edit_category">
     {% if categories %}
     {% for category in categories %}
-    <form>
+    <form method="POST">
         <input name="id" value="{{ category['id'] }}" style="display:none;">
         <input name="category" value="{{ category['name'] }}">
         <div style="display:flex;flex-direction:column;">
