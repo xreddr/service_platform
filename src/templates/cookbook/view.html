@@ -17,11 +17,15 @@
     <p>{{ recipe['keywords']|string }}</p>
     <div class="page_buff"></div>
 </section>
-<form method="POST" action="/cookbook/delete/{{ recipe['id'] }}">
-    <input type="checkbox" required>
-    <input type="submit" value="Delete">
-</form>
-<a href="{{ url_for('web.cookbook.edit_recipe', recipe_id=recipe['id']) }}"><button>Edit</button></a>
-<a href="{{ url_for('web.cookbook')  }}"><button>Cookbook</button></a>
+<section class="view_nav">
+    <section class="check_with_button">
+        <form method="POST" action="/cookbook/delete/{{ recipe['id'] }}">
+            <input type="checkbox" required>
+            <input type="submit" value="Delete">
+        </form>
+    </section>
+    <a href="{{ url_for('web.cookbook.edit_recipe', recipe_id=recipe['id']) }}"><button>Edit</button></a>
+    <a href="{{ url_for('web.cookbook')  }}"><button>Cookbook</button></a>
+</section>
 <div class="page_buff"></div>
 {% endblock %}

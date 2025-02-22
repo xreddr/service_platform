@@ -31,6 +31,10 @@
         {% endif %}
         <input class="submit" type="submit" value="Update">
     </form>
+    <section class="view_nav">
+        <a href="{{ url_for('web.cookbook') }}"><button>Cookbook</button></a>
+        <a href="{{ url_for('web.cookbook.recipes', recipe_id=recipe['id']) }}"><button>Recipe</button></a>
+    </section>
 </section>
 {{ ckeditor.load() }}
 <script src="{{ url_for('static', filename='cookbook/js/ckeditor_config.js') }}"></script>

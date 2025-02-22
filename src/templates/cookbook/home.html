@@ -5,18 +5,18 @@
 <h1>{{ g.user['username'] }}'s Cookbook</h1>
 <section id="cb_home_menu" style="display:flex;flex-direction:column">
     <a href="{{ url_for('web.cookbook.new_recipe') }}"><button>New Recipe</button></a>
-    <form method="POST" action="cookbook/new_category">
+    <form method="POST" action="{{ url_for('web.cookbook.new_category') }}">
         <input type="text" name="category" placeholder="New Category" required>
         <input type="submit" value="Add">
     </form>
-    <form>
+    <!-- <form>
         <input type="search" list="recipes" placeholder="Keyword?">
         <datalist id="recipes">
             {% for keyword in keywords %}
             <option value="{{ keyword['keyword'] }}">
             {% endfor %}
         </datalist>
-    </form>
+    </form> -->
     {% if categories %}
     <section id="category_buttons">
         <a href="{{ url_for('web.cookbook.edit_category' )}}"><button>Edit Categories</button></a>

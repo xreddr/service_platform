@@ -77,7 +77,7 @@ pre {
 #category_buttons {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 35%;
     margin: auto;
 }
 
@@ -123,4 +123,23 @@ pre {
 
 main {
     min-height: 100vh;
+}
+
+.view_nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+}
+
+.view_nav a {
+    padding: .5rem;
+}
+
+.check_with_button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
 }
