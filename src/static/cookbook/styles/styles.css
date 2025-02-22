@@ -77,16 +77,18 @@ pre {
 #category_buttons {
     display: flex;
     flex-direction: column;
-    width: 35%;
+    min-width: 300px;
+    max-width: 35%;
     margin: auto;
 }
 
 #category_buttons a {
-    height: 2rem;
+    /* height: 2rem; */
     align-content: center;
-    width: 350px;
+    width: 100%;
     margin: auto;
     margin-top: .5rem;
+    margin-bottom: .5rem;
 }
 
 .cat_chk {
@@ -132,8 +134,8 @@ main {
     margin: auto;
 }
 
-.view_nav a {
-    padding: .5rem;
+.view_nav form {
+    /* padding: .5rem; */
 }
 
 .check_with_button {
@@ -142,4 +144,22 @@ main {
     justify-content: center;
     align-items: center;
     margin: auto;
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+}
+
+#cb_home_menu {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+}
+
+
+.glass {
+    min-height: 2rem;
+    border-radius: 25px;
 }

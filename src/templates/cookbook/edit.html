@@ -12,8 +12,8 @@
         <input type="text" name="title" id="recipe_title" value="{{ recipe['title'] }}" required>
         <label for="ckeditor">Body</label>
         {{ ckeditor.create(value=recipe['recipe']) }}<br>
-        <label for="keywords">Recipe Keywords *Seperate by comma*</label>
-        <input type="text" name="keywords" id="recipe_keywords" value="{{ recipe['keywords'] }}">
+        <!-- <label for="keywords">Recipe Keywords *Seperate by comma*</label>
+        <input type="text" name="keywords" id="recipe_keywords" value="{{ recipe['keywords'] }}"> -->
         <label for="categories">Categories:</label>
         {% if categories %}
         <section class="cat_chk">
@@ -32,8 +32,8 @@
         <input class="submit" type="submit" value="Update">
     </form>
     <section class="view_nav">
-        <a href="{{ url_for('web.cookbook') }}"><button>Cookbook</button></a>
         <a href="{{ url_for('web.cookbook.recipes', recipe_id=recipe['id']) }}"><button>Recipe</button></a>
+        <a href="{{ url_for('web.cookbook') }}"><button>Cookbook</button></a>
     </section>
 </section>
 {{ ckeditor.load() }}
