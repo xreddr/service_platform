@@ -12,8 +12,10 @@
         <input type="text" name="title" id="recipe_title" value="{{ recipe['title'] }}" required>
         <label for="ckeditor">Body</label>
         {{ ckeditor.create(value=recipe['recipe']) }}<br>
-        <!-- <label for="keywords">Recipe Keywords *Seperate by comma*</label>
-        <input type="text" name="keywords" id="recipe_keywords" value="{{ recipe['keywords'] }}"> -->
+        <section style="display:none;">
+            <label for="keywords">Recipe Keywords *Seperate by comma*</label>
+            <input type="text" name="keywords" id="recipe_keywords" value="{{ recipe['keywords'] }}">
+        </section>
         <label for="categories">Categories:</label>
         {% if categories %}
         <section class="cat_chk">
