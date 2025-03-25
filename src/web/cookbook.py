@@ -8,6 +8,8 @@ from src import db, auth
 # CKEditor
 from flask import Flask
 from flask_ckeditor import CKEditor
+# Calendar
+from datetime import datetime, timedelta
 
 current_app.config.update(CKEDITOR_SERVE_LOCAL='ON', CKEDITOR_HEIGHT=400)
 ckeditor = CKEditor(current_app)
@@ -103,6 +105,21 @@ def recipes(recipe_id):
                 )
     recipe = cur.fetchone()
     return render_template('cookbook/view.html', recipe=recipe)
+
+@bp.route('/calendar', methods=('GET', 'POST'))
+@auth.authorize_login
+def calendar():
+    today = datetime.now().date()
+    days = []
+    d = 14
+    n = 0
+    while d > 0:
+        date = today + timedelta(+n)
+        days.append(date)
+        d -= 1
+        n += 1
+    
+    return render_template('cookbook/calendar.html', days=days)
 
 '''
 Update

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+{% extends 'cookbook/base.html' %}
+
+{% block header %}
+{% if days %}
+{% for day in days %}
+<p>{{ day }}</p>
+{% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% endblock %}
