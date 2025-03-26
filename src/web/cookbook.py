@@ -109,6 +109,12 @@ def recipes(recipe_id):
 @bp.route('/calendar', methods=('GET', 'POST'))
 @auth.authorize_login
 def calendar():
+    conn = db.lite_conn()
+    cur = conn.cursor()
+
+    cur.execute("SELECT id, title FROM recipe WHERE user_id =?", (session['user_id'],))
+    recipes = cur.fetchall()
+
     today = datetime.now().date()
     days = []
     d = 14
@@ -119,7 +125,7 @@ def calendar():
         d -= 1
         n += 1
     
-    return render_template('cookbook/calendar.html', days=days)
+    return render_template('cookbook/calendar.html', days=days, recipes=recipes)
 
 '''
 Update
