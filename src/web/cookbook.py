@@ -116,14 +116,25 @@ def calendar():
     recipes = cur.fetchall()
 
     today = datetime.now().date()
-    days = []
-    d = 14
+    days = ()
+    d = -7
     n = 0
-    while d > 0:
-        date = today + timedelta(+n)
-        days.append(date)
-        d -= 1
+    while d < 14:
+        if d < 0:
+            date = today - timedelta(abs(d))
+        else:
+            date = today + timedelta(d)
+        str_date = date.strftime("%A %m-%d-%Y")
+        days = days + (str_date,)
+        d += 1
         n += 1
+
+    if request.method == 'POST':
+        cur.execute("INSERT INTO recipe_date (user_id, recipe_id, date) VALUES (?,?,?);",
+                    (session['user_id'], "NEED_RECIPE_ID", "NEED_DATE")
+                    ) 
+        
+        return redirect(url_for('cookbook.calendar'))
     
     return render_template('cookbook/calendar.html', days=days, recipes=recipes)
 

@@ -163,3 +163,12 @@ button {
     min-height: 2rem;
     border-radius: 25px;
 }
+
+.date_box {
+    border: solid black 4px;
+    border-radius: 90deg;
+    margin: auto;
+    width: 70%;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
