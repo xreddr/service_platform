@@ -10,14 +10,14 @@
 {% for day in days %}
 <section class="date_box">
     <h1>{{ day }}</h1>
-    <form>
-        <input type="search" list="recipes" placeholder="Recipe?">
+    <form method="POST">
+        <input type="search" list="recipes" placeholder="Recipe?" name="recipe">
         <datalist id="recipes">
             {% for recipe in recipes %}
             <option value="{{ recipe['title'] }}">
             {% endfor %}
         </datalist>
-        <input value="{{ day }}" style="display:none;">
+        <input value="{{ day }}" style="display:none;" name="date">
         <input type="submit" value="Add">
     </form>
     <ul>

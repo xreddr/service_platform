@@ -129,14 +129,31 @@ def calendar():
         d += 1
         n += 1
 
+    meals = []
+    for day in days:
+        cur.execute("SELECT r.title, rp.date FROM recipe_date rp JOIN recipe r ON r.id=rp.recipe_id WHERE rp.user_id =? AND rp.date =?;",
+                    (session['user_id'], day))
+        meal = cur.fetchone()
+        meals.append(meal)
+
     if request.method == 'POST':
+
+        recipe_name = request.form['recipe']
+        date = request.form['date']
+
+        cur.execute("SELECT id FROM recipe WHERE title=?;", (recipe_name,))
+        recipe_id = cur.fetchone()
+
+        print(session['user_id'], recipe_id['id'], date)
+
         cur.execute("INSERT INTO recipe_date (user_id, recipe_id, date) VALUES (?,?,?);",
-                    (session['user_id'], "NEED_RECIPE_ID", "NEED_DATE")
+                    (session['user_id'], recipe_id['id'], date)
                     ) 
+        conn.commit()
         
-        return redirect(url_for('cookbook.calendar'))
+        return redirect(url_for('web.cookbook.calendar'))
     
-    return render_template('cookbook/calendar.html', days=days, recipes=recipes)
+    return render_template('cookbook/calendar.html', days=days, recipes=recipes, meals=meals)
 
 '''
 Update

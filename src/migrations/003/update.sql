@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS recipe_date (
     id INTEGER NOT NULL,
     user_id INTEGER NOT NULL,
     recipe_id INTEGER NOT NULL,
-    date DATE,
+    date TEXT NOT NULL,
     PRIMARY KEY(id AUTOINCREMENT),
     FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE CASCADE,
     FOREIGN KEY(recipe_id) REFERENCES recipe(id) ON DELETE CASCADE
