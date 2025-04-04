@@ -172,3 +172,20 @@ button {
     margin-bottom: 1rem;
     margin-top: 1rem;
 }
+
+.meal_list {
+    list-style-type: none;
+}
+
+.meal_delete_form {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu_delete_button {
+    height: 1.5rem;
+    margin: 1rem;
+}

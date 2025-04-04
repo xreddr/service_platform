@@ -20,11 +20,18 @@
         <input value="{{ day }}" style="display:none;" name="date">
         <input type="submit" value="Add">
     </form>
-    <ul>
+    <ul class="meal_list">
         {% if meals %}
         {% for meal in meals %}
         {% if meal['date'] == day %}
-        <li>{{ meal['title'] }}</li>
+        <li>
+            <form method="POST" action="/cookbook/delete_meal" class="meal_delete_form">
+                <input value="{{ meal['title'] }}" style="display:none;" name="meal">
+                <input value="{{ day }}" name="date" style="display:none;">
+                <p>{{ meal['title'] }}</p>
+                <input type="submit" class="menu_delete_button" value="X">
+            </form>
+        </li>
         {% endif %}
         {% endfor %}
         {% endif %}

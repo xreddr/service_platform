@@ -135,6 +135,7 @@ def calendar():
                     (session['user_id'], day))
         meal = cur.fetchone()
         meals.append(meal)
+    print(meals)
 
     if request.method == 'POST':
 
@@ -304,3 +305,27 @@ def delete_recipe(recipe_id):
         cur.close()
         conn.close()
         return redirect(url_for('web.cookbook'))
+    
+@bp.route('/delete_meal', methods=("POST",))
+@auth.authorize_login
+def delete_meal():
+    if request.method == 'POST':
+        conn = db.lite_conn()
+        cur = conn.cursor()
+
+        recipe = request.form['meal']
+        date = request.form['date']
+
+        cur.execute("SELECT id FROM recipe WHERE user_id=? AND title=?;",
+                    (session['user_id'], recipe)
+                    )
+        recipe_id = cur.fetchone()
+        recipe_id = recipe_id['id']
+
+        cur.execute("DELETE FROM recipe_date WHERE user_id=? AND recipe_id=? AND date=?;",
+                    (session['user_id'], recipe_id, date)
+                    )
+        
+        conn.commit()
+
+        return redirect(url_for("web.cookbook.calendar"))
