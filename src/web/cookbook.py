@@ -116,7 +116,7 @@ def calendar():
     recipes = cur.fetchall()
 
     today = datetime.now().date()
-    days = ()
+    days = []
     d = -7
     n = 0
     while d < 14:
@@ -124,17 +124,21 @@ def calendar():
             date = today - timedelta(abs(d))
         else:
             date = today + timedelta(d)
-        str_date = date.strftime("%A %m-%d-%Y")
-        days = days + (str_date,)
+        str_day = date.strftime("%A")
+        str_date = date.strftime("%m-%d-%Y")
+        days.append((str_date, str_day))
         d += 1
         n += 1
 
     meals = []
     for day in days:
+        print(f'{day[1]} {day[0]}')
+        search_day = f'{day[1]} {day[0]}'
         cur.execute("SELECT r.title, rp.date FROM recipe_date rp JOIN recipe r ON r.id=rp.recipe_id WHERE rp.user_id =? AND rp.date =?;",
-                    (session['user_id'], day))
-        meal = cur.fetchone()
-        meals.append(meal)
+                    (session['user_id'], search_day))
+        meal_list = cur.fetchall()
+        for meal in meal_list:
+            meals.append(meal)
     print(meals)
 
     if request.method == 'POST':

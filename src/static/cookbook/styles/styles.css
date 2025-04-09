@@ -171,6 +171,29 @@ button {
     width: 70%;
     margin-bottom: 1rem;
     margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.l_date_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 1rem;
+    background-color: orange;
+}
+
+.r_date_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.calendar_day {
+    font-size: 2rem;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 .meal_list {
