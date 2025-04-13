@@ -5,6 +5,7 @@
 <h1>{{ g.user['username'] }}'s Cookbook</h1>
 <section id="cb_home_menu">
     <a href="{{ url_for('web.cookbook.new_recipe') }}"><button>New Recipe</button></a>
+    <a href="{{ url_for('web.cookbook.calendar') }}"><button>Calendar</button></a>
     <form method="POST" action="{{ url_for('web.cookbook.new_category') }}">
         <input type="text" name="category" placeholder="New Category" required>
         <input type="submit" value="Add">
@@ -20,11 +21,11 @@
     <a href="{{ url_for('web.cookbook.edit_category' )}}"><button>Edit Categories</button></a>
     {% if categories %}
     <section id="category_buttons">
-        <a href="{{ url_for('web.cookbook', category_id='00') }}" class="glass">All</a>
+        <a href="{{ url_for('web.cookbook', category_id='00') }}" class="glass">all</a>
         {% for category in categories %}
         <a href="{{ url_for('web.cookbook', category_id=category['id']) }}" class="glass">{{category['name']}}</a>
         {% endfor %}
-        <a href="{{ url_for('web.cookbook', category_id='000') }}" class="glass">Uncategorized</a>
+        <a href="{{ url_for('web.cookbook', category_id='000') }}" class="glass">uncategorized</a>
     </section>
     {% endif %}
 </section>

@@ -10,8 +10,10 @@
 {% for day in days %}
 <section class="date_box" id="{{ day[0] }}">
     <section class="l_date_container">
-        <h1 class="calendar_day">{{ day[1] }}</h1>
-        <h2 class="calendar_date">{{ day[0] }}</h2>
+        <section class="cal_date_header">
+            <h1 class="calendar_day">{{ day[1] }}</h1>
+            <h2 class="calendar_date">{{ day[0] }}</h2>
+        </section>
         <form method="POST">
             <input type="search" list="recipes" placeholder="Recipe?" name="recipe">
             <datalist id="recipes">

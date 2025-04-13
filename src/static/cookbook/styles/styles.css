@@ -165,7 +165,7 @@ button {
 }
 
 .date_box {
-    border: solid black 4px;
+    border: solid rgb(51, 115, 145) 4px;
     border-radius: 90deg;
     margin: auto;
     width: 70%;
@@ -181,7 +181,7 @@ button {
     flex-direction: column;
     justify-content: center;
     margin-left: 1rem;
-    background-color: orange;
+    background-color: rgb(219, 119, 61);
 }
 
 .r_date_container {
@@ -211,4 +211,33 @@ button {
 .menu_delete_button {
     height: 1.5rem;
     margin: 1rem;
+}
+
+@media (orientation:portrait) {
+    .date_box {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .l_date_container {
+        flex: 100;
+        max-height: 150px;
+        padding: none;
+        margin-left: 0px;
+    }
+
+    .calendar_day {
+        padding-top: 0px;
+        margin-top: 0px;
+        font-size: 1.5rem;
+    }
+
+    .calendar_date {
+        font-size: 1rem;
+    }
+
+    .cal_date_header {
+        display:flex;
+        flex-direction: row;
+    }
 }
