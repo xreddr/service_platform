@@ -105,9 +105,11 @@ def cookbook(category_id=None):
     db.close_db()
     conn = db.lite_conn()
     cur = conn.cursor()
+    uncat_trig = False
     if category_id == '00':
         cur.execute("SELECT * FROM recipe WHERE user_id = ? ORDER BY title ASC;", (session['user_id'],))
     elif category_id == '000':
+        uncat_trig = True
         cur.execute("SELECT * FROM recipe WHERE user_id = ? AND NOT EXISTS (SELECT recipe_id FROM recipe_category WHERE recipe.user_id = ? AND recipe_category.recipe_id=recipe.id) ORDER BY title ASC;",
                     (session['user_id'], session['user_id'])
                     )
@@ -122,7 +124,7 @@ def cookbook(category_id=None):
     categories = cur.fetchall()
     cur.close()
     db.close_db()
-    return render_template('cookbook/home.html', recipes=recipes, keywords=keywords, categories=categories)
+    return render_template('cookbook/home.html', recipes=recipes, keywords=keywords, categories=categories, uncat_trig=uncat_trig)
 
 @bp.route('/chatter')
 @auth.authorize_login
