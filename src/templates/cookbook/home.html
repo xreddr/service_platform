@@ -2,58 +2,65 @@
 {% extends 'cookbook/base.html' %}
 
 {% block header %}
+
 <h1>{{ g.user['username'] }}'s Cookbook</h1>
+
 <section id="cb_home_menu">
-    <a href="{{ url_for('web.cookbook.new_recipe') }}"><button>New Recipe</button></a>
-    <a href="{{ url_for('web.cookbook.calendar') }}"><button>Calendar</button></a>
+    <a href="{{ url_for('web.cookbook.new_recipe') }}"><button class="cat_button glass">New Recipe</button></a>
+    <a href="{{ url_for('web.cookbook.calendar') }}"><button class="cat_button glass">Calendar</button></a>
+    <a href="{{ url_for('web.cookbook.edit_category' )}}"><button class="glass cat_button">Edit Categories</button></a>
+    
     <form method="POST" action="{{ url_for('web.cookbook.new_category') }}">
         <input type="text" name="category" placeholder="New Category" required>
         <input type="submit" value="Add">
     </form>
-    <!-- <form>
-        <input type="search" list="recipes" placeholder="Keyword?">
-        <datalist id="recipes">
-            {% for keyword in keywords %}
-            <option value="{{ keyword['keyword'] }}">
-            {% endfor %}
-        </datalist>
-    </form> -->
-    <a href="{{ url_for('web.cookbook.edit_category' )}}"><button>Edit Categories</button></a>
+
+</section>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section id="category_buttons">
     {% if categories %}
-    <section id="category_buttons">
-        {% if recipes %}
-        <a href="{{ url_for('web.cookbook') }}" class="glass">clear list</a>
-        {% endif %}
-        {% for category in categories %}
-        <a href="{{ url_for('web.cookbook', category_id=category['id']) }}" class="glass">{{category['name']}}</a>
-        <button onclick="catShowHide(this)" class="cat_button glass">{{category['name']}}</button>
-        {% if recipes %}{# and recipes[0]['category_id'] == category['id'] #}
-        <section id="recipe_list" style="display:none;flex-direction:column;justify-content:center;">
-            {% for recipe in recipes %}
-            {% if recipe['category_id'] == category['id'] %}
-            <h1><a href="{{ url_for('web.cookbook.recipes', recipe_id=recipe['id']) }}">{{ recipe['title'] }}</a>
-            </h1>
-            {% endif %}
-            {% endfor %}
-        </section>
+    <a href="{{ url_for('web.cookbook') }}" class="glass">clear list</a>
+
+    {% for category in categories %}
+    <button onclick="catShowHide(this)" class="cat_button glass">{{category['name']}}</button>
+
+    <section class="recipe_list" style="display:none;flex-direction:column;justify-content:center;">
+        {% for recipe in recipes %}
+        {% if recipe['category_id'] == category['id'] %}
+        <h1><a href="{{ url_for('web.cookbook.recipes', recipe_id=recipe['id']) }}">{{ recipe['title'] }}</a>
+        </h1>
         {% endif %}
         {% endfor %}
-        <a href="{{ url_for('web.cookbook', category_id='000') }}" class="glass">uncategorized</a>
-            {% if recipes and uncat_trig %}
-            {% for recipe in recipes %}
-            <h1><a href="{{ url_for('web.cookbook.recipes', recipe_id=recipe['id']) }}">{{ recipe['title'] }}</a>
-            </h1>
-            {% endfor %}
-        {% endif %}
-        <a href="{{ url_for('web.cookbook', category_id='00') }}" class="glass">all</a>
-        {% if recipes and recipes[0]['category_id'] == Null and not uncat_trig %}
-            {% for recipe in recipes %}
-            <h1><a href="{{ url_for('web.cookbook.recipes', recipe_id=recipe['id']) }}">{{ recipe['title'] }}</a>
-            </h1>
-            {% endfor %}
-        {% endif %}
     </section>
+    {% endfor %}
+
     {% endif %}
+
+    <button onclick="catShowHide(this)" class="cat_button glass">uncategorized</button>
+
+    <section class="recipe_list" style="display:none;flex-direction:column;justify-content:center;">
+        {% for recipe in recipes %}
+        {% if not recipe['category_id'] %}
+        <h1><a href="{{ url_for('web.cookbook.recipes', recipe_id=recipe['id']) }}">{{ recipe['title'] }}</a>
+        </h1>
+        {% endif %}
+        {% endfor %}
+    </section>        
+
+    <button onclick="catShowHide(this)" class="cat_button glass">all</button>
+
+    <section class="recipe_list" style="display:none;flex-direction:column;justify-content:center;">
+        {% for recipe in recipes %}
+        <h1><a href="{{ url_for('web.cookbook.recipes', recipe_id=recipe['id']) }}">{{ recipe['title'] }}</a>
+        </h1>
+        {% endfor %}
+    </section>
+
 </section>
 
 <script>
@@ -63,24 +70,13 @@
         let base = parentArray.indexOf(element);
         let target = parentArray[base+1];
         console.log(target)
-        if (target.id === 'recipe_list' && target.style.display === 'none') {
+        if (target.classList.contains('recipe_list') && target.style.display === 'none') {
             target.style.display = 'flex';
         }
-        else if (target.id === 'recipe_list' && target.style.display === 'flex') {
+        else if (target.classList.contains('recipe_list') && target.style.display === 'flex') {
             target.style.display = 'none';
         }
     };
 </script>
 
-{% endblock %}
-
-{% block content %}
-{% if recipes %}
-<!-- <section id="recipe_list">
-    {% for recipe in recipes %}
-    <h1><a href="{{ url_for('web.cookbook.recipes', recipe_id=recipe['id']) }}">{{ recipe['title'] }}</a>
-    </h1>
-    {% endfor %}
-</section> -->
-{% endif %}
 {% endblock %}

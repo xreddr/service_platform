@@ -16,7 +16,3 @@ window.addEventListener('load', function() {
     this.window.scrollTo(0, element.offsetTop-200)
     document.getElementById(element.id).style.border = "thick solid orange";
   });
-
-var catShowHide = function(element) {
-  console.log(element)
-}

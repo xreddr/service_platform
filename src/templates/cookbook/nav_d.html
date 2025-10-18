@@ -1,0 +1,25 @@
+<!-- This entire page can hopefully be eliminated with css media queries.  -->
+<section class="nav_wrapper">
+    <section class="left_nav">
+        <section class="top_menu" onclick="menuClick(this)">
+            <section>
+                <div class="menu1"></div>
+                <div class="menu2"></div>
+                <div class="menu3"></div>
+            </section>
+            <section class="top_drop">
+                <a class="menu_buff_top"></a>
+                {% include 'cookbook/nav_menu.html' %}
+                {% block nav_menu %}{% endblock %}
+            </section>
+        </section>
+    </section>
+    <section class="right_nav">
+        {% if g.user %}
+        <a href="{{ url_for('web.home_page') }}" class="glass">Home</a>
+        <a href="{{ url_for('web.logout') }}" class="glass">Logout</a>
+        {% else %}
+        <a href="/#login" class="glass">Login</a>
+        {% endif %}
+    </section>
+</section>

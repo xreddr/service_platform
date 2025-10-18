@@ -12,13 +12,13 @@
     </head>
     <body>
         <nav>
-            {% include 'nav_d.html' %}
+            {% include 'cookbook/nav_d.html' %}
         </nav>
         <section id="sleeve">
             <section class="content">
                 <header id="header">
                     <!-- Should be in nav. Does not display properly when outside of id=sleeve, or inside id=nav_wrapper -->
-                    {% include 'nav_m.html' %}
+                    {% include 'cookbook/nav_m.html' %}
                     <!-- That up there ^ -->
                     {% for message in get_flashed_messages() %}
                     <div class="flash">{{ message }}</div>

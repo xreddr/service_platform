@@ -7,7 +7,8 @@
         </section>
     </section>
     <section class="menu_bar">
-        {% include 'nav_menu.html' %}
+        {% include 'cookbook/nav_menu.html' %}
+        {% block nav_menu %}{% endblock %}
         <a class="menu_buff"></a>
     </section>
     {% if g.user %}

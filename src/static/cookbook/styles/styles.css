@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(62, 95, 204);
+    background-color: rgb(43, 87, 99);
     min-height: 100vh;
 }
 
@@ -58,13 +58,13 @@ pre {
 
 @media only screen and (min-width:1000px) {
     #sleeve {
-        background-color: rgb(14, 13, 13);
+        background-color: rgb(43, 87, 99);
         /* color:rgb(255, 255, 255); */
     }
 }
 
 #sleeve {
-    background-color: rgb(39, 23, 23);
+    background-color: rgb(43, 87, 99);
     color: rgb(255, 255, 255);
 }
 
@@ -102,6 +102,11 @@ pre {
     flex-direction: row;
     margin-top: .2rem;
     margin-bottom: .2rem;
+}
+
+.cat_button {
+    color: white;
+    min-width: 250px;
 }
 
 #input_recipe label {
@@ -151,6 +156,7 @@ main {
 #cb_home_menu {
     display: flex;
     flex-direction: column;
+    margin: 1rem;
 }
 
 button {
@@ -162,6 +168,14 @@ button {
 .glass {
     min-height: 2rem;
     border-radius: 25px;
+    color: white;
+    /* background-color: rgb(71, 188, 255); */
+	background-image: linear-gradient(rgb(255, 173, 135),rgb(155, 83, 41));
+}
+
+.glass:hover {
+    background-image: linear-gradient(rgb(245, 247, 123), rgb(226, 191, 32));
+    color: black;
 }
 
 .date_box {
