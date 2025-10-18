@@ -107,7 +107,7 @@ def cookbook(category_id=None):
     cur = conn.cursor()
     uncat_trig = False
     if category_id == '00':
-        cur.execute("SELECT * FROM recipe WHERE user_id = ? ORDER BY title ASC;", (session['user_id'],))
+        cur.execute("SELECT rp.*, rc.category_id FROM recipe rp JOIN  recipe_category rc ON rp.id = rc.recipe_id WHERE user_id = ? ORDER BY title ASC;", (session['user_id'],))
     elif category_id == '000':
         uncat_trig = True
         cur.execute("SELECT * FROM recipe WHERE user_id = ? AND NOT EXISTS (SELECT recipe_id FROM recipe_category WHERE recipe.user_id = ? AND recipe_category.recipe_id=recipe.id) ORDER BY title ASC;",

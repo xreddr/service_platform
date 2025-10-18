@@ -17,3 +17,6 @@ window.addEventListener('load', function() {
     document.getElementById(element.id).style.border = "thick solid orange";
   });
 
+var catShowHide = function(element) {
+  console.log(element)
+}

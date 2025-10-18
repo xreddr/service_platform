@@ -26,14 +26,17 @@
         {% endif %}
         {% for category in categories %}
         <a href="{{ url_for('web.cookbook', category_id=category['id']) }}" class="glass">{{category['name']}}</a>
-            {% if recipes and recipes[0]['category_id'] == category['id'] %}
-            <section id="recipe_list">
-                {% for recipe in recipes %}
-                <h1><a href="{{ url_for('web.cookbook.recipes', recipe_id=recipe['id']) }}">{{ recipe['title'] }}</a>
-                </h1>
-                {% endfor %}
-            </section>
+        <button onclick="catShowHide(this)" class="cat_button glass">{{category['name']}}</button>
+        {% if recipes %}{# and recipes[0]['category_id'] == category['id'] #}
+        <section id="recipe_list" style="display:none;flex-direction:column;justify-content:center;">
+            {% for recipe in recipes %}
+            {% if recipe['category_id'] == category['id'] %}
+            <h1><a href="{{ url_for('web.cookbook.recipes', recipe_id=recipe['id']) }}">{{ recipe['title'] }}</a>
+            </h1>
             {% endif %}
+            {% endfor %}
+        </section>
+        {% endif %}
         {% endfor %}
         <a href="{{ url_for('web.cookbook', category_id='000') }}" class="glass">uncategorized</a>
             {% if recipes and uncat_trig %}
@@ -52,6 +55,22 @@
     </section>
     {% endif %}
 </section>
+
+<script>
+    function catShowHide(element) {
+        console.log(element);
+        let parentArray = Array.from(element.parentNode.children);
+        let base = parentArray.indexOf(element);
+        let target = parentArray[base+1];
+        console.log(target)
+        if (target.id === 'recipe_list' && target.style.display === 'none') {
+            target.style.display = 'flex';
+        }
+        else if (target.id === 'recipe_list' && target.style.display === 'flex') {
+            target.style.display = 'none';
+        }
+    };
+</script>
 
 {% endblock %}
 
