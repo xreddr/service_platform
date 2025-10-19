@@ -164,6 +164,9 @@ button {
     margin-bottom: .5rem;
 }
 
+.recipe_list h1 {
+    font-size: 1rem;
+}
 
 .glass {
     min-height: 2rem;
@@ -174,8 +177,8 @@ button {
 }
 
 .glass:hover {
-    background-image: linear-gradient(rgb(245, 247, 123), rgb(226, 191, 32));
-    color: black;
+    background-image: linear-gradient(rgb(255, 142, 89),rgb(148, 54, 0));
+    color: white;
 }
 
 .date_box {

@@ -3,7 +3,7 @@ import sqlite3
 import werkzeug.exceptions
 import json
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask import Blueprint, flash, render_template, request, session, url_for, current_app, g, redirect
+from flask import Blueprint, jsonify, flash, render_template, request, session, url_for, current_app, g, redirect
 from src import db, auth
 # CKEditor
 from flask import Flask
@@ -32,6 +32,7 @@ def new_recipe():
     categories = cur.fetchall()
 
     if request.method == 'POST':
+        print("NEW POST REACH")
         title = request.form['title']
         body = request.form['ckeditor']
         keywords = request.form['keywords'].split(',')
@@ -142,7 +143,7 @@ def calendar():
     print(meals)
 
     if request.method == 'POST':
-
+        print("REACH POST")
         recipe_name = request.form['recipe']
         date = request.form['date']
 
@@ -156,7 +157,12 @@ def calendar():
                     ) 
         conn.commit()
         
-        return redirect(url_for('web.cookbook.calendar'))
+        # return redirect(url_for('web.cookbook.calendar'))
+        return jsonify({
+            "status": "success",
+            "recipe": recipe_name,
+            "date": date
+        })
     
     return render_template('cookbook/calendar.html', days=days, recipes=recipes, meals=meals)
 
@@ -332,4 +338,4 @@ def delete_meal():
         
         conn.commit()
 
-        return redirect(url_for("web.cookbook.calendar"))
+        return jsonify({"status": "success", "deleted": recipe, "date": date})

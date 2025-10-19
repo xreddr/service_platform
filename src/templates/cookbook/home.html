@@ -6,6 +6,7 @@
 <h1>{{ g.user['username'] }}'s Cookbook</h1>
 
 <section id="cb_home_menu">
+    
     <a href="{{ url_for('web.cookbook.new_recipe') }}"><button class="cat_button glass">New Recipe</button></a>
     <a href="{{ url_for('web.cookbook.calendar') }}"><button class="cat_button glass">Calendar</button></a>
     <a href="{{ url_for('web.cookbook.edit_category' )}}"><button class="glass cat_button">Edit Categories</button></a>
@@ -62,21 +63,5 @@
     </section>
 
 </section>
-
-<script>
-    function catShowHide(element) {
-        console.log(element);
-        let parentArray = Array.from(element.parentNode.children);
-        let base = parentArray.indexOf(element);
-        let target = parentArray[base+1];
-        console.log(target)
-        if (target.classList.contains('recipe_list') && target.style.display === 'none') {
-            target.style.display = 'flex';
-        }
-        else if (target.classList.contains('recipe_list') && target.style.display === 'flex') {
-            target.style.display = 'none';
-        }
-    };
-</script>
 
 {% endblock %}

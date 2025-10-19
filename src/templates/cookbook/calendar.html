@@ -9,42 +9,140 @@
 {% if days %}
 {% for day in days %}
 <section class="date_box" id="{{ day[0] }}">
+
     <section class="l_date_container">
         <section class="cal_date_header">
             <h1 class="calendar_day">{{ day[1] }}</h1>
             <h2 class="calendar_date">{{ day[0] }}</h2>
         </section>
-        <form method="POST">
-            <input type="search" list="recipes" placeholder="Recipe?" name="recipe">
+        <!-- <form id="{{ day[0] }}" method="POST"> -->
+        <section class="meal_add_section">
+            <input class="recipe_input" type="search" list="recipes" placeholder="Recipe?" name="recipe">
             <datalist id="recipes">
                 {% for recipe in recipes %}
                 <option value="{{ recipe['title'] }}">
                 {% endfor %}
             </datalist>
-            <input value="{{ day[1] }} {{ day[0] }}" style="display:none;" name="date">
-            <input type="submit" value="Add">
-        </form>
+            <input class="date_input" value="{{ day[1] }} {{ day[0] }}" style="display:none;" name="date">
+            <!-- <input class="meal_submit" type="submit" value="Add"> -->
+            <button class="{{ day[0] }}meal_submit">Add</button>
+        </section>
+        <!-- </form> -->
     </section>
+
     <section class="r_date_container">
         <ul class="meal_list">
             {% if meals %}
             {% for meal in meals %}
             {% if day[0] in meal['date'] %}
             <li>
-                <form method="POST" action="/cookbook/delete_meal" class="meal_delete_form">
-                    <input value="{{ meal['title'] }}" style="display:none;" name="meal">
-                    <input value="{{ day[1] }} {{ day[0] }}" name="date" style="display:none;">
+                <section class="meal_delete_section">
+                    <input class="meal_delete_input" value="{{ meal['title'] }}" style="display:none;" name="meal">
+                    <input class="date_delete_input" value="{{ day[1] }} {{ day[0] }}" name="date" style="display:none;">
                     <p>{{ meal['title'] }}</p>
-                    <input type="submit" class="menu_delete_button" value="X">
-                </form>
+                    <button class="{{ day[0] }}meal_delete_submit">X</button>
+                </section>
             </li>
             {% endif %}
             {% endfor %}
             {% endif %}
         </ul>
     </section>
+
 </section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+$(document).ready(function() {
+  $(document).on('click', '.{{ day[0] }}meal_submit', function(e) {
+    console.log("REACH DELETE POST")
+    e.preventDefault(); // prevent normal button behavior (if inside form)
+
+    const button = $(this);
+    const dayBox = button.closest('.date_box');
+
+    const recipeName = dayBox.find('.recipe_input').val();
+    const dateValue = dayBox.find('.date_input').val();
+
+    // Simple validation
+    if (!recipeName) {
+      alert("Please enter a recipe!");
+      return;
+    }
+
+    // Send AJAX
+    $.ajax({
+      url: 'calendar',
+      type: 'POST',
+      data: {
+        recipe: recipeName,
+        date: dateValue
+      },
+      success: function(response) {
+        console.log("AJAX success:", response);
+
+        // Append new <li>
+        const mealList = dayBox.find('.meal_list');
+        const newLi = `
+          <li>
+            <section class="meal_delete_section">
+              <input class="meal_delete_input" value="${recipeName}" style="display:none;" name="meal">
+              <input class="date_delete_input" value="${dateValue}" name="date" style="display:none;">
+              <p>${recipeName}</p>
+              <button class="${dateValue}meal_delete_submit">X</button>
+            </section>
+          </li>
+        `;
+        mealList.append(newLi);
+
+        // Clear input
+        dayBox.find('.recipe_input').val('');
+      },
+      error: function(xhr, status, error) {
+        console.error("AJAX error:", error);
+      }
+    });
+  });
+});
+
+$(document).ready(function() {
+  $(document).on('click', '.{{ day[0] }}meal_delete_submit', function(e) {
+    console.log("REACH DELETE POST")
+
+    e.preventDefault(); // prevent normal button behavior (if inside form)
+
+    
+    const button = $(this);
+    const section = button.closest('.meal_delete_section');
+    const li = section.closest('li');
+
+    const mealName = section.find('.meal_delete_input').val();
+    const dateValue = section.find('.date_delete_input').val();
+
+    let data = {
+        meal: mealName,
+        date: dateValue
+      }
+
+    console.log(data);
+
+    $.ajax({
+      url: '/cookbook/delete_meal',
+      type: 'POST',
+      data: data,
+      success: function(response) {
+        console.log('Deleted meal:', response);
+        // remove the li from the DOM
+        li.remove();
+      },
+      error: function(xhr, status, error) {
+        console.error('Delete error:', error);
+      }
+    });
+  });
+});
+</script>
 {% endfor %}
 {% endif %}
-<script src="{{ url_for('static', filename='cookbook/js/index.js') }}"></script>
 {% endblock %}

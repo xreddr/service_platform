@@ -4,7 +4,6 @@
         <title>Cookbook</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
-        <!-- <link rel="stylesheet" href="{{ url_for('static', filename='wsc/styles/styles.css') }}"> -->
         <link rel="stylesheet" href="{{ url_for('static', filename='cookbook/styles/styles.css') }}">
         <style>
 
@@ -36,12 +35,8 @@
                 </footer>
             </section>
         </section>
-        <script src="{{ url_for('static', filename='wsc/js/index.js')  }}"></script>
-        <!-- <script>
-            function LoadScroll() {
-                window.scroll(0,1);
-            }
-            window.onload = LoadScroll;
-        </script> -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="{{ url_for('static', filename='index.js')  }}"></script>
+        <script src="{{ url_for('static', filename='cookbook/js/index.js')  }}"></script>  
     </body>
 </html>
