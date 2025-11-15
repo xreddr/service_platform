@@ -4,19 +4,16 @@
         <title>LV Game Night</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='lvgm/styles/styles.css') }}">
         <style>
 
         </style>
     </head>
     <body>
-        <nav>
-            {% include 'wsc/nav_d.html' %}
-        </nav>
+        {% include 'lvgm/nav_menu.html' %}
         <section id="sleeve">
             <section class="content">
                 <header id="header">
-                    <!-- Should be in nav. Does not display properly when outside of id=sleeve, or inside id=nav_wrapper -->
-                    {% include 'wsc/nav_m.html' %}
                     <!-- That up there ^ -->
                     {% for message in get_flashed_messages() %}
                     <div class="flash">{{ message }}</div>
@@ -28,11 +25,12 @@
                     <!-- Page specific content -->
                     {% block content %}{% endblock %}
                 </main>
+            </section>
                 <footer>
+                    <!-- Modularize -->
                     <h3 class="left_foot">Whale Shark Cookbook(c)</h3>
                     <h3 class="right_foot">2024 - 2025</h3>
                 </footer>
-            </section>
         </section>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="{{ url_for('static', filename='index.js')  }}"></script>

@@ -13,6 +13,8 @@ from . import cookbook
 bp.register_blueprint(cookbook.bp)
 from . import chatter
 bp.register_blueprint(chatter.bp)
+from . import lvgm
+bp.register_blueprint(lvgm.bp)
 
 
 @bp.route('/', methods=('GET', 'POST'))

@@ -11,13 +11,11 @@ from flask_ckeditor import CKEditor
 # Calendar
 from datetime import datetime, timedelta
 
-current_app.config.update(CKEDITOR_SERVE_LOCAL='ON', CKEDITOR_HEIGHT=400)
-ckeditor = CKEditor(current_app)
-
 
 bp = Blueprint('lvgm', __name__, url_prefix='lvgm')
+
 
 @bp.route('/', methods=['GET', 'POST'])
 @auth.authorize_login
 def lvgm_home():
-    return render_template('lvgm/base.html')
+    return render_template('lvgm/home.html')

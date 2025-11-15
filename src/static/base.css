@@ -9,6 +9,10 @@ body {
     min-height: 100vh;
 }
 
+footer {
+    /* padding-bottom: 2vh; */
+}
+
 /* Button Style ******************************** */
 
 .glass {
@@ -274,7 +278,7 @@ footer {
         background-attachment: fixed;
     }
 
-    #menu {
+    /* #menu {
         display: none;
     }
 
@@ -309,12 +313,12 @@ footer {
         top: 0;
         left: 0;
         width: 500px;
-        /* display: none; */
+        display: none;
         flex-direction: column;
-        /* margin-left: 445px; */
+        margin-left: 445px;
         margin-top: .5rem;
         left: inherit;
         border-radius: 5%;
         overflow: hidden;
     }
-}
+} */
