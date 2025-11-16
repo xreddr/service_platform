@@ -1,8 +1,5 @@
 
-.change .menu_bar {
-    padding-bottom: calc(60px + 4vh);
-    background-color: rgb(112, 112, 112);
-}
+
 
 body {
     background-color: red;
@@ -21,61 +18,3 @@ body {
     padding-top: 2rem;
 }
 
-@media only screen and (min-width:1000px) {
-    #sleeve {
-        padding-top: 80px;
-    }
-
-    .menu_icon {
-        display: none;
-    }
-
-    #menu {
-        margin: auto;
-        display: flex;
-        flex-direction: row;
-        width: 90vw;
-        top: 10px;
-        height: 45px;
-        overflow: hidden;
-        background-color: darkgray;
-        border-radius: 30px;
-    }
-
-    .left_icon, .right_icon {
-        width: 120px;
-        height: inherit;
-        /* border-radius: 50%; */
-        background-color: orange;
-        display:flex;
-        justify-content: center;
-        align-items: center;
-        text-decoration: none;
-        color: black;
-    }
-
-    .menu_bar {
-        margin: auto;
-        display: flex;
-        justify-content: space-between;
-        flex-direction: row;
-        width: 100%;
-        position: initial;
-        height: inherit;
-        /* border-radius: 30px; */
-        overflow: hidden;
-    }
-
-    .menu_bar a {
-        width: 100%;
-        height: inherit;
-    }
-
-    footer {
-        padding-bottom: 0;
-    }
-
-    .change .left_icon, .change .right_icon {
-        display: none;
-    }
-}

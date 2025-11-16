@@ -11,13 +11,11 @@
     </head>
     <body>
         <nav>
-            {% include 'wsc/nav_d.html' %}
+            {% include 'wsc/nav_menu.html' %}
         </nav>
         <section id="sleeve">
             <section class="content">
                 <header id="header">
-                    <!-- Should be in nav. Does not display properly when outside of id=sleeve, or inside id=nav_wrapper -->
-                    {% include 'wsc/nav_m.html' %}
                     <!-- That up there ^ -->
                     <img id="title_img" src="{{ url_for('static', filename='wsc/images/title_image.png') }}">
                     {% for message in get_flashed_messages() %}
@@ -30,11 +28,11 @@
                     <!-- Page specific content -->
                     {% block content %}{% endblock %}
                 </main>
-                <footer>
-                    <h3 class="left_foot">Whale Shark Capital(c)</h3>
-                    <h3 class="right_foot">2019 - 2025</h3>
-                </footer>
             </section>
+            <footer>
+                <h3 class="left_foot">Whale Shark Capital(c)</h3>
+                <h3 class="right_foot">2019 - 2025</h3>
+            </footer>
         </section>
         <script src="{{ url_for('static', filename='wsc/js/index.js')  }}"></script>
         <script>

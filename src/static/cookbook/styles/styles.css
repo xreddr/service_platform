@@ -169,11 +169,14 @@ button {
 }
 
 .glass {
-    min-height: 2rem;
-    border-radius: 25px;
     color: white;
     /* background-color: rgb(71, 188, 255); */
 	background-image: linear-gradient(rgb(255, 173, 135),rgb(155, 83, 41));
+}
+
+.content .glass {
+    min-height: 2rem;
+    border-radius: 25px;
 }
 
 .glass:hover {

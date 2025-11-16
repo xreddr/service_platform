@@ -9,8 +9,8 @@ body {
     min-height: 100vh;
 }
 
-footer {
-    /* padding-bottom: 2vh; */
+.content {
+    min-height: 100vh;
 }
 
 /* Button Style ******************************** */
@@ -122,6 +122,8 @@ footer {
 
 .change .menu_bar {
     height: auto;
+    padding-bottom: calc(60px + 4vh);
+    background-color: rgb(112, 112, 112);
 }
 
 .change .menu_icon {
@@ -148,6 +150,8 @@ footer {
 .change .top_drop a {
     display: flex;
 }
+
+
 
 /* Desktop Menu ******************************* */
 
@@ -276,6 +280,61 @@ footer {
         max-width: 1000px;
         margin: auto;
         background-attachment: fixed;
+
+        padding-top: 80px;
+    }
+
+    .menu_icon {
+        display: none;
+    }
+
+    #menu {
+        margin: auto;
+        display: flex;
+        flex-direction: row;
+        width: 90vw;
+        top: 10px;
+        height: 45px;
+        overflow: hidden;
+        background-color: darkgray;
+        border-radius: 30px;
+    }
+
+    .left_icon, .right_icon {
+        width: 120px;
+        height: inherit;
+        /* border-radius: 50%; */
+        background-color: orange;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        color: black;
+    }
+
+    .menu_bar {
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        width: 100%;
+        position: initial;
+        height: inherit;
+        /* border-radius: 30px; */
+        overflow: hidden;
+    }
+
+    .menu_bar a {
+        width: 100%;
+        height: inherit;
+    }
+
+    footer {
+        padding-bottom: 0;
+    }
+
+    .change .left_icon, .change .right_icon {
+        display: none;
     }
 
     /* #menu {
@@ -322,3 +381,4 @@ footer {
         overflow: hidden;
     }
 } */
+}
