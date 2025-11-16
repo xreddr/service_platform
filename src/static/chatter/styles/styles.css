@@ -18,3 +18,11 @@ body {
     padding-top: 2rem;
 }
 
+.glass {
+    background-image: linear-gradient(rgb(235, 67, 1),rgb(146, 46, 16));
+    color: white;
+}
+
+.glass:hover {
+    background-image: linear-gradient(rgb(255, 181, 171),rgb(170, 48, 0));
+}
