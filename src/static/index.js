@@ -1,3 +1,10 @@
 function menuClick(x) {
-    x.classList.toggle("change");
+
+    const media = window.matchMedia("(max-width: 1000px)");
+
+    if (media.matches) {
+        x.classList.toggle("change");
+        console.log("CHANGE")
+    }
+    
 }

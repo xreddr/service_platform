@@ -13,6 +13,14 @@ body {
     min-height: 100vh;
 }
 
+nav {
+    opacity: 85%;
+}
+
+nav:hover {
+    opacity: 100%;
+}
+
 /* Button Style ******************************** */
 
 .glass {
@@ -334,51 +342,7 @@ footer {
     }
 
     .change .left_icon, .change .right_icon {
-        display: none;
+        /* display: none; */
     }
 
-    /* #menu {
-        display: none;
-    }
-
-    nav, .top_menu, .nav_wrapper {
-        height: 60px;
-    }
-
-    .left_nav a, .right_nav a {
-        display: flex;
-    }
-
-    .top_menu div {
-        width: 35px;
-        height: 5px;
-        background-color: black;
-        margin: 6px 0;
-        transition: 0.4s;
-    }
-
-    .nav_spacer {
-        height: 30px;
-    }
-
-    #ad1, #ad2, #ad3 {
-        padding-top: 60px;
-        padding-bottom: 0;
-    }
-
-    .menu_bar {
-        height: auto;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 500px;
-        display: none;
-        flex-direction: column;
-        margin-left: 445px;
-        margin-top: .5rem;
-        left: inherit;
-        border-radius: 5%;
-        overflow: hidden;
-    }
-} */
 }
