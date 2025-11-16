@@ -13,10 +13,10 @@
         </section>
         {% if g.user %}
         <a href="{{ url_for('web.logout') }}" class="left_icon glass">Logout</a>
-        <a href="{{ url_for('web.home_page') }}" class="right_icon glass">Home</a>    
+        <a href="{{ url_for('web.home_page') }}" class="right_icon glass"><img class="menu_image" src="{{ url_for('static', filename='wsc/images/title_image.png') }}"></a>    
         {% else %}
         <a href="/#login" class="left_icon glass">Login</a>
-        <a href="{{ url_for('web.index') }}" class="right_icon glass">Home</a>    
+        <a href="{{ url_for('web.index') }}" class="right_icon">Home</a>    
         {% endif %}
     </section>
     <div class="nav_spacer"></div>

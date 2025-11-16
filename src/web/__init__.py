@@ -100,6 +100,7 @@ def manage_user_page():
 
     return render_template('wsc/manage_users.html', user_list=user_list, admin_list=admin_list)
 
+# Remove and insert into respective .py file. Update connections
 @bp.route('/cookbook', methods=('GET', 'POST'))
 @auth.authorize_login
 def cookbook():
