@@ -13,8 +13,8 @@ from . import cookbook
 bp.register_blueprint(cookbook.bp)
 from . import chatter
 bp.register_blueprint(chatter.bp)
-from . import lvgm
-bp.register_blueprint(lvgm.bp)
+from . import character
+bp.register_blueprint(character.bp)
 
 
 @bp.route('/', methods=('GET', 'POST'))
@@ -100,6 +100,10 @@ def manage_user_page():
 
     return render_template('wsc/manage_users.html', user_list=user_list, admin_list=admin_list)
 
+'''
+SERVICE ROUTES
+'''
+
 # Remove and insert into respective .py file. Update connections
 @bp.route('/cookbook', methods=('GET', 'POST'))
 @auth.authorize_login
@@ -118,8 +122,13 @@ def cookbook():
 
 @bp.route('/chatter')
 @auth.authorize_login
-def chatter_page():
+def chatter():
     return render_template('chatter/home.html')
+
+@bp.route('/character')
+@auth.authorize_login
+def character():
+    return redirect(url_for('web.character.load_char'))
 
 @bp.route('/db_dump')
 @auth.authorize_login

@@ -1,0 +1,17 @@
+BEGIN TRANSACTION;
+
+ALTER TABLE service
+RENAME TO service_old;
+
+DROP TABLE IF EXISTS service;
+CREATE TABLE IF NOT EXISTS service (
+    id INTEGER NOT NULL,
+    name TEXT NOT NULL UNIQUE,
+    link TEXT,
+    PRIMARY KEY(id AUTOINCREMENT)
+);
+INSERT INTO service (name)
+SELECT name
+FROM service_old;
+
+COMMIT TRANSACTION;

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% extends 'character/base.html' %}
+
+{% block header %}
+
+<h1>Character</h1>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section>
+
+{% if total_time %}
+    <p>Your total time <strong>{{ total_time }}</strong></p>
+    <p id="difference"></p>
+{% else %}
+    <p>You have no time.</p>
+{% endif %}
+
+<button id="timeBtn">Press Me</button>
+
+<script>
+    document.getElementById("timeBtn").addEventListener("click", function() {
+        fetch("/character/record_press", { method: "POST" })
+            .then(res => res.json())
+            .then(data => {
+                alert("Time saved: " + data.saved_time);
+                // location.reload(); // refresh to show new info
+            });
+    });
+
+    // Calculate difference in minutes on the client side
+    //const lastPress = "{{ last_press }}";
+    //if (lastPress) {
+    //    const prev = new Date(lastPress);
+    //    const now = new Date();
+    //    const diffMin = Math.floor((now - prev) / 60000);
+    //    document.getElementById("difference").innerText =
+    //        "Minutes since last press: " + diffMin;
+    //}
+</script>
+</section>
+
+{% endblock %}

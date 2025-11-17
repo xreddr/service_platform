@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Character</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='character/styles/styles.css') }}">
+        <style>
+
+        </style>
+    </head>
+    <body>
+        {% include 'character/nav_menu.html' %}
+        <section id="sleeve">
+            <section class="content">
+                <header id="header">
+                    <!-- That up there ^ -->
+                    {% for message in get_flashed_messages() %}
+                    <div class="flash">{{ message }}</div>
+                    {% endfor %}
+                    <!-- Page specific header -->
+                    {% block header %}{% endblock %}
+                </header>
+                <main>
+                    <!-- Page specific content -->
+                    {% block content %}{% endblock %}
+                </main>
+            </section>
+            <footer>
+                <!-- Modularize -->
+                <h3 class="left_foot">Whale Shark Chatter(c)</h3>
+                <h3 class="right_foot">2025</h3>
+            </footer>
+        </section>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="{{ url_for('static', filename='index.js')  }}"></script>
+    </body>
+</html>

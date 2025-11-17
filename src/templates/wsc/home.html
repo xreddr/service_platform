@@ -2,12 +2,13 @@
 {% extends 'wsc/base.html' %}
 
 {% block header %}
-<h1>Welcome {{ g.user['username'] }}</h1>
-{% for service in services %}
-<a href="{{ url_for(service['link'])}}"><button>{{ service['name'] }}</button></a>
-{% endfor %}
-<a href="{{ url_for('web.chatter_page')}}"><button>Chatter</button></a>
 
+<h1>Welcome {{ g.user['username'] }}</h1>
+<section id="service_menu">
+{% for service in services %}
+    <a class="service_link glass" href="{{ url_for('web.'+service['name'])}}">{{ service['name'] }}</a>
+{% endfor %}
+</section>
 
 {% endblock %}
 
