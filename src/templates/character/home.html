@@ -13,10 +13,10 @@
 <section>
 
 {% if total_time %}
-    <p>Your total time <strong>{{ total_time }}</strong></p>
+    <p id="TimeWarn">Your total time <strong>{{ total_time }}</strong></p>
     <p id="difference"></p>
 {% else %}
-    <p>You have no time.</p>
+    <p id="TimeWarn">You have no time.</p>
 {% endif %}
 
 <button id="timeBtn">Press Me</button>
@@ -26,8 +26,8 @@
         fetch("/character/record_press", { method: "POST" })
             .then(res => res.json())
             .then(data => {
-                alert("Time saved: " + data.saved_time);
-                // location.reload(); // refresh to show new info
+                $('#timeBtn').hide()
+                $('#TimeWarn').text("Your character is away.")
             });
     });
 
