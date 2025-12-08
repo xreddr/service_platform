@@ -130,6 +130,11 @@ def chatter():
 def character():
     return redirect(url_for('web.character.load_char'))
 
+@bp.route('/checkout')
+@auth.authorize_login
+def checkout():
+    return render_template('checkout/home.html')
+
 @bp.route('/db_dump')
 @auth.authorize_login
 def db_dump():

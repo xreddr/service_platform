@@ -10,7 +10,6 @@ if [ -z "$1" ]; then
 fi
 
 SERVICE_NAME="$1"
-TITLE_CASE="$(echo "$SERVICE_NAME" | sed -E 's/(^|_)(.)/\ U\2/g')"
 
 # ---- Directory Structure ----
 echo "Creating directory tree for service: $SERVICE_NAME"
@@ -30,7 +29,7 @@ cat > "templates/$SERVICE_NAME/home.html" <<EOF
 
 {% block header %}
 
-<h1>$TITLE_CASE</h1>
+<h1>{{ "$SERVICE_NAME"|title }}</h1>
 
 {% endblock %}
 
@@ -38,7 +37,7 @@ cat > "templates/$SERVICE_NAME/home.html" <<EOF
 {% block content %}
 
 <section>
-    <p>$TITLE_CASE</p>
+    <p>{{ "$SERVICE_NAME"|title }}</p>
 </section>
 
 {% endblock %}
@@ -48,7 +47,7 @@ cat > "templates/$SERVICE_NAME/base.html" <<EOF
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>$TITLE_CASE</title>
+        <title>{{ "$SERVICE_NAME"|title }}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='$SERVICE_NAME/styles/styles.css') }}">
@@ -75,7 +74,7 @@ cat > "templates/$SERVICE_NAME/base.html" <<EOF
             </section>
             <footer>
                 <!-- Modularize -->
-                <h3 class="left_foot">Whale Shark $TITLE_CASE(c)</h3>
+                <h3 class="left_foot">Whale Shark {{ "$SERVICE_NAME"|title }}(c)</h3>
                 <h3 class="right_foot">2025</h3>
             </footer>
         </section>
@@ -101,7 +100,7 @@ console.log("Loaded $TITLE_CASE frontend");
 EOF
 
 cat > "static/$SERVICE_NAME/styles/styles.css" <<EOF
-/* Styles for $TITLE_CASE */
+/* Styles for $SERVICE_NAME*/
 body {
     background-image: none;
 }
