@@ -4,4 +4,7 @@
     height: auto;
 }
 
-
+#screenTop, #screenBottom {
+    height: 10px;
+    background-color: orange;
+}
