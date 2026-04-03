@@ -11,17 +11,12 @@ function resizeCanvas() {
     canvas.style.width = displayWidth + 'px';
     canvas.style.height = displayHeight + 'px';
 
-    const dpr = window.devicePixelRation || 1;
+    const dpr = window.devicePixelRatio || 1;
 
-    canvas.wdith = displayWidth * dpr;
+    canvas.width = displayWidth * dpr;
     canvas.height = displayHeight * dpr;
-}
 
-function toPixels(normX, normY) {
-    return {
-        x: normX * canvas.width,
-        y: normY * canvas.height
-    };
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
 
 let input = {
@@ -38,7 +33,7 @@ canvas.addEventListener("pointerdown", (e) => {
     input.startTime = performance.now();
     input.x = e.clientX - rect.left;
     input.y = e.clientY - rect.top;
-    console.log(input.x, input.y)
+
 });
 
 canvas.addEventListener("pointerup", () => {
@@ -47,10 +42,11 @@ canvas.addEventListener("pointerup", () => {
 
 let slash = {
   startTime: performance.now(),
-  duration: 1000, // ms
-  x: 200,
-  y: 200,
-  radius: 30
+  duration: 3000, // ms
+  x: 100,
+  y: 100,
+  radius: 30,
+  length: 150
 };
 
 function getProgress() {
@@ -58,12 +54,12 @@ function getProgress() {
 }
 
 function drawSlash(progress) {
-  const length = 200;
+  const length = slash.length;
   const filled = length * Math.min(progress, 1);
 
   ctx.save();
   ctx.translate(slash.x, slash.y);
-  ctx.rotate(Math.PI / 4); // diagonal
+  ctx.rotate(Math.PI / 9); // diagonal
 
   // background
   ctx.fillStyle = "#333";
@@ -85,6 +81,12 @@ function drawSlash(progress) {
 function checkHit(progress) {
   if (!input.active) return;
 
+  const rect = canvas.getBoundingClientRect();
+  const hitX = input.x - rect.left;
+  const hitY = input.y - rect.top;
+  const hitBox = new Path2D();
+  hitBox.arc(slash.x, slash.y, slash.radius, 0, Math.PI * 2);
+
   // distance check
   const dx = input.x - slash.x;
   const dy = input.y - slash.y;
@@ -94,6 +96,8 @@ function checkHit(progress) {
 
   // timing window (example: must hit before bar fills)
   const timingGood = progress < 1;
+
+ 
 
   if (inRange && timingGood) {
     console.log("SUCCESS");
