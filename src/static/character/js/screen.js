@@ -2,11 +2,8 @@ const canvas = document.getElementById("screenCanvas");
 const ctx = canvas.getContext("2d");
 
 function resizeCanvas() {
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
-
-    const displayWidth = screenWidth;
-    const displayHeight = screenHeight;
+    const displayWidth = window.innerWidth;
+    const displayHeight = window.innerHeight;
 
     canvas.style.width = displayWidth + 'px';
     canvas.style.height = displayHeight + 'px';
@@ -18,6 +15,12 @@ function resizeCanvas() {
 
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
+
+let game = {
+  hp: 5,
+  maxHp: 5,
+  score: 0
+};
 
 let input = {
     active: false,
@@ -40,14 +43,20 @@ canvas.addEventListener("pointerup", () => {
     input.active = false;
 })
 
-let slash = {
-  startTime: performance.now(),
-  duration: 3000, // ms
-  x: 100,
-  y: 100,
-  radius: 30,
-  length: 150
-};
+let slash;
+
+function initSlash() {
+  const pos = randomBottomSpawn();
+
+  slash = {
+    startTime: performance.now(),
+    duration: 3000,
+    x: pos.x,
+    y: pos.y,
+    radius: 30,
+    length: 300,
+  };
+}
 
 function getProgress() {
   return (performance.now() - slash.startTime) / slash.duration;
@@ -81,12 +90,6 @@ function drawSlash(progress) {
 function checkHit(progress) {
   if (!input.active) return;
 
-  const rect = canvas.getBoundingClientRect();
-  const hitX = input.x - rect.left;
-  const hitY = input.y - rect.top;
-  const hitBox = new Path2D();
-  hitBox.arc(slash.x, slash.y, slash.radius, 0, Math.PI * 2);
-
   // distance check
   const dx = input.x - slash.x;
   const dy = input.y - slash.y;
@@ -97,14 +100,69 @@ function checkHit(progress) {
   // timing window (example: must hit before bar fills)
   const timingGood = progress < 1;
 
- 
-
   if (inRange && timingGood) {
     console.log("SUCCESS");
 
+    if (progress < 0.5 && slash.radius < 35) {
+      slash.radius += 0.5
+      console.log("BONUS")
+    }
+
+    game.score += 1;
     // reset slash
+    const pos = randomBottomSpawn();
+    slash.duration -= 100;
+    slash.radius -= 0.3;
+    slash.x = pos.x;
+    slash.y = pos.y;
     slash.startTime = performance.now();
   }
+}
+
+// function randomBottomSpawn(marginX = 0.1, marginBottom = 0.1, marginTop = 0.05) {
+//   const width = canvas.clientWidth;
+//   const height = canvas.clientHeight;
+
+//   // X: avoid left/right edges
+//   const x = (marginX + Math.random() * (1 - marginX * 2)) * width;
+
+//   // Y: only bottom 50%, with margins
+//   const minY = 0.5 + marginTop;        // slightly above halfway
+//   const maxY = 1 - marginBottom;       // avoid bottom edge
+
+//   const y = (minY + Math.random() * (maxY - minY)) * height;
+
+//   return { x, y };
+// }
+
+function randomBottomSpawn(
+  slashLength = 300,
+  marginX = 0.1,
+  marginBottom = 0.1,
+  marginTop = 0.05
+) {
+  const width = canvas.clientWidth;
+  const height = canvas.clientHeight;
+
+  // --- NEW: account for slash size + rotation ---
+  const halfLength = slashLength / 2;
+  const safeOffset = halfLength * Math.SQRT2;
+
+  const offsetX = safeOffset / width;
+  const offsetY = safeOffset / height;
+
+  // --- Clamp X range (respect margins + slash size) ---
+  const minX = Math.max(marginX, offsetX);
+  const maxX = Math.min(1 - marginX, 1 - offsetX);
+
+  // --- Clamp Y range (bottom half + margins + slash size) ---
+  const minY = Math.max(0.5 + marginTop, offsetY);
+  const maxY = Math.min(1 - marginBottom, 1 - offsetY);
+
+  const x = (minX + Math.random() * (maxX - minX)) * width;
+  const y = (minY + Math.random() * (maxY - minY)) * height;
+
+  return { x, y };
 }
 
 function loop() {
@@ -114,20 +172,51 @@ function loop() {
 
   drawSlash(progress);
   checkHit(progress);
+  if (progress >= 1) {
+    // MISS
+    game.hp -= 1;
+
+    console.log("MISS", game.hp);
+
+    const pos = randomBottomSpawn();
+    slash.x = pos.x;
+    slash.y = pos.y;
+
+    slash.startTime = performance.now();
+  }
+
+  if (game.hp <= 0) {
+    ctx.fillStyle = "red";  
+    ctx.font = "40px Arial";
+    ctx.fillText("GAME OVER", canvas.clientWidth / 2 - 120, canvas.clientHeight / 2);
+    ctx.fillText("SCORE:" + game.score, canvas.clientWidth / 2 - 90, canvas.clientHeight / 2 + 60);
+    return;
+  }
+
+  drawUI();
 
   requestAnimationFrame(loop);
 }
 
 requestAnimationFrame(loop);
 
-
-
 function drawScreen() {
     const bgColor = "black";
-
     canvas.style.backgroundColor = bgColor;
+}
+
+function drawUI() {
+  ctx.fillStyle = "white";
+  ctx.font = "20px Arial";
+
+  // Score (top-left)
+  ctx.fillText("Score: " + game.score, 20, 30);
+
+  // HP (top-right)
+  ctx.fillText("HP: " + game.hp, canvas.clientWidth - 100, 30);
 }
 
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
 drawScreen();
+initSlash();
