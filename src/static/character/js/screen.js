@@ -75,7 +75,13 @@ function drawSlash(progress) {
   ctx.fillRect(-length / 2, -5, length, 10);
 
   // fill
-  ctx.fillStyle = "red";
+  if (progress < 0.5) {
+    ctx.fillStyle = "yellow";
+  }
+  else {
+    ctx.fillStyle = "red";
+  }
+  
   ctx.fillRect(-length / 2, -5, filled, 10);
 
   ctx.restore();
@@ -103,7 +109,7 @@ function checkHit(progress) {
   if (inRange && timingGood) {
     console.log("SUCCESS");
 
-    if (progress < 0.5 && slash.radius < 35) {
+    if (progress < 0.5) {
       slash.radius += 0.5
       console.log("BONUS")
     }
@@ -111,29 +117,13 @@ function checkHit(progress) {
     game.score += 1;
     // reset slash
     const pos = randomBottomSpawn();
-    slash.duration -= 100;
+    slash.duration -= 50;
     slash.radius -= 0.3;
     slash.x = pos.x;
     slash.y = pos.y;
     slash.startTime = performance.now();
   }
 }
-
-// function randomBottomSpawn(marginX = 0.1, marginBottom = 0.1, marginTop = 0.05) {
-//   const width = canvas.clientWidth;
-//   const height = canvas.clientHeight;
-
-//   // X: avoid left/right edges
-//   const x = (marginX + Math.random() * (1 - marginX * 2)) * width;
-
-//   // Y: only bottom 50%, with margins
-//   const minY = 0.5 + marginTop;        // slightly above halfway
-//   const maxY = 1 - marginBottom;       // avoid bottom edge
-
-//   const y = (minY + Math.random() * (maxY - minY)) * height;
-
-//   return { x, y };
-// }
 
 function randomBottomSpawn(
   slashLength = 300,
