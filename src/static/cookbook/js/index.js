@@ -6,16 +6,29 @@ var yyyy = today.getFullYear();
 
 today = mm + '-' + dd + '-' + yyyy;
 hashToday = '#' + today
-console.log(today)
+// console.log(today)
 window.addEventListener('load', function() {
     const element = document.getElementById(today);
-    console.log(element)
+    // console.log(element)
     if (element) {
       element.scrollIntoView();
     }
     this.window.scrollTo(0, element.offsetTop-200)
-    document.getElementById(element.id).style.border = "thick solid orange";
+    const headerBG = element.querySelector(".l_date_container");
+    headerBG.style.backgroundColor = 'orange';
+    // document.getElementById(element.id).style.border = "thick solid orange";
   });
+
+  
+const dateBoxes = document.querySelectorAll('.date_box');
+
+dateBoxes.forEach(box => {
+    const dayHeader = box.querySelector('.calendar_day');
+    
+    if (dayHeader && dayHeader.textContent.trim().toLowerCase() === 'monday') {
+        box.style.marginTop = '5rem';
+    }
+});
 
 // Home, Categories 
 

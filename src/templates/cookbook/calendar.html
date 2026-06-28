@@ -13,39 +13,42 @@
     <section class="l_date_container">
         <section class="cal_date_header">
             <h1 class="calendar_day">{{ day[1] }}</h1>
-            <h2 class="calendar_date">{{ day[0] }}</h2>
+            <h2 class="calendar_date">{{ day[0][:5] }}</h2>
         </section>
         <!-- <form id="{{ day[0] }}" method="POST"> -->
-        <section class="meal_add_section">
-            <input class="recipe_input" type="search" list="recipes" placeholder="Recipe?" name="recipe">
-            <datalist id="recipes">
-                {% for recipe in recipes %}
-                <option value="{{ recipe['title'] }}">
-                {% endfor %}
-            </datalist>
-            <input class="date_input" value="{{ day[1] }} {{ day[0] }}" style="display:none;" name="date">
-            <!-- <input class="meal_submit" type="submit" value="Add"> -->
-            <button class="{{ day[0] }}meal_submit">Add</button>
-        </section>
+
         <!-- </form> -->
     </section>
 
     <section class="r_date_container">
+
         <ul class="meal_list">
-            {% if meals %}
-            {% for meal in meals %}
-            {% if day[0] in meal['date'] %}
-            <li>
-                <section class="meal_delete_section">
-                    <input class="meal_delete_input" value="{{ meal['title'] }}" style="display:none;" name="meal">
-                    <input class="date_delete_input" value="{{ day[1] }} {{ day[0] }}" name="date" style="display:none;">
-                    <p>{{ meal['title'] }}</p>
-                    <button class="{{ day[0] }}meal_delete_submit">X</button>
-                </section>
-            </li>
-            {% endif %}
-            {% endfor %}
-            {% endif %}
+          <section class="meal_add_section">
+              <input class="recipe_input" type="search" list="recipes" placeholder="Recipe?" name="recipe">
+              <datalist id="recipes">
+                  {% for recipe in recipes %}
+                  <option value="{{ recipe['title'] }}">
+                  {% endfor %}
+              </datalist>
+              <input class="date_input" value="{{ day[1] }} {{ day[0] }}" style="display:none;" name="date">
+              <!-- <input class="meal_submit" type="submit" value="Add"> -->
+              <button class="{{ day[0] }}meal_submit">Add</button>
+          </section>
+          {% if meals %}
+          {% for meal in meals %}
+          {% if day[0] in meal['date'] %}
+          <li class="meal_li">
+              <p>{{ meal['title'] }}</p>
+              <section class="meal_delete_section">
+                  <input class="meal_delete_input" value="{{ meal['title'] }}" style="display:none;" name="meal">
+                  <input class="date_delete_input" value="{{ day[1] }} {{ day[0] }}" name="date" style="display:none;">
+                  <!-- <p>{{ meal['title'] }}</p> -->
+                  <button class="{{ day[0] }}meal_delete_submit">X</button>
+              </section>
+          </li>
+          {% endif %}
+          {% endfor %}
+          {% endif %}
         </ul>
     </section>
 
@@ -56,7 +59,7 @@
 
 $(document).ready(function() {
   $(document).on('click', '.{{ day[0] }}meal_submit', function(e) {
-    console.log("REACH DELETE POST")
+    console.log("REACH ADD POST")
     e.preventDefault(); // prevent normal button behavior (if inside form)
 
     const button = $(this);
@@ -85,11 +88,12 @@ $(document).ready(function() {
         // Append new <li>
         const mealList = dayBox.find('.meal_list');
         const newLi = `
-          <li>
+          <li class="meal_li">
+            <p>${recipeName}</p>
             <section class="meal_delete_section">
               <input class="meal_delete_input" value="${recipeName}" style="display:none;" name="meal">
               <input class="date_delete_input" value="${dateValue}" name="date" style="display:none;">
-              <p>${recipeName}</p>
+              
               <button class="${dateValue}meal_delete_submit">X</button>
             </section>
           </li>
