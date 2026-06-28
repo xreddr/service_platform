@@ -23,17 +23,7 @@
     <section class="r_date_container">
 
         <ul class="meal_list">
-          <section class="meal_add_section">
-              <input class="recipe_input" type="search" list="recipes" placeholder="Recipe?" name="recipe">
-              <datalist id="recipes">
-                  {% for recipe in recipes %}
-                  <option value="{{ recipe['title'] }}">
-                  {% endfor %}
-              </datalist>
-              <input class="date_input" value="{{ day[1] }} {{ day[0] }}" style="display:none;" name="date">
-              <!-- <input class="meal_submit" type="submit" value="Add"> -->
-              <button class="{{ day[0] }}meal_submit">Add</button>
-          </section>
+
           {% if meals %}
           {% for meal in meals %}
           {% if day[0] in meal['date'] %}
@@ -49,7 +39,19 @@
           {% endif %}
           {% endfor %}
           {% endif %}
+
         </ul>
+        <section class="meal_add_section">
+            <input class="recipe_input" type="search" list="recipes" placeholder="Recipe?" name="recipe">
+            <datalist id="recipes">
+                {% for recipe in recipes %}
+                <option value="{{ recipe['title'] }}">
+                {% endfor %}
+            </datalist>
+            <input class="date_input" value="{{ day[1] }} {{ day[0] }}" style="display:none;" name="date">
+            <!-- <input class="meal_submit" type="submit" value="Add"> -->
+            <button class="{{ day[0] }}meal_submit">Add</button>
+        </section>
     </section>
 
 </section>

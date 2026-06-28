@@ -15,8 +15,8 @@ window.addEventListener('load', function() {
     }
     this.window.scrollTo(0, element.offsetTop-200)
     const headerBG = element.querySelector(".l_date_container");
-    headerBG.style.backgroundColor = 'orange';
-    // document.getElementById(element.id).style.border = "thick solid orange";
+    // headerBG.style.backgroundColor = 'orange';
+    document.getElementById(element.id).style.borderLeft = "thick solid orange";
   });
 
   
@@ -25,7 +25,7 @@ const dateBoxes = document.querySelectorAll('.date_box');
 dateBoxes.forEach(box => {
     const dayHeader = box.querySelector('.calendar_day');
     
-    if (dayHeader && dayHeader.textContent.trim().toLowerCase() === 'monday') {
+    if (dayHeader && dayHeader.textContent.trim().toLowerCase() === 'sunday') {
         box.style.marginTop = '5rem';
     }
 });

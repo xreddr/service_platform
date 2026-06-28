@@ -188,7 +188,7 @@ button {
     /* border: solid rgb(51, 115, 145) 4px; */
     border-radius: 90deg;
     margin: auto;
-    width: 70%;
+    width: 90%;
     margin-bottom: 1rem;
     margin-top: 1rem;
     display: flex;
@@ -208,6 +208,7 @@ button {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    height: auto;
 }
 
 .calendar_day, .calendar_date {
@@ -250,11 +251,12 @@ button {
     display:flex;
     flex-direction: row;
     border-bottom: solid grey 2px;
+    justify-content: space-evenly;
 }
 
 .meal_li p {
     width: 90%;
-    text-align: left;
+    /* text-align: left; */
 }
 
 .meal_delete_section {
@@ -266,17 +268,19 @@ button {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 95%;
+    width: 100%;
     margin: auto;
+    border-bottom: solid grey 2px;
 }
 
 .meal_add_section input {
     background-color: rgb(43, 87, 99);
     color: white;
-    width: 80%;
+    width: 100%;
     border-top: none;
     border-left: none;
     border-right: none;
+    border-bottom: none;
 }
 
 .date_box {
